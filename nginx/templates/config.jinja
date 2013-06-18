@@ -1,0 +1,58 @@
+{% set nginx = pillar.get('nginx', {}) -%}
+{% set user = nginx.get('user', 'www-data') -%}
+{% set group = nginx.get('group', 'www-data') -%}
+user   {{ user }} {{ group }};
+worker_processes  {{ nginx.get('worker_processes', 1) }};
+
+error_log /var/log/nginx/error.fifo warn;
+pid {{ nginx.get('pid', '/var/run/nginx.pid') }};
+daemon {{ nginx.get('daemon', 'off') }};
+
+events {
+    worker_connections {{ nginx.get('events', {}).get('worker_connections', 1024) }};
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+    log_format main '$scheme://$host:$server_port$uri$is_args$args $remote_addr:$remote_user "$request" $request_time $request_length:$bytes_sent $status "$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
+    access_log /var/log/nginx/access.fifo main;
+    sendfile {{ nginx.get('sendfile', 'on') }};
+    #tcp_nopush on;
+    keepalive_timeout {{ nginx.get('keepalive_timeout', 65) }};
+    server_names_hash_bucket_size {{ nginx.get('server_names_hash_bucket_size', 128) }};
+    server_names_hash_max_size {{ nginx.get('server_names_hash_max_size', 1024) }};
+    types_hash_max_size {{ nginx.get('types_hash_max_size', 8192) }};
+
+    gzip {{ nginx.get('gzip', 'on') }};
+    gzip_vary {{ nginx.get('gzip_vary', 'on') }};
+    gzip_proxied {{ nginx.get('gzip_proxied', 'any') }};
+    gzip_comp_level {{ nginx.get('gzip_comp_level', 6) }};
+    gzip_buffers {{ nginx.get('gzip_buffers', '16 8k') }};
+    gzip_http_version {{ nginx.get('gzip_http_version', '1.1') }};
+    gzip_types {{ nginx.get('gzip_types', ['text/plain', 'text/css', 'application/json', 'application/x-javascript', 'text/xml', 'application/xml', 'application/xml+rss', 'text/javascript'])|join(' ') }};
+
+    # turn on nginx_status on localhost
+    server {
+        listen 127.0.0.1:80;
+        server_name 127.0.0.1;
+        location /nginx_status {
+            stub_status on;
+            access_log off;
+            allow 127.0.0.1;
+            deny all;
+        }
+    }
+{% if pillar['nginx'] is defined -%}
+{% if pillar['nginx']['redirect_numeric_ip']|default(False) %}
+    server {
+        server_name {% for ip in salt['network.interfaces']()['eth0']['inet'] %}{{ ip['address'] }}:80{% if not loop.last %} {% endif %}{% endfor %};
+        return 302 {{ pillar['nginx']['redirect_numeric_ip'] }};
+        access_log off;
+    }
+{% endif %}
+{% endif %}
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*.conf;
+}
