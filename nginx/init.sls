@@ -13,7 +13,7 @@ include:
     - user: root
     - group: root
     - mode: 440
-    - source: salt://nginx/templates/config.jinja
+    - source: salt://nginx/files/config.jinja
     - require:
       - pkg: nginx
 
@@ -61,7 +61,7 @@ nginx-logger-{{ log_type }}:
     - user: root
     - group: root
     - mode: 440
-    - source: salt://nginx/templates/upstart-logger.jinja
+    - source: salt://nginx/files/upstart-logger.jinja
     - context:
       type: {{ log_type }}
   service:
@@ -87,7 +87,7 @@ nginx:
     - user: root
     - group: root
     - mode: 440
-    - source: salt://nginx/templates/upstart.jinja
+    - source: salt://nginx/files/upstart.jinja
     - require:
       - pkg: nginx
       - file: nginx-old-init
