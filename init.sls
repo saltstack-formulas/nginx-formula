@@ -1,8 +1,9 @@
 include:
   - nginx.common
   - nginx.users
-  # To install from a package
-  # If you want to install from source
-  # simply replace this comment
+{% if pillar.get('nginx', {}).get('install_from_source') %}
+  - nginx.source
+{% else %}
   - nginx.package
+{% endif -%}
 
