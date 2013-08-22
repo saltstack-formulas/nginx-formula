@@ -16,6 +16,6 @@ nginx_user_{{name}}:
     - path: {{ htauth }}
     - require:
       - pkg: htpasswd
-    
+
 {% endif -%}
 {% endfor %}
