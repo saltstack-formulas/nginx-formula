@@ -1,4 +1,4 @@
-# {{ pillar['message_do_not_modify'] }}
+# {{ pillar.get('message_do_not_modify', '') }}
 # startup script for Nginx loggers
 
 start on starting nginx
