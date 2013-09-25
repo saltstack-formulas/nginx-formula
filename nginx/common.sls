@@ -24,7 +24,7 @@ nginx-logger-{{ log_type }}:
     - user: root
     - group: root
     - mode: 440
-    - source: salt://nginx/templates/upstart_logger.jinja
+    - source: salt://nginx/templates/upstart-logger.jinja
     - context:
       type: {{ log_type }}
   service:
