@@ -61,7 +61,7 @@ get-nginx:
     - watch:
       - file: get-nginx
 
-{% for name, module in nginx.get('modules', {}) -%}
+{% for name, module in nginx.get('modules', {}).items() -%}
 get-nginx-{{name}}:
   file.managed:
     - name: {{ nginx_modules_dir }}/{{name}}.tar.gz
@@ -71,7 +71,7 @@ get-nginx-{{name}}:
       - file: nginx_user
   cmd.wait:
     - cwd: {{ nginx_home }}
-    - names: 
+    - names:
         - tar -zxf {{ nginx_modules_dir }}/{{name}}.tar.gz -C {{ nginx_modules_dir }}/{{name}}
     - watch:
       - file: get-nginx
@@ -136,16 +136,16 @@ nginx:
         --prefix=/usr/local/nginx
         --error-log-path=/var/log/nginx/error.log
         --pid-path=/var/run/nginx.pid
-        --lock-path=/var/lock/nginx.lock 
-        --http-log-path=/var/log/nginx/access.log 
-        --with-http_dav_module 
-        --http-client-body-temp-path={{ home }}/body 
-        --http-proxy-temp-path={{ home }}/proxy 
-        --with-http_stub_status_module 
-        --http-fastcgi-temp-path={{ home }}/fastcgi 
-        --with-debug 
-        --with-http_ssl_module 
-        {% for name, module in nginx.get('modules', {}) -%}
+        --lock-path=/var/lock/nginx.lock
+        --http-log-path=/var/log/nginx/access.log
+        --with-http_dav_module
+        --http-client-body-temp-path={{ home }}/body
+        --http-proxy-temp-path={{ home }}/proxy
+        --with-http_stub_status_module
+        --http-fastcgi-temp-path={{ home }}/fastcgi
+        --with-debug
+        --with-http_ssl_module
+        {% for name, module in nginx.get('modules', {}).items() -%}
         --add-module={{nginx_modules_dir}}/{{name}} \
         --with-pcre --with-ipv6
         {% endfor %}
