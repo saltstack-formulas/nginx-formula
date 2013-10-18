@@ -1,6 +1,3 @@
-include:
-  - nrpe
-
 /usr/share/nginx:
   file:
     - directory
