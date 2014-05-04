@@ -1,4 +1,5 @@
-
+{% set use_upstart = pillar.get('nginx', {}).get('use_upstart', true) %}
+{% if use_upstart %}
 nginx-old-init:
   file:
     - rename
@@ -32,10 +33,12 @@ nginx-old-init-disable:
       - module: nginx-old-init
     - watch:
       - file: nginx-old-init
+{% endif %}
 
 nginx:
   pkg.installed:
     - name: nginx
+{% if use_upstart %}
   file:
     - managed
     - name: /etc/init/nginx.conf
@@ -48,12 +51,15 @@ nginx:
       - pkg: nginx
       - file: nginx-old-init
       - module: nginx-old-init
+{% endif %}
   service:
     - running
     - enable: True
     - restart: True
     - watch:
+{% if use_upstart %}
       - file: nginx
+{% endif %}
       - file: /etc/nginx/nginx.conf
       - file: /etc/nginx/conf.d/default.conf
       - file: /etc/nginx/conf.d/example_ssl.conf
