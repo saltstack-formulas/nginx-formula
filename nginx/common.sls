@@ -7,6 +7,7 @@
   file.absent
 {% endfor %}
 
+{% if pillar.get('nginx', {}).get('use_upstart', true) %}
 {% set logger_types = ('access', 'error') %}
 
 {% for log_type in logger_types %}
@@ -36,6 +37,7 @@ nginx-logger-{{ log_type }}:
 /etc/logrotate.d/nginx:
   file:
     - absent
+{% endif %}
 
 /etc/nginx:
   file.directory:

@@ -1,5 +1,6 @@
 nginx:
   install_from_source: True
+  use_upstart: True
   with_luajit: False
   with_openresty: True
   modules:
