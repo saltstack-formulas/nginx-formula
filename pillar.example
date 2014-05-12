@@ -7,3 +7,5 @@ nginx:
     headers-more:
       source: http://github.com/agentzh/headers-more-nginx-module/tarball/v0.21
       source_hash: sha1=dbf914cbf3f7b6cb7e033fa7b7c49e2f8879113b
+  sites-enabled:
+    - default

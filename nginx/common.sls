@@ -55,9 +55,21 @@ nginx-logger-{{ log_type }}:
     - require:
       - file: /etc/nginx
 
-{% for dir in ('sites-enabled', 'sites-available') %}
-/etc/nginx/{{ dir }}:
+/etc/nginx/sites-available:
+  file.recurse:
+    - source: salt://nginx/sites-available
+    - user: root
+    - group: root
+    - require:
+      - file: /etc/nginx
+
+/etc/nginx/sites-enabled:
   file.directory:
     - user: root
     - group: root
-{% endfor -%}
+
+{% for site in pillar.get('sites-enabled') %}
+/etc/nginx/sites-enabled/{{site}}.conf:
+  file.symlink:
+    - target: /etc/nginx/sites-available/{{site}}.conf
+{% endfor %}
