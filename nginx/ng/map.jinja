@@ -1,0 +1,80 @@
+{% macro sls_block(dict) %}
+    {% for key, value in dict.items() %}
+    - {{ key }}: {{ value|json() }}
+    {% endfor %}
+{% endmacro %}
+
+{% set nginx = salt['pillar.get']('nginx:ng', {
+    'lookup': salt['grains.filter_by']({
+        'Debian': {
+            'package': 'nginx',
+            'service': 'nginx',
+            'webuser': 'www-data',
+            'conf_file': '/etc/nginx/nginx.conf',
+            'vhost_available': '/etc/nginx/sites-available',
+            'vhost_enabled': '/etc/nginx/sites-enabled',
+            'vhost_use_symlink': True,
+        },
+        'RedHat': {
+            'package': 'nginx',
+            'service': 'nginx',
+            'webuser': 'httpd',
+            'conf_file': '/etc/nginx/nginx.conf',
+            'vhost_available': '/etc/nginx/conf.d',
+            'vhost_enabled': '/etc/nginx/conf.d',
+            'vhost_use_symlink': False,
+        },
+    }, default='Debian' ),
+    'from_source': False,
+    'package': {
+        'opts': {},
+    },
+    'service': {
+        'enable': True,
+        'opts': {},
+    },
+    'server': {
+        'opts': {},
+        'config': {
+            'worker_processes': 4,
+            'pid': '/run/nginx.pid',
+            'events': {
+                'worker_connections': 768,
+            },
+            'http': {
+                'sendfile': 'on',
+                'tcp_nopush': 'on',
+                'tcp_nodelay': 'on',
+                'keepalive_timeout': '65',
+                'types_hash_max_size': '2048',
+                'default_type': 'application/octet-stream',
+                'access_log': '/var/log/nginx/access.log',
+                'error_log': '/var/log/nginx/error.log',
+                'gzip': 'off',
+                'gzip_disable': '"msie6"',
+                'include': [
+                    '/etc/nginx/mime.types',
+                    '/etc/nginx/conf.d/*.conf',
+                    '/etc/nginx/sites-enabled/*',
+                ],
+            },
+        },
+    },
+    'vhosts': {
+        'disabled_postfix': '.disabled',
+        'symlink_opts': {},
+        'rename_opts': {},
+        'managed_opts': {},
+        'dir_opts': {
+            'makedirs': True,
+        },
+        'managed': {}
+        },
+    },
+}, merge=True) %}
+
+{% if 'user' not in nginx.server.config %}
+{% do nginx.server.config.update({
+    'user': nginx.lookup.webuser,
+})%}
+{% endif %}
