@@ -1,6 +1,7 @@
 # nginx.ng.service
 #
 # Manages the nginx service.
+
 {% from 'nginx/ng/map.jinja' import nginx, sls_block with context %}
 {% set service_function = {True:'running', False:'dead'}.get(nginx.service.enable) %}
 

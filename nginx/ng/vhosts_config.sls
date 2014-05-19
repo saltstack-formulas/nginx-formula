@@ -1,6 +1,7 @@
 # nginx.ng.vhosts_config
 #
 # Manages the configuration of virtual host files.
+
 {% from 'nginx/ng/map.jinja' import nginx, sls_block with context %}
 {% set vhost_states = [] %}
 
