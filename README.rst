@@ -58,6 +58,9 @@ The following states provide an alternate approach to managing Nginx and Nginx
 vhosts, as well as code organization. Please provide feedback by filing issues,
 discussing in ``#salt`` in Freenode and the mailing list as normal.
 
+.. contents::
+    :local:
+
 ``nginx.ng``
 ------------
 
