@@ -50,3 +50,35 @@ Installs nginx via the source files.
 ---------------
 
 Installs apache utils, and configures nginx users specified in the pillar.
+
+``nginx.ng``
+------------
+
+Meta-state for inclusion of all ng states. This is a reimplementation that provides basic support for vhost management.
+
+**Note:** nginx.ng requires the merge parameter of salt.modules.pillar.get(), first available in the Helium release.
+
+``nginx.ng.install``
+~~~~~~~~~~~~~~~~~~~~
+
+Installs the nginx package.
+
+``nginx.ng.config``
+~~~~~~~~~~~~~~~~~~~
+
+Manages the nginx main server configuration file.
+
+``nginx.ng.service``
+~~~~~~~~~~~~~~~~~~~~
+
+Manages the startup and running state of the nginx service.
+
+``nginx.ng.vhosts_config``
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Manages virtual host files. This state only manages the content of the files and does not bind them to service calls.
+
+``nginx.ng.vhosts``
+~~~~~~~~~~~~~~~~~~~
+
+Manages nginx virtual hosts files and binds them to service calls.

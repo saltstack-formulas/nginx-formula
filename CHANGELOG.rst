@@ -2,6 +2,11 @@
 nginx-formula
 =============
 
+0.0.4
+-----
+
+- Added .ng states
+
 0.0.3
 -----
 
