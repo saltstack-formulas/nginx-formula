@@ -93,7 +93,7 @@ nginx_vhost_available_dir:
     - source: salt://nginx/ng/files/vhost.conf
     - template: jinja
     - context:
-      config: {{ settings.config }}
+        config: {{ settings.config|json() }}
 {% do vhost_states.append(conf_state_id) %}
 {% endif %}
 
