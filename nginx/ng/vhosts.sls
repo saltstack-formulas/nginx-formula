@@ -6,6 +6,12 @@
 {% from 'nginx/ng/vhosts_config.sls' import vhost_states with context %}
 {% from 'nginx/ng/service.sls' import service_function with context %}
 
+{% macro file_requisites(states) %}
+      {%- for state in states %}
+      - file: {{ state }}
+      {%- endfor -%}
+{% endmacro %}
+
 include:
   - nginx.ng.service
   - nginx.ng.vhosts_config
@@ -18,7 +24,8 @@ nginx_service_reload:
     - use:
       - service: nginx_service
     - watch:
-      {%- for vhost in vhost_states %}
-      - file: {{ vhost }}
-      {% endfor -%}
+      {{ file_requisites(vhost_states) }}
+    - require:
+      {{ file_requisites(vhost_states) }}
+      - service: nginx_service
 {% endif %}
