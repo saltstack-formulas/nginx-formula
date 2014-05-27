@@ -1,4 +1,4 @@
-# nginx.ng.install
+# nginx.ng.config
 #
 # Manages the main nginx server configuration file.
 
