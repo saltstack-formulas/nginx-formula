@@ -3,6 +3,10 @@
 {% set group = nginx.get('group', 'www-data') -%}
 user   {{ user }} {{ group }};
 worker_processes  {{ nginx.get('worker_processes', 1) }};
+{% set worker_rlimit_nofile = nginx.get('worker_rlimit_nofile', '') %}
+{% if worker_rlimit_nofile %}
+worker_rlimit_nofile {{ worker_rlimit_nofile }};
+{% endif %}
 
 error_log /var/log/nginx/error.fifo warn;
 pid {{ nginx.get('pid', '/var/run/nginx.pid') }};
