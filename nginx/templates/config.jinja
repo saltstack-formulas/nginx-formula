@@ -8,7 +8,9 @@ worker_processes  {{ nginx.get('worker_processes', 1) }};
 worker_rlimit_nofile {{ worker_rlimit_nofile }};
 {% endif -%}
 
-error_log /var/log/nginx/error.fifo warn;
+{% set error_log_location = nginx.get('error_log',{}).get('location', '/var/log/nginx/error.log') -%}
+{% set error_log_level = nginx.get('error_log',{}).get('level', 'warn') -%}
+error_log {{ ' '.join([error_log_location, error_log_level]) }};
 pid {{ nginx.get('pid', '/var/run/nginx.pid') }};
 daemon {{ nginx.get('daemon', 'on') }};
 
@@ -39,7 +41,7 @@ http {
     gzip_buffers {{ nginx.get('gzip_buffers', '16 8k') }};
     gzip_http_version {{ nginx.get('gzip_http_version', '1.1') }};
     gzip_types {{ nginx.get('gzip_types', ['text/plain', 'text/css', 'application/json', 'application/x-javascript', 'text/xml', 'application/xml', 'application/xml+rss', 'text/javascript'])|join(' ') }};
-    gzip_disable "{{ nginx.get('gzip_disable', 'msie6' }}";
+    gzip_disable "{{ nginx.get('gzip_disable', 'msie6') }}";
 
     # turn on nginx_status on localhost
     server {
