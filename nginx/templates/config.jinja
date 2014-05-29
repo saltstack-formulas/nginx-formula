@@ -17,7 +17,7 @@ events {
     {% set use = nginx.get('events', {}).get('use', '') -%}
     {% if use -%}
     use {{ use }};
-    {% endif -%}}
+    {% endif -%}
 }
 
 http {
