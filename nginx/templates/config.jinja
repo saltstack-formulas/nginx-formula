@@ -19,7 +19,7 @@ events {
     {% set use = nginx.get('events', {}).get('use', '') -%}
     {% if use -%}
     use {{ use }};
-    {% endif -%}
+    {% endif %}
 }
 
 http {
@@ -62,7 +62,7 @@ http {
         access_log off;
     }
 {% endif -%}
-{% endif -%}
+{% endif %}
 
     include /etc/nginx/conf.d/*.conf;
     include /etc/nginx/sites-enabled/*.conf;
