@@ -6,7 +6,7 @@ worker_processes  {{ nginx.get('worker_processes', 1) }};
 
 error_log /var/log/nginx/error.fifo warn;
 pid {{ nginx.get('pid', '/var/run/nginx.pid') }};
-daemon {{ nginx.get('daemon', 'off') }};
+daemon {{ nginx.get('daemon', 'on') }};
 
 events {
     worker_connections {{ nginx.get('events', {}).get('worker_connections', 1024) }};
