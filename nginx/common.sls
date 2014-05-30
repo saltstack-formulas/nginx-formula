@@ -54,6 +54,9 @@ nginx-logger-{{ log_type }}:
     - source: salt://nginx/templates/config.jinja
     - require:
       - file: /etc/nginx
+{% if not pillar.get('nginx', {}).get('install_from_source') %}
+      - pkg: nginx
+{% endif -%}
 
 {% for dir in ('sites-enabled', 'sites-available') %}
 /etc/nginx/{{ dir }}:
