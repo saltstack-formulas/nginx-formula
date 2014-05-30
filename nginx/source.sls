@@ -79,10 +79,6 @@ get-nginx-{{name}}:
       - cmd: make-nginx
 {% endfor -%}
 
-{% if install_luajit -%}
-
-{% endif -%}
-
 get-ngx_devel_kit:
   file.managed:
     - name: {{ source }}/ngx_devel_kit.tar.gz
