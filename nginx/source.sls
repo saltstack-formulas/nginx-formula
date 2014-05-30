@@ -1,6 +1,3 @@
-include:
-  - nginx.common
-
 {% set nginx = pillar.get('nginx', {}) -%}
 {% set version = nginx.get('version', '1.5.2') -%}
 {% set checksum = nginx.get('checksum', 'sha1=3546be28a72251f8823ab6be6a1180d300d06f76') -%}
@@ -11,13 +8,12 @@ include:
 {% set nginx_home     = home + "/nginx-" + version -%}
 {% set nginx_modules_dir = source + "/nginx-modules" -%}
 
-{% if nginx['with_luajit'] -%}
 include:
+  - nginx.common
+{% if nginx['with_luajit'] %}
   - nginx.luajit2
 {% endif -%}
-
-{% if nginx['with_openresty'] -%}
-include:
+{% if nginx['with_openresty'] %}
   - nginx.openresty
 {% endif -%}
 
@@ -76,12 +72,8 @@ get-nginx-{{name}}:
     - watch:
       - file: get-nginx
     - require_in:
-      - cmd: make-nginx
+      - cmd: nginx
 {% endfor -%}
-
-{% if install_luajit -%}
-
-{% endif -%}
 
 get-ngx_devel_kit:
   file.managed:
