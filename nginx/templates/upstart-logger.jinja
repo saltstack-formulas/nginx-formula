@@ -8,6 +8,7 @@ respawn
 
 pre-start script
     if [ ! -r /var/log/nginx/{{ type }}.fifo ]; then
+        mkdir -p /var/log/nginx
         mkfifo /var/log/nginx/{{ type }}.fifo
         chown root.root /var/log/nginx/{{ type }}.fifo
         chmod 660 /var/log/nginx/{{ type }}.fifo
