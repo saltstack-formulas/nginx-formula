@@ -72,7 +72,7 @@ get-nginx-{{name}}:
     - watch:
       - file: get-nginx
     - require_in:
-      - cmd: make-nginx
+      - cmd: nginx
 {% endfor -%}
 
 get-ngx_devel_kit:
