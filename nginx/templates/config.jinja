@@ -3,18 +3,28 @@
 {% set group = nginx.get('group', 'www-data') -%}
 user   {{ user }} {{ group }};
 worker_processes  {{ nginx.get('worker_processes', 1) }};
+{% set worker_rlimit_nofile = nginx.get('worker_rlimit_nofile', '') -%}
+{% if worker_rlimit_nofile -%}
+worker_rlimit_nofile {{ worker_rlimit_nofile }};
+{% endif -%}
 
-error_log /var/log/nginx/error.fifo warn;
+{% set error_log_location = nginx.get('error_log',{}).get('location', '/var/log/nginx/error.log') -%}
+{% set error_log_level = nginx.get('error_log',{}).get('level', 'warn') -%}
+error_log {{ ' '.join([error_log_location, error_log_level]) }};
 pid {{ nginx.get('pid', '/var/run/nginx.pid') }};
 daemon {{ nginx.get('daemon', 'on') }};
 
 events {
     worker_connections {{ nginx.get('events', {}).get('worker_connections', 1024) }};
+    {% set use = nginx.get('events', {}).get('use', '') -%}
+    {% if use -%}
+    use {{ use }};
+    {% endif %}
 }
 
 http {
     include /etc/nginx/mime.types;
-    default_type  application/octet-stream;
+    default_type  {{ nginx.get('default_type', 'application/octet-stream') }};
     log_format main '$scheme://$host:$server_port$uri$is_args$args $remote_addr:$remote_user "$request" $request_time $request_length:$bytes_sent $status "$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
     access_log /var/log/nginx/access.fifo main;
     sendfile {{ nginx.get('sendfile', 'on') }};
@@ -31,6 +41,7 @@ http {
     gzip_buffers {{ nginx.get('gzip_buffers', '16 8k') }};
     gzip_http_version {{ nginx.get('gzip_http_version', '1.1') }};
     gzip_types {{ nginx.get('gzip_types', ['text/plain', 'text/css', 'application/json', 'application/x-javascript', 'text/xml', 'application/xml', 'application/xml+rss', 'text/javascript'])|join(' ') }};
+    gzip_disable "{{ nginx.get('gzip_disable', 'msie6') }}";
 
     # turn on nginx_status on localhost
     server {
@@ -44,13 +55,13 @@ http {
         }
     }
 {% if pillar['nginx'] is defined -%}
-{% if pillar['nginx']['redirect_numeric_ip']|default(False) %}
+{% if pillar['nginx']['redirect_numeric_ip']|default(False) -%}
     server {
         server_name {% for ip in salt['network.interfaces']()['eth0']['inet'] %}{{ ip['address'] }}:80{% if not loop.last %} {% endif %}{% endfor %};
         return 302 {{ pillar['nginx']['redirect_numeric_ip'] }};
         access_log off;
     }
-{% endif %}
+{% endif -%}
 {% endif %}
 
     include /etc/nginx/conf.d/*.conf;
