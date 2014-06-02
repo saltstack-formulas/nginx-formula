@@ -4,7 +4,7 @@ nginx:
   with_luajit: False
   with_openresty: True
   set_real_ips: # NOTE: to use this, nginx must have http_realip module enabled
-    ips:
+    from_ips:
       - 10.10.10.0/24
     real_ip_header: X-Forwarded-For
   modules:
