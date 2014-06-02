@@ -3,6 +3,10 @@ nginx:
   use_upstart: True
   with_luajit: False
   with_openresty: True
+  set_real_ips: # NOTE: to use this, nginx must have http_realip module enabled
+    ips:
+      - 10.10.10.0/24
+    real_ip_header: X-Forwarded-For
   modules:
     headers-more:
       source: http://github.com/agentzh/headers-more-nginx-module/tarball/v0.21
