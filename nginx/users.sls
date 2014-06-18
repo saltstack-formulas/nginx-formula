@@ -1,9 +1,9 @@
-{% set nginx  = pillar.get('nginx', {}) -%}
+{% from "nginx/map.jinja" import nginx with context %}
 {% set htauth = nginx.get('htpasswd', '/etc/nginx/.htpasswd') -%}
 
 htpasswd:
   pkg.installed:
-    - name: apache2-utils
+    - name: {{ nginx.apache_utils }}
 
 {% for name, user in pillar.get('users', {}).items() %}
 {% if user['webauth'] is defined -%}
