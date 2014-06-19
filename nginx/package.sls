@@ -64,3 +64,10 @@ nginx:
       - file: /etc/nginx/conf.d/default.conf
       - file: /etc/nginx/conf.d/example_ssl.conf
       - pkg: nginx
+
+# Create 'service' symlink for tab completion.
+{% if use_upstart %}
+/etc/init.d/nginx:
+  file.symlink:
+    - target: /lib/init/upstart-job
+{% endif %}
