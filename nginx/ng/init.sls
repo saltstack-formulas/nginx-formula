@@ -17,4 +17,4 @@ extend:
   nginx_config:
     file:
       - require:
-        - pkg: install
+        - pkg: nginx_install
