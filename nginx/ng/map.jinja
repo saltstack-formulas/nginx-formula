@@ -70,7 +70,7 @@
         },
         'managed': {},
     },
-}) %}
+}, merge=True) %}
 
 {% if 'user' not in nginx.server.config %}
 {% do nginx.server.config.update({
