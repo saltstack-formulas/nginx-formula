@@ -1,5 +1,6 @@
 nginx:
   install_from_source: True
+  install_from_ppa: False
   use_upstart: True
   user_auth_enabled: True
   with_luajit: False
@@ -12,6 +13,9 @@ nginx:
     headers-more:
       source: http://github.com/agentzh/headers-more-nginx-module/tarball/v0.21
       source_hash: sha1=dbf914cbf3f7b6cb7e033fa7b7c49e2f8879113b
+
+  lookup:
+    package: nginx
 
 # ========
 # nginx.ng
@@ -30,7 +34,10 @@ nginx:
       vhost_use_symlink: True
 
     # Source compilation is not currently a part of nginx.ng
-    from_source: False
+    install_from_source: False
+
+    # Install nginx.ng.lookup.package from the PPA repository
+    install_from_ppa: True
 
     package:
       opts: {} # this partially exposes parameters of pkg.installed
