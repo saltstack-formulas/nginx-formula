@@ -16,6 +16,6 @@ nginx_service:
     - require:
       - sls: nginx.ng.install
     - watch:
-      {% if not nginx.from_source %}
+      {% if not nginx.install_from_source %}
       - pkg: nginx_install
       {% endif %}
