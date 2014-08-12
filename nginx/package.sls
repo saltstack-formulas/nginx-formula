@@ -1,3 +1,4 @@
+{% from "nginx/map.jinja" import nginx with context %}
 {% set use_upstart = pillar.get('nginx', {}).get('use_upstart', true) %}
 {% if use_upstart %}
 nginx-old-init:
@@ -35,9 +36,29 @@ nginx-old-init-disable:
       - file: nginx-old-init
 {% endif %}
 
+{% if salt['grains.get']('os_family') == 'Debian' %}
+nginx-ppa-repo:
+  pkgrepo:
+    {%- if nginx.install_from_ppa %}
+    - managed
+    {%- else %}
+    - absent
+    {%- endif %}
+    - humanname: nginx-ppa-{{ grains['oscodename'] }}
+    - name: deb http://ppa.launchpad.net/nginx/stable/ubuntu {{ grains['oscodename'] }} main
+    - file: /etc/apt/sources.list.d/nginx-stable-{{ grains['oscodename'] }}.list
+    - dist: {{ grains['oscodename'] }}
+    - keyid: C300EE8C
+    - keyserver: keyserver.ubuntu.com
+    - require_in:
+      - pkg: nginx
+    - watch_in:
+      - pkg: nginx
+{% endif %}
+
 nginx:
   pkg.installed:
-    - name: nginx
+    - name: {{ nginx.package }}
 {% if use_upstart %}
   file:
     - managed
