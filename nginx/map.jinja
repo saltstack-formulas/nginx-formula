@@ -1,10 +1,8 @@
 {% set nginx = salt['grains.filter_by']({
     'Debian': {
-        'package': 'nginx',
         'apache_utils': 'apache2-utils',
     },
     'RedHat': {
-        'package': 'nginx',
         'apache_utils': 'httpd-tools',
     },
 }, merge=salt['pillar.get']('nginx:lookup')) %}
