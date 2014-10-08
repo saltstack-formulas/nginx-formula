@@ -36,10 +36,15 @@ nginx-old-init-disable:
       - file: nginx-old-init
 {% endif %}
 
-{% if salt['grains.get']('os_family') == 'Debian' %}
+{% if grains.get('os_family') == 'Debian' %}
+
+{% set repo_source = pillar.get('nginx', {}).get('repo_source', 'default') %}
+{% set use_ppa = repo_source == 'ppa' and grains.get('os') == 'Ubuntu' %}
+{% set use_official = repo_source == 'official' and grains.get('os') in ('Ubuntu', 'Debian') %}
+
 nginx-ppa-repo:
   pkgrepo:
-    {%- if nginx.install_from_ppa %}
+    {%- if use_ppa %}
     - managed
     {%- else %}
     - absent
@@ -54,6 +59,24 @@ nginx-ppa-repo:
       - pkg: nginx
     - watch_in:
       - pkg: nginx
+
+nginx-official-repo:
+  pkgrepo:
+    {%- if use_official %}
+    - managed
+    {%- else %}
+    - absent
+    {%- endif %}
+    - humanname: nginx apt repo
+    - name: deb http://nginx.org/packages/{{ grains['os'].lower() }}/ {{ grains['oscodename'] }} nginx
+    - file: /etc/apt/sources.list.d/nginx-official-{{ grains['oscodename'] }}.list
+    - keyid: ABF5BD827BD9BF62
+    - keyserver: keyserver.ubuntu.com
+    - require_in:
+      - pkg: nginx
+    - watch_in:
+      - pkg: nginx
+
 {% endif %}
 
 nginx:
