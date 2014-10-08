@@ -1,6 +1,7 @@
 nginx:
   install_from_source: True
   use_upstart: True
+  use_sysvinit: False
   user_auth_enabled: True
   with_luajit: False
   with_openresty: True
