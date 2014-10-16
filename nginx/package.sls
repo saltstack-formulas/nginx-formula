@@ -114,4 +114,5 @@ nginx:
 /etc/init.d/nginx:
   file.symlink:
     - target: /lib/init/upstart-job
+    - force: True
 {% endif %}
