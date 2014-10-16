@@ -22,6 +22,7 @@
     - source: salt://nginx/templates/config.jinja
     - require:
       - file: /etc/nginx
+      - pkg: nginx
 
 {% for dir in ('sites-enabled', 'sites-available') %}
 /etc/nginx/{{ dir }}:
