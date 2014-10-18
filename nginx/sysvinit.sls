@@ -1,7 +1,10 @@
+{% set nginx = pillar.get('nginx', {}) -%}
+{% set log_dir = nginx.get('log_dir', '/var/log/nginx') -%}
+
 {% set logger_types = ('access', 'error') %}
 
 {% for log_type in logger_types %}
-/var/log/nginx/{{ log_type }}.log:
+{{ log_dir }}/{{ log_type }}.log:
   file.absent
 
 nginx-logger-{{ log_type }}:
@@ -18,13 +21,13 @@ nginx-logger-{{ log_type }}:
   service:
     - running
     - enable: True
+    - restart: True
+    - watch:
+      - cmd: nginx
     - require:
       - file: nginx-logger-{{ log_type }}
     - require_in:
       - service: nginx
-  cmd:
-    - wait
-    - name: /usr/sbin/update-rc.d nginx-logger-{{ log_type }} defaults
 {% endfor %}
 
 /etc/logrotate.d/nginx:
