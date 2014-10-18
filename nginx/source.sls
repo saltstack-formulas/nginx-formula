@@ -1,21 +1,35 @@
 {% set nginx = pillar.get('nginx', {}) -%}
-{% set version = nginx.get('version', '1.5.2') -%}
-{% set checksum = nginx.get('checksum', 'sha1=3546be28a72251f8823ab6be6a1180d300d06f76') -%}
+{% set version = nginx.get('version', '1.6.2') -%}
+{% set checksum = nginx.get('checksum', 'sha256=b5608c2959d3e7ad09b20fc8f9e5bd4bc87b3bc8ba5936a513c04ed8f1391a18') -%}
 {% set home = nginx.get('home', '/var/www') -%}
+{% set base_temp_dir = nginx.get('base_temp_dir', '/tmp') -%}
 {% set source = nginx.get('source_root', '/usr/local/src') -%}
 
+{% set conf_dir = nginx.get('conf_dir', '/etc/nginx') -%}
+{% set conf_only = nginx.get('conf_only', false) -%}
+{% set log_dir = nginx.get('log_dir', '/var/log/nginx') -%}
+{% set pid_path = nginx.get('pid_path', '/var/run/nginx.pid') -%}
+{% set lock_path = nginx.get('lock_path', '/var/lock/nginx.lock') -%}
+{% set sbin_dir = nginx.get('sbin_dir', '/usr/sbin') -%}
+
+{% set install_prefix = nginx.get('install_prefix', '/usr/local/nginx') -%}
+{% set with_items = nginx.get('with', ['debug', 'http_dav_module', 'http_stub_status_module', 'pcre', 'ipv6']) -%}
+{% set without_items = nginx.get('without', []) -%}
+{% set make_flags = nginx.get('make_flags', '-j2') -%}
+
 {% set nginx_package = source + '/nginx-' + version + '.tar.gz' -%}
-{% set nginx_home     = home + "/nginx-" + version -%}
+{% set nginx_source  = source + "/nginx-" + version -%}
 {% set nginx_modules_dir = source + "/nginx-modules" -%}
 
 include:
   - nginx.common
-{% if nginx['with_luajit'] %}
+{% if nginx.get('with_luajit', false) %}
   - nginx.luajit2
 {% endif -%}
-{% if nginx['with_openresty'] %}
+{% if nginx.get('with_openresty', false) %}
   - nginx.openresty
 {% endif -%}
+
 
 nginx_group:
   group.present:
@@ -38,6 +52,11 @@ nginx_user:
     - require:
       - group: nginx_group
 
+{{ nginx_modules_dir }}:
+  file:
+    - directory
+    - makedirs: True
+
 get-nginx:
   pkg.installed:
     - names:
@@ -50,9 +69,8 @@ get-nginx:
     - source_hash: {{ checksum }}
   cmd.wait:
     - cwd: {{ source }}
-    - name: tar -zxf {{ nginx_package }} -C {{ home }}
+    - name: tar -zxf {{ nginx_package }}
     - require:
-      - file: nginx_user
       - pkg: get-nginx
     - watch:
       - file: get-nginx
@@ -63,110 +81,109 @@ get-nginx-{{name}}:
     - name: {{ nginx_modules_dir }}/{{name}}.tar.gz
     - source: {{ module['source'] }}
     - source_hash: {{ module['source_hash'] }}
-    - require:
-      - file: nginx_user
   cmd.wait:
-    - cwd: {{ nginx_home }}
+    - cwd: {{ nginx_modules_dir }}
     - names:
-        - tar -zxf {{ nginx_modules_dir }}/{{name}}.tar.gz -C {{ nginx_modules_dir }}/{{name}}
+        - tar --transform "s,^$(tar --list -zf {{name}}.tar.gz | head -n 1),{{name}}/," -zxf {{name}}.tar.gz
     - watch:
-      - file: get-nginx
+      - file: get-nginx-{{name}}
     - require_in:
       - cmd: nginx
 {% endfor -%}
 
+{% if nginx.get('ngx_devel_kit', true) -%}
 get-ngx_devel_kit:
   file.managed:
     - name: {{ source }}/ngx_devel_kit.tar.gz
     - source: https://github.com/simpl/ngx_devel_kit/archive/v0.2.18.tar.gz
     - source_hash: sha1=e21ba642f26047661ada678b21eef001ee2121d8
   cmd.wait:
-    - cwd: {{ nginx_home }}
+    - cwd: {{ source }}
     - name: tar -zxf {{ source }}/ngx_devel_kit.tar.gz -C {{ source }}
     - watch:
       - file: get-ngx_devel_kit
-
-get-lua-nginx-module:
-  file.managed:
-    - name: {{ source }}/lua-nginx-module.tar.gz
-    - source: https://github.com/chaoslawful/lua-nginx-module/archive/v0.8.3rc1.tar.gz
-    - source_hash: sha1=49b2fa946517fb2e9b26185d418570e98ff5ff51
-  cmd.wait:
-    - cwd: {{ nginx_home }}
-    - name: tar -zxf {{ source }}/lua-nginx-module.tar.gz -C {{ source }}
-    - watch:
-      - file: get-lua-nginx-module
-
-{{ home }}:
-  file.directory:
-    - user: www-data
-    - group: www-data
-    - makedirs: True
-    - mode: 0755
-
-{% for dir in ('body', 'proxy', 'fastcgi') -%}
-{{ home }}-{{dir}}:
-  file.directory:
-    - name: {{ home }}/{{dir}}
-    - user: www-data
-    - group: www-data
-    - mode: 0755
-    - require:
-      - file: {{ home }}
-    - require_in:
-      - service: nginx
-{% endfor -%}
+{% endif %}
 
 nginx:
   cmd.wait:
-    - cwd: {{ nginx_home }}
+    - cwd: {{ nginx_source }}
     - names:
-      - ./configure --conf-path=/etc/nginx/nginx.conf
-        --sbin-path=/usr/sbin/nginx
+      - ./configure --conf-path={{ conf_dir }}/nginx.conf
+        --sbin-path={{ sbin_dir }}/nginx
         --user=www-data
         --group=www-data
-        --prefix=/usr/local/nginx
-        --error-log-path=/var/log/nginx/error.log
-        --pid-path=/var/run/nginx.pid
-        --lock-path=/var/lock/nginx.lock
-        --http-log-path=/var/log/nginx/access.log
-        --with-http_dav_module
-        --http-client-body-temp-path={{ home }}/body
-        --http-proxy-temp-path={{ home }}/proxy
-        --with-http_stub_status_module
-        --http-fastcgi-temp-path={{ home }}/fastcgi
-        --with-debug
-        --with-http_ssl_module
-        {% for name, module in nginx.get('modules', {}).items() -%}
-        --add-module={{nginx_modules_dir}}/{{name}} \
-        --with-pcre --with-ipv6
-        {% endfor %}
-      - make -j2 && make install
+        --prefix={{ install_prefix }}
+        --http-log-path={{ log_dir }}/access.log
+        --error-log-path={{ log_dir }}/error.log
+        --pid-path={{ pid_path }}
+        --lock-path={{ lock_path }}
+        --http-client-body-temp-path={{ base_temp_dir }}/body
+        --http-proxy-temp-path={{ base_temp_dir }}/proxy
+        --http-fastcgi-temp-path={{ base_temp_dir }}/fastcgi
+        --http-uwsgi-temp-path={{ base_temp_dir }}/temp_uwsgi
+        --http-scgi-temp-path={{ base_temp_dir }}/temp_scgi
+        {%- for name, module in nginx.get('modules', {}).items() %}
+        --add-module={{nginx_modules_dir}}/{{name}}
+        {%- endfor %}
+        {%- for name in with_items %}
+        --with-{{ name }}
+        {%- endfor %}
+        {%- for name in without_items %}
+        --without-{{ name }}
+        {%- endfor %}
+        && make {{ make_flags }}
+        && make install
     - watch:
       - cmd: get-nginx
+      {% for name, module in nginx.get('modules', {}).items() -%}
+      - file: get-nginx-{{name}}
+      {% endfor %}
     - require:
       - cmd: get-nginx
-      - cmd: get-lua-nginx-module
-      - cmd: get-ngx_devel_kit
+      {% for name, module in nginx.get('modules', {}).items() -%}
+      - file: get-nginx-{{name}}
+      {% endfor %}
     - require_in:
       - service: nginx
-  file.managed:
-    - name: /etc/init/nginx.conf
+  file:
+    - managed
     - template: jinja
+    - name: /etc/init.d/nginx
+    - source: salt://nginx/templates/nginx.init.jinja
     - user: root
     - group: root
-    - mode: 440
-    - source: salt://nginx/templates/upstart.jinja
-    - require:
-      - cmd: nginx
-  service.running:
+    - mode: 0755
+    - context:
+      sbin_dir: {{ sbin_dir }}
+      pid_path: {{ pid_path }}
+  service:
+    - running
     - enable: True
+    - reload: True
     - watch:
-      - file: nginx
-      - file: /etc/nginx/nginx.conf
-      - file: /etc/nginx/conf.d/default.conf
-      - file: /etc/nginx/conf.d/example_ssl.conf
-      - file: nginx
+      - cmd: nginx
+      - file: {{ conf_dir }}/nginx.conf
     - require:
       - cmd: nginx
-      - file: {{ home }}
+      - file: {{ conf_dir }}/nginx.conf
+
+{% for file in nginx.get('delete_confs', []) %}
+{{ conf_dir }}/{{ file }}:
+  file:
+    - absent
+  watch:
+    - cmd: nginx
+{{ conf_dir }}/{{ file }}.default:
+  file:
+    - absent
+  watch:
+    - cmd: nginx
+{% endfor %}
+
+{% for file in nginx.get('delete_htdocs', []) %}
+{{ install_prefix }}/html/{{ file }}:
+  file:
+    - absent
+  watch:
+    - cmd: nginx
+{% endfor %}
