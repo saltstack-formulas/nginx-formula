@@ -1,3 +1,5 @@
+# Source currently requires package 'build-essential' which is Debian based.
+# Will not work with os_family RedHat!  You have been warned.
 {% set nginx = pillar.get('nginx', {}) -%}
 {% set version = nginx.get('version', '1.6.2') -%}
 {% set checksum = nginx.get('checksum', 'sha256=b5608c2959d3e7ad09b20fc8f9e5bd4bc87b3bc8ba5936a513c04ed8f1391a18') -%}
@@ -137,6 +139,11 @@ nginx:
       - cmd: get-nginx
       {% for name, module in nginx.get('modules', {}).items() -%}
       - file: get-nginx-{{name}}
+      {% endfor %}
+    - watch_in:
+      {% set logger_types = ('access', 'error') %}
+      {% for log_type in logger_types %}  
+      - service: nginx-logger-{{ log_type }}
       {% endfor %}
     - require:
       - cmd: get-nginx

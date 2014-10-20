@@ -8,6 +8,10 @@ nginx-old-init:
     - source: /etc/init.d/nginx
     - require_in:
       - file: nginx
+    - require:
+      - pkg: nginx
+{% if grains.get('os_family') == 'Debian' %}
+# Don't dpkg-divert if we are not Debian based!
   cmd:
     - wait
     - name: dpkg-divert --divert /usr/share/nginx/init.d --add /etc/init.d/nginx
@@ -17,6 +21,7 @@ nginx-old-init:
       - file: nginx-old-init
     - require_in:
       - file: nginx
+{% endif %}
   module:
     - wait
     - name: cmd.run
@@ -26,14 +31,20 @@ nginx-old-init:
     - require_in:
       - file: nginx
 
+# RedHat requires the init file in place to chkconfig off
+{% if nginx['disable_before_rename'] %}
+  {% set _in = '_in' %}
+{% else %}
+  {% set _in = '' %}
+{% endif %}
+
 nginx-old-init-disable:
   cmd:
-    - wait
-    - name: update-rc.d -f nginx remove
-    - require:
+    - run
+    - name: {{ nginx.old_init_disable }}
+    - require{{ _in }}:
       - module: nginx-old-init
-    - watch:
-      - file: nginx-old-init
+    - unless: [ ! -f /etc/init.d/nginx ]
 {% endif %}
 
 {% if grains.get('os_family') == 'Debian' %}
@@ -94,7 +105,7 @@ nginx:
     - require:
       - pkg: nginx
       - file: nginx-old-init
-      - module: nginx-old-init
+      - module: nginx-old-init      
 {% endif %}
   service:
     - running
@@ -104,13 +115,16 @@ nginx:
 {% if use_upstart %}
       - file: nginx
 {% endif %}
-      - file: /etc/nginx/nginx.conf
-      - file: /etc/nginx/conf.d/default.conf
-      - file: /etc/nginx/conf.d/example_ssl.conf
+{% set conf_dir = salt['pillar.get']('nginx:conf_dir', '/etc/nginx') %}
+      - file: {{ conf_dir }}/nginx.conf
+      - file: {{ conf_dir }}/conf.d/default.conf
+      - file: {{ conf_dir }}/conf.d/example_ssl.conf
       - pkg: nginx
 
 # Create 'service' symlink for tab completion.
-{% if use_upstart %}
+# This is not supported in os_family RedHat and likely only works in
+# Debian-based distros
+{% if use_upstart and grains['os_family'] == 'Debian' %}
 /etc/init.d/nginx:
   file.symlink:
     - target: /lib/init/upstart-job
