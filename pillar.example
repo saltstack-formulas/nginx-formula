@@ -5,6 +5,7 @@ nginx:
   user_auth_enabled: True
   with_luajit: False
   with_openresty: True
+  repo_version: development  # Must be using ppa install by setting `repo_source = ppa`
   set_real_ips: # NOTE: to use this, nginx must have http_realip module enabled
     from_ips:
       - 10.10.10.0/24
