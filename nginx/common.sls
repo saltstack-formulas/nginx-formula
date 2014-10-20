@@ -8,7 +8,7 @@
   file:
     - directory
     - user: {{ nginx_map.default_user }}
-    - group: {{ nginx_map.default_user }}
+    - group: {{ nginx_map.default_group }}
     - mode: 0755
     - makedirs: True
 
