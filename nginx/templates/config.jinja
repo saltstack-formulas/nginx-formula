@@ -1,6 +1,7 @@
 {% set nginx = pillar.get('nginx', {}) -%}
-{% set user = nginx.get('user', 'www-data') -%}
-{% set group = nginx.get('group', 'www-data') -%}
+# defaults passed via context from the map.jinja
+{% set user = nginx.get('user', default_user) -%}
+{% set group = nginx.get('group', default_group) -%}
 user   {{ user }} {{ group }};
 worker_processes  {{ nginx.get('worker_processes', 1) }};
 {% set worker_rlimit_nofile = nginx.get('worker_rlimit_nofile', '') -%}

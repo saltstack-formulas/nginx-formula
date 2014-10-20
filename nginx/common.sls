@@ -1,3 +1,4 @@
+{% from "nginx/map.jinja" import nginx as nginx_map with context %}
 {% set nginx = pillar.get('nginx', {}) -%}
 {% set home = nginx.get('home', '/var/www') -%}
 {% set conf_dir = nginx.get('conf_dir', '/etc/nginx') -%}
@@ -6,8 +7,8 @@
 {{ home }}:
   file:
     - directory
-    - user: www-data
-    - group: www-data
+    - user: {{ nginx_map.default_user }}
+    - group: {{ nginx_map.default_user }}
     - mode: 0755
     - makedirs: True
 
@@ -36,3 +37,13 @@
     - source: {{ conf_template }}
     - require:
       - file: {{ conf_dir }}
+    - context:
+      default_user: {{ nginx_map.default_user }}
+      default_group: {{ nginx_map.default_group }}
+
+{% for dir in ('sites-enabled', 'sites-available') %}
+/etc/nginx/{{ dir }}:
+  file.directory:
+    - user: root
+    - group: root
+{% endfor -%}

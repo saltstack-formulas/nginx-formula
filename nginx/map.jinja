@@ -1,9 +1,18 @@
 {% set nginx = salt['grains.filter_by']({
     'Debian': {
         'apache_utils': 'apache2-utils',
-        'package': 'nginx-full'
+        'package': 'nginx-full',
+        'default_user': 'www-data',
+        'default_group': 'www-data',
+        'disable_before_rename': False,
+        'old_init_disable': 'update-rc.d -f nginx remove'
     },
     'RedHat': {
         'apache_utils': 'httpd-tools',
+        'package': 'nginx',
+        'default_user': 'nginx',
+        'default_group': 'nginx',
+        'disable_before_rename': True,
+        'old_init_disable': 'chkconfig --del nginx'
     },
-}, merge=salt['pillar.get']('nginx:lookup')) %}
+}, merge=salt['pillar.get']('nginx:lookup'), default='Debian') %}

@@ -15,19 +15,25 @@ nginx-logger-{{ log_type }}:
     - user: root
     - group: root
     - mode: 755
-    - source: salt://nginx/templates/sysvinit-logger.jinja
+    - source:
+      - salt://nginx/templates/{{ grains['os_family'] }}-sysvinit-logger.jinja
+      - salt://nginx/templates/sysvinit-logger.jinja
     - context:
       type: {{ log_type }}
   service:
     - running
     - enable: True
     - restart: True
-    - watch:
-      - cmd: nginx
     - require:
       - file: nginx-logger-{{ log_type }}
     - require_in:
       - service: nginx
+# Not supported in os_family other than Debian
+{% if grains['os_family'] == 'Debian' %}
+  cmd:
+    - wait
+    - name: /usr/sbin/update-rc.d nginx-logger-{{ log_type }} defaults
+{% endif %}
 {% endfor %}
 
 /etc/logrotate.d/nginx:
