@@ -10,6 +10,7 @@ nginx-old-init:
       - file: nginx
     - require:
       - pkg: nginx
+    - force: True
 {% if grains.get('os_family') == 'Debian' %}
 # Don't dpkg-divert if we are not Debian based!
   cmd:
