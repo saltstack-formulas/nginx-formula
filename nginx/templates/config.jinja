@@ -9,7 +9,7 @@ worker_processes  {{ nginx.get('worker_processes', 1) }};
 worker_rlimit_nofile {{ worker_rlimit_nofile }};
 {% endif -%}
 
-{% set error_log_location = nginx.get('error_log',{}).get('location', '/var/log/nginx/error.log') -%}
+{% set error_log_location = nginx.get('error_log',{}).get('location', '/var/log/nginx/error.fifo') -%}
 {% set error_log_level = nginx.get('error_log',{}).get('level', 'warn') -%}
 error_log {{ ' '.join([error_log_location, error_log_level]) }};
 pid {{ nginx.get('pid', '/var/run/nginx.pid') }};
