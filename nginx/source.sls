@@ -175,7 +175,7 @@ nginx:
   service:
     - running
     - enable: True
-    - reload: True
+    - restart: True
     - watch:
       - cmd: nginx
       - file: {{ conf_dir }}/nginx.conf
