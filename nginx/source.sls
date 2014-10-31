@@ -117,7 +117,8 @@ nginx:
   cmd.wait:
     - cwd: {{ nginx_source }}
     - names:
-      - ./configure --conf-path={{ conf_dir }}/nginx.conf
+      - (
+        ./configure --conf-path={{ conf_dir }}/nginx.conf
         --sbin-path={{ sbin_dir }}/nginx
         --user={{ nginx_map.default_user }}
         --group={{ nginx_map.default_group }}
@@ -142,6 +143,17 @@ nginx:
         {%- endfor %}
         && make {{ make_flags }}
         && make install
+        )
+        {#- If they want to silence the compiler output, then save it to file so we can reference it later if needed #}
+        {%- if nginx.get('silence_compiler', true) %}
+        > {{ nginx_source }}/build.out 2> {{ nginx_source }}/build.err;
+        {#- If the build process failed, write stderr to stderr and exit with the error code #}
+        r=$?;
+        if [ x$r != x0 ]; then
+          cat {{ nginx_source }}/build.err 1>&2;  {#- copy err output to stderr #}
+          exit $r;
+        fi;
+        {% endif %}
     - watch:
       - cmd: get-nginx
       {% for name, module in nginx.get('modules', {}).items() -%}
