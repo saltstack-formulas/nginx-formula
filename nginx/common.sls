@@ -41,9 +41,11 @@
       default_user: {{ nginx_map.default_user }}
       default_group: {{ nginx_map.default_group }}
 
+{% if nginx.get('init_conf_dirs', True) %}
 {% for dir in ('sites-enabled', 'sites-available') %}
-/etc/nginx/{{ dir }}:
+{{ conf_dir }}/{{ dir }}:
   file.directory:
     - user: root
     - group: root
 {% endfor -%}
+{% endif %}
