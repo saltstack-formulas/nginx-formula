@@ -28,12 +28,6 @@ nginx-logger-{{ log_type }}:
       - file: nginx-logger-{{ log_type }}
     - require_in:
       - service: nginx
-# Not supported in os_family other than Debian
-{% if grains['os_family'] == 'Debian' %}
-  cmd:
-    - wait
-    - name: /usr/sbin/update-rc.d nginx-logger-{{ log_type }} defaults
-{% endif %}
 {% endfor %}
 
 /etc/logrotate.d/nginx:
