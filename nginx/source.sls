@@ -1,23 +1,27 @@
+{% from "nginx/map.jinja" import nginx as nginx_map with context %}
+
 # Source currently requires package 'build-essential' which is Debian based.
-# Will not work with os_family RedHat!  You have been warned.
+# Will not work with os_family RedHat!
+# TODO- Someone with a RedHat system please update this to work on RedHat
 {% set nginx = pillar.get('nginx', {}) -%}
+{% set use_sysvinit = nginx.get('use_sysvinit', nginx_map['use_sysvinit']) %}
 {% set version = nginx.get('version', '1.6.2') -%}
 {% set checksum = nginx.get('checksum', 'sha256=b5608c2959d3e7ad09b20fc8f9e5bd4bc87b3bc8ba5936a513c04ed8f1391a18') -%}
-{% set home = nginx.get('home', '/var/www') -%}
+{% set home = nginx.get('home', nginx_map['home']) -%}
 {% set base_temp_dir = nginx.get('base_temp_dir', '/tmp') -%}
 {% set source = nginx.get('source_root', '/usr/local/src') -%}
 
-{% set conf_dir = nginx.get('conf_dir', '/etc/nginx') -%}
+{% set conf_dir = nginx.get('conf_dir', nginx_map['conf_dir']) -%}
 {% set conf_only = nginx.get('conf_only', false) -%}
-{% set log_dir = nginx.get('log_dir', '/var/log/nginx') -%}
+{% set log_dir = nginx.get('log_dir', nginx_map['log_dir']) -%}
 {% set pid_path = nginx.get('pid_path', '/var/run/nginx.pid') -%}
 {% set lock_path = nginx.get('lock_path', '/var/lock/nginx.lock') -%}
-{% set sbin_dir = nginx.get('sbin_dir', '/usr/sbin') -%}
+{% set sbin_dir = nginx.get('sbin_dir', nginx_map['sbin_dir']) -%}
 
-{% set install_prefix = nginx.get('install_prefix', '/usr/local/nginx') -%}
+{% set install_prefix = nginx.get('install_prefix', nginx_map['install_prefix']) -%}
 {% set with_items = nginx.get('with', ['debug', 'http_dav_module', 'http_stub_status_module', 'pcre', 'ipv6']) -%}
 {% set without_items = nginx.get('without', []) -%}
-{% set make_flags = nginx.get('make_flags', '-j2') -%}
+{% set make_flags = nginx.get('make_flags', nginx_map['make_flags']) -%}
 
 {% set nginx_package = source + '/nginx-' + version + '.tar.gz' -%}
 {% set nginx_source  = source + "/nginx-" + version -%}
@@ -35,22 +39,22 @@ include:
 
 nginx_group:
   group.present:
-    - name: www-data
+    - name: {{ nginx_map.default_group }}
 
 nginx_user:
   file.directory:
     - name: {{ home }}
-    - user: www-data
-    - group: www-data
+    - user: {{ nginx_map.default_user }}
+    - group: {{ nginx_map.default_group }}
     - mode: 0755
     - require:
       - user: nginx_user
       - group: nginx_group
   user.present:
-    - name: www-data
+    - name: {{ nginx_map.default_user }}
     - home: {{ home }}
     - groups:
-      - www-data
+      - {{ nginx_map.default_group }}
     - require:
       - group: nginx_group
 
@@ -69,11 +73,14 @@ get-nginx:
     - name: {{ nginx_package }}
     - source: http://nginx.org/download/nginx-{{ version }}.tar.gz
     - source_hash: {{ checksum }}
+    - require:
+      - file: {{ nginx_modules_dir }}
   cmd.wait:
     - cwd: {{ source }}
     - name: tar -zxf {{ nginx_package }}
     - require:
       - pkg: get-nginx
+      - file: get-nginx
     - watch:
       - file: get-nginx
 
@@ -110,10 +117,11 @@ nginx:
   cmd.wait:
     - cwd: {{ nginx_source }}
     - names:
-      - ./configure --conf-path={{ conf_dir }}/nginx.conf
+      - (
+        ./configure --conf-path={{ conf_dir }}/nginx.conf
         --sbin-path={{ sbin_dir }}/nginx
-        --user=www-data
-        --group=www-data
+        --user={{ nginx_map.default_user }}
+        --group={{ nginx_map.default_group }}
         --prefix={{ install_prefix }}
         --http-log-path={{ log_dir }}/access.log
         --error-log-path={{ log_dir }}/error.log
@@ -135,16 +143,29 @@ nginx:
         {%- endfor %}
         && make {{ make_flags }}
         && make install
+        )
+        {#- If they want to silence the compiler output, then save it to file so we can reference it later if needed #}
+        {%- if nginx.get('silence_compiler', true) %}
+        > {{ nginx_source }}/build.out 2> {{ nginx_source }}/build.err;
+        {#- If the build process failed, write stderr to stderr and exit with the error code #}
+        r=$?;
+        if [ x$r != x0 ]; then
+          cat {{ nginx_source }}/build.err 1>&2;  {#- copy err output to stderr #}
+          exit $r;
+        fi;
+        {% endif %}
     - watch:
       - cmd: get-nginx
       {% for name, module in nginx.get('modules', {}).items() -%}
       - file: get-nginx-{{name}}
       {% endfor %}
+{% if use_sysvinit %}
     - watch_in:
       {% set logger_types = ('access', 'error') %}
       {% for log_type in logger_types %}  
       - service: nginx-logger-{{ log_type }}
       {% endfor %}
+{% endif %}
     - require:
       - cmd: get-nginx
       {% for name, module in nginx.get('modules', {}).items() -%}
@@ -166,7 +187,7 @@ nginx:
   service:
     - running
     - enable: True
-    - reload: True
+    - restart: True
     - watch:
       - cmd: nginx
       - file: {{ conf_dir }}/nginx.conf

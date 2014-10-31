@@ -1,9 +1,10 @@
+{% from "nginx/map.jinja" import nginx as nginx_map with context %}
+
 include:
   - nginx.common
-# Only upstart OR sysvinit should default to true.
-{% if pillar.get('nginx', {}).get('use_upstart', true) %}
+{% if salt['pillar.get']('nginx:use_upstart', nginx_map['use_upstart']) %}
   - nginx.upstart
-{% elif pillar.get('nginx', {}).get('use_sysvinit', false) %}
+{% elif salt['pillar.get']('nginx:use_sysvinit', nginx_map['use_sysvinit']) %}
   - nginx.sysvinit
 {% endif %}
 {% if pillar.get('nginx', {}).get('user_auth_enabled', true) %}
