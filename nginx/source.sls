@@ -113,6 +113,42 @@ get-ngx_devel_kit:
       - file: get-ngx_devel_kit
 {% endif %}
 
+nginx-source-modified:
+  cmd.run:
+    - cwd: {{ nginx_source }}
+    - stateful: True
+    - names:
+      - m=$(find . \! -name "build.*" -newer {{ sbin_dir }}/nginx -print -quit);
+        r=$?;
+        if [ x$r != x0 ]; then
+          echo "changed=yes comment='binary file does not exist or other find error'";
+          exit 0;
+        fi;
+        if [ x$m != "x" ]; then
+          echo "changed=yes comment='source files are newer than binary'";
+          exit 0;
+        fi;
+        echo "changed=no comment='source files are older than binary'"
+
+{% for name, module in nginx.get('modules', {}).items() -%}
+nginx-module-modified-{{name}}:
+  cmd.run:
+    - cwd: {{ nginx_modules_dir }}/{{name}}
+    - stateful: True
+    - names:
+      - m=$(find . \! -name "build.*" -newer {{ sbin_dir }}/nginx -print -quit);
+        r=$?;
+        if [ x$r != x0 ]; then
+          echo "changed=yes comment='binary file does not exist or other find error'";
+          exit 0;
+        fi;
+        if [ x$m != "x" ]; then
+          echo "changed=yes comment='module source files are newer than binary'";
+          exit 0;
+        fi;
+        echo "changed=no comment='module source files are older than binary'"
+{% endfor -%}
+
 nginx:
   cmd.wait:
     - cwd: {{ nginx_source }}
@@ -156,7 +192,9 @@ nginx:
         {% endif %}
     - watch:
       - cmd: get-nginx
+      - cmd: nginx-source-modified
       {% for name, module in nginx.get('modules', {}).items() -%}
+      - cmd: nginx-module-modified-{{name}}
       - file: get-nginx-{{name}}
       {% endfor %}
 {% if use_sysvinit %}
