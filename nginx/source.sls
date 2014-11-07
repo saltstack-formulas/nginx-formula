@@ -6,6 +6,7 @@
 {% set nginx = pillar.get('nginx', {}) -%}
 {% set use_sysvinit = nginx.get('use_sysvinit', nginx_map['use_sysvinit']) %}
 {% set version = nginx.get('version', '1.6.2') -%}
+{% set tarball_url = nginx.get('tarball_url', 'http://nginx.org/download/nginx-' + version + '.tar.gz') -%}
 {% set checksum = nginx.get('checksum', 'sha256=b5608c2959d3e7ad09b20fc8f9e5bd4bc87b3bc8ba5936a513c04ed8f1391a18') -%}
 {% set home = nginx.get('home', nginx_map['home']) -%}
 {% set base_temp_dir = nginx.get('base_temp_dir', '/tmp') -%}
@@ -71,7 +72,7 @@ get-nginx:
       - libssl-dev
   file.managed:
     - name: {{ nginx_package }}
-    - source: http://nginx.org/download/nginx-{{ version }}.tar.gz
+    - source: {{ tarball_url }}
     - source_hash: {{ checksum }}
     - require:
       - file: {{ nginx_modules_dir }}
