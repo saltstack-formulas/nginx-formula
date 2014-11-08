@@ -24,6 +24,9 @@
 {% set without_items = nginx.get('without', []) -%}
 {% set make_flags = nginx.get('make_flags', nginx_map['make_flags']) -%}
 
+{% set service_name = nginx.get('service_name', 'nginx') %}
+{% set service_enable = nginx.get('service_enable', True) %}
+
 {% set nginx_package = source + '/nginx-' + version + '.tar.gz' -%}
 {% set nginx_source  = source + "/nginx-" + version -%}
 {% set nginx_modules_dir = source + "/nginx-modules" -%}
@@ -78,7 +81,7 @@ get-nginx:
       - file: {{ nginx_modules_dir }}
   cmd.wait:
     - cwd: {{ source }}
-    - name: tar -zxf {{ nginx_package }}
+    - name: tar --transform "s,^$(tar --list -zf nginx-{{ version }}.tar.gz | head -n 1),nginx-{{ version }}/," -zxf {{ nginx_package }}
     - require:
       - pkg: get-nginx
       - file: get-nginx
@@ -114,12 +117,17 @@ get-ngx_devel_kit:
       - file: get-ngx_devel_kit
 {% endif %}
 
-nginx-source-modified:
+is-nginx-source-modified:
   cmd.run:
-    - cwd: {{ nginx_source }}
+    - cwd: {{ source }}
     - stateful: True
     - names:
-      - m=$(find . \! -name "build.*" -newer {{ sbin_dir }}/nginx -print -quit);
+      - if [ ! -d "nginx-{{ version }}" ]; then
+          echo "changed=yes comment='Tarball has not yet been extracted'";
+          exit 0;
+        fi;
+        cd "nginx-{{ version }}";
+        m=$(find . \! -name "build.*" -newer {{ sbin_dir }}/nginx -print -quit);
         r=$?;
         if [ x$r != x0 ]; then
           echo "changed=yes comment='binary file does not exist or other find error'";
@@ -132,7 +140,7 @@ nginx-source-modified:
         echo "changed=no comment='source files are older than binary'"
 
 {% for name, module in nginx.get('modules', {}).items() -%}
-nginx-module-modified-{{name}}:
+is-nginx-module-modified-{{name}}:
   cmd.run:
     - cwd: {{ nginx_modules_dir }}/{{name}}
     - stateful: True
@@ -193,9 +201,9 @@ nginx:
         {% endif %}
     - watch:
       - cmd: get-nginx
-      - cmd: nginx-source-modified
+      - cmd: is-nginx-source-modified
       {% for name, module in nginx.get('modules', {}).items() -%}
-      - cmd: nginx-module-modified-{{name}}
+      - cmd: is-nginx-module-modified-{{name}}
       - file: get-nginx-{{name}}
       {% endfor %}
 {% if use_sysvinit %}
@@ -210,23 +218,28 @@ nginx:
       {% for name, module in nginx.get('modules', {}).items() -%}
       - file: get-nginx-{{name}}
       {% endfor %}
-    - require_in:
-      - service: nginx
   file:
     - managed
     - template: jinja
-    - name: /etc/init.d/nginx
+    - name: /etc/init.d/{{ service_name }}
     - source: salt://nginx/templates/nginx.init.jinja
     - user: root
     - group: root
     - mode: 0755
     - context:
+      service_name: {{ service_name }}
       sbin_dir: {{ sbin_dir }}
       pid_path: {{ pid_path }}
   service:
+{% if service_enable %}
     - running
     - enable: True
     - restart: True
+{% else %}
+    - dead
+    - enable: False
+{% endif %}
+    - name: {{ service_name }}
     - watch:
       - cmd: nginx
       - file: {{ conf_dir }}/nginx.conf
@@ -238,19 +251,14 @@ nginx:
 {{ conf_dir }}/{{ file }}:
   file:
     - absent
-  watch:
-    - cmd: nginx
-{{ conf_dir }}/{{ file }}.default:
-  file:
-    - absent
-  watch:
-    - cmd: nginx
+    - require_in:
+      - service: nginx
 {% endfor %}
 
 {% for file in nginx.get('delete_htdocs', []) %}
 {{ install_prefix }}/html/{{ file }}:
   file:
     - absent
-  watch:
-    - cmd: nginx
+    - require_in:
+      - service: nginx
 {% endfor %}
