@@ -212,8 +212,6 @@ nginx:
       {% for name, module in nginx.get('modules', {}).items() -%}
       - file: get-nginx-{{name}}
       {% endfor %}
-    - require_in:
-      - service: nginx
   file:
     - managed
     - template: jinja
@@ -241,14 +239,14 @@ nginx:
 {{ conf_dir }}/{{ file }}:
   file:
     - absent
-  watch:
-    - cmd: nginx
+    - require_in:
+      - service: nginx
 {% endfor %}
 
 {% for file in nginx.get('delete_htdocs', []) %}
 {{ install_prefix }}/html/{{ file }}:
   file:
     - absent
-  watch:
-    - cmd: nginx
+    - require_in:
+      - service: nginx
 {% endfor %}
