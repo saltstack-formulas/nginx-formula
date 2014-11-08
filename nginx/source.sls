@@ -240,11 +240,6 @@ nginx:
     - absent
   watch:
     - cmd: nginx
-{{ conf_dir }}/{{ file }}.default:
-  file:
-    - absent
-  watch:
-    - cmd: nginx
 {% endfor %}
 
 {% for file in nginx.get('delete_htdocs', []) %}
