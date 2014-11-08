@@ -25,6 +25,7 @@
 {% set make_flags = nginx.get('make_flags', nginx_map['make_flags']) -%}
 
 {% set service_name = nginx.get('service_name', 'nginx') %}
+{% set service_enable = nginx.get('service_enable', True) %}
 
 {% set nginx_package = source + '/nginx-' + version + '.tar.gz' -%}
 {% set nginx_source  = source + "/nginx-" + version -%}
@@ -224,9 +225,14 @@ nginx:
       sbin_dir: {{ sbin_dir }}
       pid_path: {{ pid_path }}
   service:
+{% if service_enable %}
     - running
     - enable: True
     - restart: True
+{% else %}
+    - dead
+    - enable: False
+{% endif %}
     - name: {{ service_name }}
     - watch:
       - cmd: nginx
