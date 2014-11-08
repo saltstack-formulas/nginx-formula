@@ -81,7 +81,7 @@ get-nginx:
       - file: {{ nginx_modules_dir }}
   cmd.wait:
     - cwd: {{ source }}
-    - name: tar -zxf {{ nginx_package }}
+    - name: tar --transform "s,^$(tar --list -zf nginx-{{ version }}.tar.gz | head -n 1),nginx-{{ version }}/," -zxf {{ nginx_package }}
     - require:
       - pkg: get-nginx
       - file: get-nginx
@@ -117,12 +117,17 @@ get-ngx_devel_kit:
       - file: get-ngx_devel_kit
 {% endif %}
 
-nginx-source-modified:
+is-nginx-source-modified:
   cmd.run:
-    - cwd: {{ nginx_source }}
+    - cwd: {{ source }}
     - stateful: True
     - names:
-      - m=$(find . \! -name "build.*" -newer {{ sbin_dir }}/nginx -print -quit);
+      - if [ ! -d "nginx-{{ version }}" ]; then
+          echo "changed=yes comment='Tarball has not yet been extracted'";
+          exit 0;
+        fi;
+        cd "nginx-{{ version }}";
+        m=$(find . \! -name "build.*" -newer {{ sbin_dir }}/nginx -print -quit);
         r=$?;
         if [ x$r != x0 ]; then
           echo "changed=yes comment='binary file does not exist or other find error'";
@@ -135,7 +140,7 @@ nginx-source-modified:
         echo "changed=no comment='source files are older than binary'"
 
 {% for name, module in nginx.get('modules', {}).items() -%}
-nginx-module-modified-{{name}}:
+is-nginx-module-modified-{{name}}:
   cmd.run:
     - cwd: {{ nginx_modules_dir }}/{{name}}
     - stateful: True
@@ -196,9 +201,9 @@ nginx:
         {% endif %}
     - watch:
       - cmd: get-nginx
-      - cmd: nginx-source-modified
+      - cmd: is-nginx-source-modified
       {% for name, module in nginx.get('modules', {}).items() -%}
-      - cmd: nginx-module-modified-{{name}}
+      - cmd: is-nginx-module-modified-{{name}}
       - file: get-nginx-{{name}}
       {% endfor %}
 {% if use_sysvinit %}
