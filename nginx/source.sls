@@ -24,6 +24,8 @@
 {% set without_items = nginx.get('without', []) -%}
 {% set make_flags = nginx.get('make_flags', nginx_map['make_flags']) -%}
 
+{% set service_name = nginx.get('service_name', 'nginx') %}
+
 {% set nginx_package = source + '/nginx-' + version + '.tar.gz' -%}
 {% set nginx_source  = source + "/nginx-" + version -%}
 {% set nginx_modules_dir = source + "/nginx-modules" -%}
@@ -215,7 +217,7 @@ nginx:
   file:
     - managed
     - template: jinja
-    - name: /etc/init.d/nginx
+    - name: /etc/init.d/{{ service_name }}
     - source: salt://nginx/templates/nginx.init.jinja
     - user: root
     - group: root
@@ -227,6 +229,7 @@ nginx:
     - running
     - enable: True
     - restart: True
+    - name: {{ service_name }}
     - watch:
       - cmd: nginx
       - file: {{ conf_dir }}/nginx.conf
