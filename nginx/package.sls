@@ -45,7 +45,7 @@ nginx-old-init-disable:
     - name: {{ nginx.old_init_disable }}
     - require{{ _in }}:
       - module: nginx-old-init
-    - unless: [ ! -f /etc/init.d/nginx ]
+    - onlyif: [ -f /etc/init.d/nginx ]
 {% endif %}
 
 {% if grains.get('os_family') == 'Debian' %}
