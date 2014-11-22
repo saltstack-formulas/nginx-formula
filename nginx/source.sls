@@ -41,27 +41,6 @@ include:
 {% endif -%}
 
 
-nginx_group:
-  group.present:
-    - name: {{ nginx_map.default_group }}
-
-nginx_user:
-  file.directory:
-    - name: {{ home }}
-    - user: {{ nginx_map.default_user }}
-    - group: {{ nginx_map.default_group }}
-    - mode: 0755
-    - require:
-      - user: nginx_user
-      - group: nginx_group
-  user.present:
-    - name: {{ nginx_map.default_user }}
-    - home: {{ home }}
-    - groups:
-      - {{ nginx_map.default_group }}
-    - require:
-      - group: nginx_group
-
 {{ nginx_modules_dir }}:
   file:
     - directory
