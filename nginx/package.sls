@@ -2,8 +2,7 @@
 {% set use_upstart = salt['pillar.get']('nginx:use_upstart', nginx['use_upstart']) %}
 {% if use_upstart %}
 nginx-old-init:
-  file:
-    - rename
+  file.rename:
     - name: /usr/share/nginx/init.d
     - source: /etc/init.d/nginx
     - require_in:
@@ -13,8 +12,7 @@ nginx-old-init:
     - force: True
 {% if grains.get('os_family') == 'Debian' %}
 # Don't dpkg-divert if we are not Debian based!
-  cmd:
-    - wait
+  cmd.wait:
     - name: dpkg-divert --divert /usr/share/nginx/init.d --add /etc/init.d/nginx
     - require:
       - module: nginx-old-init
@@ -23,8 +21,7 @@ nginx-old-init:
     - require_in:
       - file: nginx
 {% endif %}
-  module:
-    - wait
+  module.wait:
     - name: cmd.run
     - cmd: kill `cat /var/run/nginx.pid`
     - watch:
@@ -40,8 +37,7 @@ nginx-old-init:
 {% endif %}
 
 nginx-old-init-disable:
-  cmd:
-    - run
+  cmd.run:
     - name: {{ nginx.old_init_disable }}
     - require{{ _in }}:
       - module: nginx-old-init
@@ -95,8 +91,7 @@ nginx:
   pkg.installed:
     - name: {{ nginx.package }}
 {% if use_upstart %}
-  file:
-    - managed
+  file.managed:
     - name: /etc/init/nginx.conf
     - template: jinja
     - user: root
@@ -108,8 +103,7 @@ nginx:
       - file: nginx-old-init
       - module: nginx-old-init      
 {% endif %}
-  service:
-    - running
+  service.running:
     - enable: True
     - restart: True
     - watch:
