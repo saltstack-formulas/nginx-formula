@@ -33,7 +33,7 @@
 
 # Gets the current canonical name of a vhost
 {% macro vhost_curpath(vhost) -%}
-  {{ vhost_path(vhost, nginx.vhosts.managed.get(vhost).get('available')) }}
+  {{ vhost_path(vhost, nginx.vhosts.managed.get(vhost).get('enabled')) }}
 {%- endmacro %}
 
 # Creates the sls block that manages symlinking / renaming vhosts
@@ -46,20 +46,16 @@
     - name: {{ vhost_path(vhost, state) }}
     - target: {{ vhost_path(vhost, anti_state) }}
     {%- else %}
-  file.rename:
-    {{ sls_block(nginx.vhosts.rename_opts) }}
-    - name: {{ vhost_path(vhost, state) }}
-    - source: {{ vhost_path(vhost, anti_state) }}
+  file.absent:
+    - name: {{ vhost_path(vhost, anti_state) }}
     {%- endif %}
   {%- elif state == False %}
     {%- if nginx.lookup.vhost_use_symlink %}
   file.absent:
     - name: {{ vhost_path(vhost, anti_state) }}
     {%- else %}
-  file.rename:
-    {{ sls_block(nginx.vhosts.rename_opts) }}
-    - name: {{ vhost_path(vhost, state) }}
-    - source: {{ vhost_path(vhost, anti_state) }}
+  file.absent:
+    - name: {{ vhost_path(vhost, anti_state) }}
     {%- endif -%}
   {%- endif -%}
 {%- endmacro %}
