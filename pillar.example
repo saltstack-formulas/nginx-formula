@@ -21,6 +21,11 @@ nginx:
 
 nginx:
   ng:
+    # PPA installing
+    install_from_ppa: True
+    # Set to 'mainline' for edge nginx builds
+    ppa_version: 'stable'
+    
     # These are usually set by grains in map.jinja
     lookup:
       package: nginx-custom
@@ -30,7 +35,6 @@ nginx:
       vhost_available: /etc/nginx/sites-available
       vhost_enabled: /etc/nginx/sites-enabled
       vhost_use_symlink: True
-      repo_source: official
 
     # Source compilation is not currently a part of nginx.ng
     from_source: False

@@ -22,7 +22,11 @@ nginx_ppa_repo:
     - absent
     {%- endif %}
     - humanname: nginx-ppa-{{ grains['oscodename'] }}
-    - name: deb http://ppa.launchpad.net/nginx/{{ nginx.ppa_version }}/ubuntu {{ grains['oscodename'] }} main
+    {%- if nginx.ppa_version == 'mainline' %}
+    - name: deb http://nginx.org/packages/mainline/ubuntu/ {{ grains['oscodename'] }} nginx
+    {%- else %}
+    - name: deb http://ppa.launchpad.net/nginx/stable/ubuntu {{ grains['oscodename'] }} main
+    {%- endif %}
     - file: /etc/apt/sources.list.d/nginx-{{ nginx.ppa_version }}-{{ grains['oscodename'] }}.list
     - dist: {{ grains['oscodename'] }}
     - keyid: C300EE8C
