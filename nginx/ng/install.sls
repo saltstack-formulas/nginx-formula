@@ -26,7 +26,7 @@ nginx_ppa_repo:
     - name: deb http://nginx.org/packages/mainline/ubuntu/ {{ grains['oscodename'] }} nginx
     - key_url: http://nginx.org/keys/nginx_signing.key
     {%- else %}
-    - name: deb http://ppa.launchpad.net/nginx/stable/ubuntu {{ grains['oscodename'] }} main
+    - name: deb http://ppa.launchpad.net/nginx/{{ nginx.ppa_version }}/ubuntu {{ grains['oscodename'] }} main
     - keyid: C300EE8C
     - keyserver: keyserver.ubuntu.com
     {%- endif %}

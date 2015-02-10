@@ -23,7 +23,7 @@ nginx:
   ng:
     # PPA installing
     install_from_ppa: True
-    # Set to 'mainline' for edge nginx builds
+    # Set to 'mainline' for edge nginx builds, 'development' for ubuntu's dev - beware, mainline has no 'full' build
     ppa_version: 'stable'
     
     # These are usually set by grains in map.jinja
