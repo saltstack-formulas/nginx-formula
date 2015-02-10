@@ -22,8 +22,8 @@ nginx_ppa_repo:
     - absent
     {%- endif %}
     - humanname: nginx-ppa-{{ grains['oscodename'] }}
-    - name: deb http://ppa.launchpad.net/nginx/stable/ubuntu {{ grains['oscodename'] }} main
-    - file: /etc/apt/sources.list.d/nginx-stable-{{ grains['oscodename'] }}.list
+    - name: deb http://ppa.launchpad.net/nginx/{{ nginx.ppa_version }}/ubuntu {{ grains['oscodename'] }} main
+    - file: /etc/apt/sources.list.d/nginx-{{ nginx.ppa_version }}-{{ grains['oscodename'] }}.list
     - dist: {{ grains['oscodename'] }}
     - keyid: C300EE8C
     - keyserver: keyserver.ubuntu.com
