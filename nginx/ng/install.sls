@@ -21,17 +21,7 @@ nginx_ppa_repo:
     {%- else %}
     - absent
     {%- endif %}
-    - humanname: nginx-ppa-{{ grains['oscodename'] }}
-    {%- if nginx.ppa_version == 'mainline' %}
-    - name: deb http://nginx.org/packages/mainline/ubuntu/ {{ grains['oscodename'] }} nginx
-    - key_url: http://nginx.org/keys/nginx_signing.key
-    {%- else %}
-    - name: deb http://ppa.launchpad.net/nginx/{{ nginx.ppa_version }}/ubuntu {{ grains['oscodename'] }} main
-    - keyid: C300EE8C
-    - keyserver: keyserver.ubuntu.com
-    {%- endif %}
-    - file: /etc/apt/sources.list.d/nginx-{{ nginx.ppa_version }}-{{ grains['oscodename'] }}.list
-    - dist: {{ grains['oscodename'] }}
+    - ppa: nginx/{{ nginx.ppa_version }}
     - require_in:
       - pkg: nginx_install
     - watch_in:
