@@ -13,7 +13,9 @@ worker_rlimit_nofile {{ worker_rlimit_nofile }};
 {% set error_log_level = nginx.get('error_log',{}).get('level', 'warn') -%}
 error_log {{ ' '.join([error_log_location, error_log_level]) }};
 pid {{ nginx.get('pid', '/var/run/nginx.pid') }};
+{% if salt['test.provider']('service') != 'systemd' -%}
 daemon {{ nginx.get('daemon', 'on') }};
+{%- endif %}
 
 events {
     worker_connections {{ nginx.get('events', {}).get('worker_connections', 1024) }};
