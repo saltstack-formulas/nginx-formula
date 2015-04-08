@@ -163,7 +163,11 @@ nginx:
     - cwd: {{ nginx_source }}
     - names:
       - (
+        {%- if nginx.get('debug_symbols', false) %}
+        CFLAGS="-g -O0" ./configure --conf-path={{ conf_dir }}/nginx.conf
+        {%- else %}
         ./configure --conf-path={{ conf_dir }}/nginx.conf
+        {%- endif %}
         --sbin-path={{ sbin_dir }}/nginx
         --user={{ nginx_map.default_user }}
         --group={{ nginx_map.default_group }}
