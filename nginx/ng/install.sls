@@ -48,3 +48,21 @@ nginx_zypp_repo:
     - watch_in:
       - pkg: nginx_install
 {% endif %}
+
+{% if salt['grains.get']('os_family') == 'RedHat' %}
+nginx_yum_repo:
+  pkgrepo.managed:
+    - name: nginx
+    - humanname: nginx repo
+    {%- if salt['grains.get']('os') == 'CentOS' %}
+    - baseurl: 'http://nginx.org/packages/centos/$releasever/$basearch/'
+    {%- else %}
+    - baseurl: 'http://nginx.org/packages/rhel/$releasever/$basearch/'
+    {%- endif %}
+    - gpgcheck: False
+    - enabled: True
+    - require_in:
+      - pkg: nginx_install
+    - watch_in:
+      - pkg: nginx_install
+{% endif %}
