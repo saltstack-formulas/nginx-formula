@@ -35,6 +35,7 @@ nginx:
       vhost_available: /etc/nginx/sites-available
       vhost_enabled: /etc/nginx/sites-enabled
       vhost_use_symlink: True
+      rh_os_releasever: '6'
 
     # Source compilation is not currently a part of nginx.ng
     from_source: False

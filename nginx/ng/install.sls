@@ -55,9 +55,9 @@ nginx_yum_repo:
     - name: nginx
     - humanname: nginx repo
     {%- if salt['grains.get']('os') == 'CentOS' %}
-    - baseurl: 'http://nginx.org/packages/centos/$releasever/$basearch/'
+    - baseurl: 'http://nginx.org/packages/centos/{{ nginx.lookup.rh_os_releasever }}/$basearch/'
     {%- else %}
-    - baseurl: 'http://nginx.org/packages/rhel/$releasever/$basearch/'
+    - baseurl: 'http://nginx.org/packages/rhel/{{ nginx.lookup.rh_os_releasever }}/$basearch/'
     {%- endif %}
     - gpgcheck: False
     - enabled: True
