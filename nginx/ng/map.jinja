@@ -14,6 +14,7 @@
             'vhost_available': '/etc/nginx/sites-available',
             'vhost_enabled': '/etc/nginx/sites-enabled',
             'vhost_use_symlink': True,
+            'pid_file': '/run/nginx.pid',
         },
         'RedHat': {
             'package': 'nginx',
@@ -23,6 +24,7 @@
             'vhost_available': '/etc/nginx/conf.d',
             'vhost_enabled': '/etc/nginx/conf.d',
             'vhost_use_symlink': False,
+            'pid_file': '/run/nginx.pid',
         },
         'Suse': {
             'package': 'nginx',
@@ -32,6 +34,16 @@
             'vhost_available': '/etc/nginx/conf.d',
             'vhost_enabled': '/etc/nginx/conf.d',
             'vhost_use_symlink': False,
+            'pid_file': '/run/nginx.pid',
+        },
+        'Arch': {
+            'package': 'nginx',
+            'service': 'nginx',
+            'webuser': 'http',
+            'conf_file': '/etc/nginx/nginx.conf',
+            'vhost_available': '/etc/nginx/sites-available',
+            'vhost_enabled': '/etc/nginx/sites-enabled',
+            'vhost_use_symlink': True,
         },
     }, default='Debian' ),
     'install_from_source': False,
@@ -49,7 +61,6 @@
         'opts': {},
         'config': {
             'worker_processes': 4,
-            'pid': '/run/nginx.pid',
             'events': {
                 'worker_connections': 768,
             },
@@ -89,3 +100,10 @@
     'user': nginx.lookup.webuser,
 })%}
 {% endif %}
+
+{% if 'pid' not in nginx.server.config and 'pid_file' in nginx.lookup %}
+{% do nginx.server.config.update({
+    'pid': nginx.lookup.pid_file,
+})%}
+{% endif %}
+
