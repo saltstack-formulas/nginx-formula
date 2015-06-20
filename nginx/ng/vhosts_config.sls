@@ -23,11 +23,11 @@
 # Gets the path of a particular vhost
 {% macro vhost_path(vhost, state) -%}
   {%- if state == True -%}
-    {{ path_join(vhost, nginx.vhosts.managed.get(vhost).get('dir', nginx.lookup.vhost_enabled)) }}
+    {{ path_join(vhost, nginx.vhosts.managed.get(vhost).get('enabled_dir', nginx.lookup.vhost_enabled)) }}
   {%- elif state == False -%}
-    {{ path_join(disabled_name(vhost), nginx.vhosts.managed.get(vhost).get('dir', nginx.lookup.vhost_available)) }}
+    {{ path_join(disabled_name(vhost), nginx.vhosts.managed.get(vhost).get('available_dir', nginx.lookup.vhost_available)) }}
   {%- else -%}
-    {{ path_join(vhost, nginx.vhosts.managed.get(vhost).get('dir', nginx.lookup.vhost_available)) }}
+    {{ path_join(vhost, nginx.vhosts.managed.get(vhost).get('available_dir', nginx.lookup.vhost_available)) }}
   {%- endif -%}
 {%- endmacro %}
 
