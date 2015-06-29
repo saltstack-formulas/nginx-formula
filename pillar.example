@@ -107,3 +107,23 @@ nginx:
           #        test something else;
           #    }
           # }         
+
+    # If you're doing SSL termination, you can deploy certificates this way.
+    # The private one(s) should go in a separate pillar file not in version
+    # control (or use encrypted pillar data).
+    certificates:
+      'www.example.com':
+        public_cert: |
+          -----BEGIN CERTIFICATE-----
+          (Your Primary SSL certificate: www.example.com.crt)
+          -----END CERTIFICATE-----
+          -----BEGIN CERTIFICATE-----
+          (Your Intermediate certificate: ExampleCA.crt)
+          -----END CERTIFICATE-----
+          -----BEGIN CERTIFICATE-----
+          (Your Root certificate: TrustedRoot.crt)
+          -----END CERTIFICATE-----
+        private_key: |
+          -----BEGIN RSA PRIVATE KEY-----
+          (Your Private Key: www.example.com.key)
+          -----END RSA PRIVATE KEY-----
