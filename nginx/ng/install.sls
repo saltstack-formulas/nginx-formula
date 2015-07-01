@@ -57,7 +57,7 @@ nginx_yum_repo:
     {%- if salt['grains.get']('os') == 'CentOS' %}
     - baseurl: 'http://nginx.org/packages/centos/$releasever/$basearch/'
     {%- else %}
-    - baseurl: 'http://nginx.org/packages/rhel/$releasever/$basearch/'
+    - baseurl: 'http://nginx.org/packages/rhel/{{ nginx.lookup.rh_os_releasever }}/$basearch/'
     {%- endif %}
     - gpgcheck: False
     - enabled: True

@@ -35,6 +35,8 @@ nginx:
       vhost_available: /etc/nginx/sites-available
       vhost_enabled: /etc/nginx/sites-enabled
       vhost_use_symlink: True
+      # This is required for RedHat like distros (Amazon Linux) that don't follow semantic versioning for $releasever
+      rh_os_releasever: '6'
 
     # Source compilation is not currently a part of nginx.ng
     from_source: False
