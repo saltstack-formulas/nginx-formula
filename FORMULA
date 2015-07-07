@@ -1,0 +1,8 @@
+name: nginx
+os: RedHat, Debian, Ubuntu, Suse
+os_family: RedHat, Debian, Suse
+version: 201507
+release: 1
+minimum_version: 2015.8
+summary: Formula for installing Nginx
+description: Formula for installing Nginx web server
