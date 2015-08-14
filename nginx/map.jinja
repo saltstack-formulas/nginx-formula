@@ -1,6 +1,11 @@
 {% set nginx = salt['grains.filter_by']({
     'Debian': {
         'apache_utils': 'apache2-utils',
+        'group_action': 'pkg.installed',
+        'group_pkg': 'build-essential',
+        'libpcre_dev': 'libpcre3-dev',
+        'libssl_dev': 'libssl-dev',
+        'pid_path': '/var/run/nginx.pid',
         'package': 'nginx-full',
         'default_user': 'www-data',
         'default_group': 'www-data',
@@ -17,6 +22,11 @@
     },
     'RedHat': {
         'apache_utils': 'httpd-tools',
+        'group_action': 'pkg.group_installed',
+        'group_pkg': 'Development Tools',
+        'libpcre_dev': 'pcre-devel',
+        'libssl_dev': 'openssl-devel',
+        'pid_path': '/run/nginx.pid',
         'package': 'nginx',
         'default_user': 'nginx',
         'default_group': 'nginx',
@@ -31,4 +41,4 @@
         'install_prefix': '/usr/local/nginx',
         'make_flags': '-j2'
     },
-}, merge=salt['pillar.get']('nginx:lookup'), default='Debian') %}
+}, grain='os_family', merge=salt['pillar.get']('nginx:lookup'), default='Debian') %}
