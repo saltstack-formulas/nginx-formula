@@ -65,7 +65,7 @@ nginx_user:
     - makedirs: True
 
 get-build-tools:
-{% if salt['pkg.version']('salt') <= '2015.8.0' and grains['os_family'] == 'RedHat' %}
+{% if salt['pkg.version']('salt') < '2015.8.0' and grains['os_family'] == 'RedHat' %}
   module.run:
     - name: pkg.group_install
     - m_name: {{ nginx_map.group_pkg }}
