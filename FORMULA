@@ -1,6 +1,6 @@
 name: nginx
-os: RedHat, Debian, Ubuntu, Suse
-os_family: RedHat, Debian, Suse
+os: RedHat, Debian, Ubuntu, Suse, Gentoo
+os_family: RedHat, Debian, Suse, Gentoo
 version: 201507
 release: 1
 minimum_version: 2015.8
