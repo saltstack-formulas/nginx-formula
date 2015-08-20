@@ -51,12 +51,11 @@ nginx_zypp_repo:
 
 {% if salt['grains.get']('os_family') == 'RedHat' %}
 nginx_yum_repo:
-  pkgrepo:
-    {%- if nginx.install_from_repo %}
-    - managed
-    {%- else %}
-    - absent
-    {%- endif %}
+  {%- if nginx.install_from_repo %}
+  pkgrepo.managed:
+  {%- else %}
+  pkgrepo.absent:
+  {%- endif %}
     - name: nginx
     - humanname: nginx repo
     {%- if salt['grains.get']('os') == 'CentOS' %}
