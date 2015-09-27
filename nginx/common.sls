@@ -11,6 +11,13 @@
     - group: {{ nginx_map.default_group }}
     - mode: 0755
     - makedirs: True
+    - require:
+      {%- if pillar.get('nginx', {}).get('install_from_source', false) %}
+      - user: {{ nginx_map.default_user }}
+      - group: {{ nginx_map.default_group }}
+      {%- else %}
+      - pkg: nginx
+      {% endif %}
 
 /usr/share/nginx:
   file:
