@@ -63,6 +63,7 @@ nginx:
           include:
             - /etc/nginx/mime.types
             - /etc/nginx/conf.d/*.conf
+            - /etc/nginx/sites-enabled/*
 
     vhosts:
       disabled_postfix: .disabled # a postfix appended to files when doing non-symlink disabling
