@@ -23,7 +23,7 @@ nginx-old-init:
 {% endif %}
   module.wait:
     - name: cmd.run
-    - cmd: kill `cat /var/run/nginx.pid`
+    - cmd: sh -c "kill `cat /var/run/nginx.pid`"
     - watch:
       - file: nginx-old-init
     - require_in:
