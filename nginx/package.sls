@@ -97,7 +97,7 @@ nginx:
     - user: root
     - group: root
     - mode: 440
-    - source: salt://nginx/templates/upstart.jinja
+    - source: salt://{{ slspath }}/templates/upstart.jinja
     - require:
       - pkg: nginx
       - file: nginx-old-init

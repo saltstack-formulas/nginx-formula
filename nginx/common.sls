@@ -2,7 +2,7 @@
 {% set nginx = pillar.get('nginx', {}) -%}
 {% set home = nginx.get('home', '/var/www') -%}
 {% set conf_dir = nginx.get('conf_dir', '/etc/nginx') -%}
-{% set conf_template = nginx.get('conf_template', 'salt://nginx/templates/config.jinja') -%}
+{% set conf_template = nginx.get('conf_template', 'salt://' + slspath + '/templates/config.jinja') -%}
 
 {{ home }}:
   file:

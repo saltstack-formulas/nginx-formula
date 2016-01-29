@@ -230,7 +230,7 @@ nginx:
     - managed
     - template: jinja
     - name: /etc/init.d/{{ service_name }}
-    - source: salt://nginx/templates/nginx.init.jinja
+    - source: salt://{{ slspath }}/templates/nginx.init.jinja
     - user: root
     - group: root
     - mode: 0755

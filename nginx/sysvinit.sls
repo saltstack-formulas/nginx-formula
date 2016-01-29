@@ -16,8 +16,8 @@ nginx-logger-{{ log_type }}:
     - group: root
     - mode: 755
     - source:
-      - salt://nginx/templates/{{ grains['os_family'] }}-sysvinit-logger.jinja
-      - salt://nginx/templates/sysvinit-logger.jinja
+      - salt://{{ slspath }}/templates/{{ grains['os_family'] }}-sysvinit-logger.jinja
+      - salt://{{ slspath }}/templates/sysvinit-logger.jinja
     - context:
       type: {{ log_type }}
   service:
