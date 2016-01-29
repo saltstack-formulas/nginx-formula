@@ -1,4 +1,4 @@
-{% from "nginx/map.jinja" import nginx as nginx_map with context %}
+{% from slspath + "/map.jinja" import nginx as nginx_map with context %}
 {% set nginx = pillar.get('nginx', {}) -%}
 {% set home = nginx.get('home', '/var/www') -%}
 {% set conf_dir = nginx.get('conf_dir', '/etc/nginx') -%}

@@ -1,18 +1,18 @@
-{% from "nginx/map.jinja" import nginx as nginx_map with context %}
+{% from slspath + "/map.jinja" import nginx as nginx_map with context %}
 
 include:
-  - nginx.common
+  - {{ slspath }}.common
 {% if salt['pillar.get']('nginx:use_upstart', nginx_map['use_upstart']) %}
-  - nginx.upstart
+  - {{ slspath }}.upstart
 {% elif salt['pillar.get']('nginx:use_sysvinit', nginx_map['use_sysvinit']) %}
-  - nginx.sysvinit
+  - {{ slspath }}.sysvinit
 {% endif %}
 {% if pillar.get('nginx', {}).get('user_auth_enabled', true) %}
-  - nginx.users
+  - {{ slspath }}.users
 {% endif %}
 {% if pillar.get('nginx', {}).get('install_from_source', false) %}
-  - nginx.source
+  - {{ slspath }}.source
 {% else %}
-  - nginx.package
+  - {{ slspath }}.package
 {% endif -%}
 

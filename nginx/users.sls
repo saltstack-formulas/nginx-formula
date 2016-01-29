@@ -1,4 +1,4 @@
-{% from "nginx/map.jinja" import nginx with context %}
+{% from slspath + "/map.jinja" import nginx with context %}
 {% set htauth = nginx.get('htpasswd', '/etc/nginx/.htpasswd') -%}
 
 htpasswd:
