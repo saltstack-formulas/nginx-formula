@@ -26,6 +26,8 @@
             'vhost_use_symlink': False,
             'pid_file': '/run/nginx.pid',
             'rh_os_releasever': '$releasever',
+            'gpg_check': False,
+            'gpg_key': 'http://nginx.org/keys/nginx_signing.key',
         },
         'Suse': {
             'package': 'nginx',
@@ -36,6 +38,8 @@
             'vhost_enabled': '/etc/nginx/conf.d',
             'vhost_use_symlink': False,
             'pid_file': '/run/nginx.pid',
+            'gpg_check': True,
+            'gpg_key': 'http://download.opensuse.org/repositories/server:/http/openSUSE_13.2/repodata/repomd.xml.key'
         },
         'Arch': {
             'package': 'nginx',

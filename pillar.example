@@ -37,6 +37,8 @@ nginx:
       vhost_use_symlink: True
       # This is required for RedHat like distros (Amazon Linux) that don't follow semantic versioning for $releasever
       rh_os_releasever: '6'
+      # Currently it can be used on rhel/centos/suse when installing from repo
+      gpg_check: True
 
     # Source compilation is not currently a part of nginx.ng
     from_source: False
