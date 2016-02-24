@@ -41,8 +41,8 @@ nginx_zypp_repo:
     - baseurl: 'http://download.opensuse.org/repositories/server:/http/openSUSE_13.2/'
     - enabled: True
     - autorefresh: True
-    - gpgcheck: True
-    - gpgkey: 'http://download.opensuse.org/repositories/server:/http/openSUSE_13.2/repodata/repomd.xml.key'
+    - gpgcheck: {{ nginx.lookup.gpg_check }}
+    - gpgkey: {{ nginx.lookup.gpg_key }}
     - require_in:
       - pkg: nginx_install
     - watch_in:
@@ -63,7 +63,8 @@ nginx_yum_repo:
     {%- else %}
     - baseurl: 'http://nginx.org/packages/rhel/{{ nginx.lookup.rh_os_releasever }}/$basearch/'
     {%- endif %}
-    - gpgcheck: False
+    - gpgcheck: {{ nginx.lookup.gpg_check }}
+    - gpgkey: {{ nginx.lookup.gpg_key }}
     - enabled: True
     - require_in:
       - pkg: nginx_install
