@@ -14,6 +14,20 @@ nginx_install:
   {% endif %}
 
 {% if salt['grains.get']('os_family') == 'Debian' %}
+  {%- if nginx.install_from_repo %}
+nginx-official-repo:
+  pkgrepo:
+    - managed
+    - humanname: nginx apt repo
+    - name: deb http://nginx.org/packages/{{ grains['os'].lower() }}/ {{ grains['oscodename'] }} nginx
+    - file: /etc/apt/sources.list.d/nginx-official-{{ grains['oscodename'] }}.list
+    - keyid: ABF5BD827BD9BF62
+    - keyserver: keyserver.ubuntu.com
+    - require_in:
+      - pkg: nginx
+    - watch_in:
+      - pkg: nginx
+  {%- else %}
 nginx_ppa_repo:
   pkgrepo:
     {%- if nginx.install_from_ppa %}
@@ -26,6 +40,7 @@ nginx_ppa_repo:
       - pkg: nginx_install
     - watch_in:
       - pkg: nginx_install
+  {%- endif %}
 {% endif %}
 
 {% if salt['grains.get']('os_family') == 'Suse' %}
