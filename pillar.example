@@ -80,7 +80,7 @@ nginx:
         mysite: # relative pathname of the vhost file
           # may be True, False, or None where True is enabled, False, disabled, and None indicates no action
           available_dir: /tmp/sites-available # an alternate directory (not sites-available) where this vhost may be found
-          enabled_dir: /tmp/sites-enabled # an alternate directory (not sites-available) where this vhost may be found
+          enabled_dir: /tmp/sites-enabled # an alternate directory (not sites-enabled) where this vhost may be found
           disabled_name: mysite.aint_on # an alternative disabled name to be use when not symlinking
           enabled: True
           
