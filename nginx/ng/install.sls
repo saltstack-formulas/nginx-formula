@@ -35,7 +35,13 @@ nginx_ppa_repo:
     {%- else %}
     - absent
     {%- endif %}
+    {% if salt['grains.get']('os') == 'Ubuntu' %}
     - ppa: nginx/{{ nginx.ppa_version }}
+    {% else %}
+    - name: deb http://ppa.launchpad.net/nginx/{{ nginx.ppa_version }}/ubuntu trusty main
+    - keyid: C300EE8C
+    - keyserver: keyserver.ubuntu.com
+    {% endif %}
     - require_in:
       - pkg: nginx_install
     - watch_in:
