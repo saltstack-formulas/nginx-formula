@@ -4,6 +4,11 @@
 
 {% from 'nginx/ng/map.jinja' import nginx, sls_block with context %}
 
+{% if nginx.install_from_source %}
+/var/log/nginx:
+  file.directory
+{% endif %}
+
 nginx_config:
   file.managed:
     {{ sls_block(nginx.server.opts) }}
