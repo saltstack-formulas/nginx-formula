@@ -2,6 +2,8 @@
 #
 # Meta-state to fully install nginx.
 
+{% from 'nginx/ng/map.jinja' import nginx, sls_block with context %}
+
 include:
   - nginx.ng.config
   - nginx.ng.service
@@ -18,4 +20,8 @@ extend:
   nginx_config:
     file:
       - require:
+        {% if nginx.install_from_source %}
+        - cmd: nginx_install
+        {% else %}
         - pkg: nginx_install
+        {% endif %}

@@ -21,10 +21,14 @@ nginx:
 
 nginx:
   ng:
-    # PPA installing
+    # PPA install
     install_from_ppa: True
     # Set to 'stable', 'development' (mainline), 'community', or 'nightly' for each build accordingly ( https://launchpad.net/~nginx )
     ppa_version: 'stable'
+
+    # Source install
+    source_version: '1.10.0'
+    source_hash: ''
     
     # These are usually set by grains in map.jinja
     lookup:
@@ -42,6 +46,9 @@ nginx:
 
     # Source compilation is not currently a part of nginx.ng
     from_source: False
+
+    source:
+      opts: {}
 
     package:
       opts: {} # this partially exposes parameters of pkg.installed

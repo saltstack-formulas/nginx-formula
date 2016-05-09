@@ -7,6 +7,12 @@
 
 include:
   - nginx.ng.install
+
+{% if nginx.install_from_source %}
+/lib/systemd/system/nginx.service:
+  file.managed:
+    - source: salt://nginx/ng/files/nginx.service
+{% endif %} 
   
 nginx_service:
   service.{{ service_function }}:
@@ -16,6 +22,8 @@ nginx_service:
     - require:
       - sls: nginx.ng.install
     - watch:
-      {% if not nginx.install_from_source %}
+      {% if nginx.install_from_source %}
+      - cmd: nginx_install
+      {% else %}
       - pkg: nginx_install
       {% endif %}
