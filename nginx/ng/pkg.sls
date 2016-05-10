@@ -1,17 +1,13 @@
-# nginx.ng.install
+# nginx.ng.pkg
 #
-# Manages installation of nginx.
+# Manages installation of nginx from pkg.
 
 {% from 'nginx/ng/map.jinja' import nginx, sls_block with context %}
 
 nginx_install:
-  {% if nginx.install_from_source %}
-  ## add source compilation here
-  {% else %}
   pkg.installed:
     {{ sls_block(nginx.package.opts) }}
     - name: {{ nginx.lookup.package }}
-  {% endif %}
 
 {% if salt['grains.get']('os_family') == 'Debian' %}
   {%- if nginx.install_from_repo %}
