@@ -6,11 +6,16 @@
 {% set service_function = {True:'running', False:'dead'}.get(nginx.service.enable) %}
 
 include:
-  - nginx.ng.install
+  {% if nginx.install_from_source %}
+  - nginx.ng.src
+  {% else %}
+  - nginx.ng.pkg
+  {% endif %}
 
 {% if nginx.install_from_source %}
-/lib/systemd/system/nginx.service:
+nginx_systemd_service_file:
   file.managed:
+    - name: /lib/systemd/system/nginx.service
     - source: salt://nginx/ng/files/nginx.service
 {% endif %} 
   
@@ -20,7 +25,11 @@ nginx_service:
     - name: {{ nginx.lookup.service }}
     - enable: {{ nginx.service.enable }}
     - require:
-      - sls: nginx.ng.install
+      {% if nginx.install_from_source %}
+      - sls: nginx.ng.src
+      {% else %}
+      - sls: nginx.ng.pkg
+      {% endif %}
     - watch:
       {% if nginx.install_from_source %}
       - cmd: nginx_install
