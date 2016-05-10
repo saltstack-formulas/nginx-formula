@@ -5,9 +5,11 @@
 {% from 'nginx/ng/map.jinja' import nginx, sls_block with context %}
 
 {% if nginx.install_from_source %}
-nginx_log_directory:
+nginx_log_dir:
   file.directory:
     - name: /var/log/nginx
+    - user: {{ nginx.server.config.user }}
+    - group: {{ nginx.server.config.user }}
 {% endif %}
 
 nginx_config:
