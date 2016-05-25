@@ -29,7 +29,7 @@ nginx_download:
 
 nginx_configure:
   cmd.run:
-    - name: ./configure --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf {{ nginx.source.opts | join(' ') }}
+    - name: ./configure --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --conf-path={{ nginx.lookup.conf_file }} {{ nginx.source.opts | join(' ') }}
     - cwd: /tmp/nginx-{{ nginx.source_version }}
     - require:
       - archive: nginx_download
