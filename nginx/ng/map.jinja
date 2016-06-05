@@ -14,7 +14,6 @@
             'vhost_available': '/etc/nginx/sites-available',
             'vhost_enabled': '/etc/nginx/sites-enabled',
             'vhost_use_symlink': True,
-            'vhost_overwrite': True,
             'pid_file': '/run/nginx.pid',
         },
         'CentOS': {
@@ -25,7 +24,6 @@
             'vhost_available': '/etc/nginx/conf.d',
             'vhost_enabled': '/etc/nginx/conf.d',
             'vhost_use_symlink': False,
-            'vhost_overwrite': True,
             'pid_file': '/run/nginx.pid',
             'rh_os_releasever': '$releasever',
             'gpg_check': False,
@@ -39,7 +37,6 @@
             'vhost_available': '/etc/nginx/conf.d',
             'vhost_enabled': '/etc/nginx/conf.d',
             'vhost_use_symlink': False,
-            'vhost_overwrite': True,
             'pid_file': '/run/nginx.pid',
             'rh_os_releasever': '$releasever',
             'gpg_check': False,
@@ -53,7 +50,6 @@
             'vhost_available': '/etc/nginx/conf.d',
             'vhost_enabled': '/etc/nginx/conf.d',
             'vhost_use_symlink': False,
-            'vhost_overwrite': True,
             'pid_file': '/run/nginx.pid',
             'gpg_check': True,
             'gpg_key': 'http://download.opensuse.org/repositories/server:/http/openSUSE_13.2/repodata/repomd.xml.key'
@@ -66,7 +62,6 @@
             'vhost_available': '/etc/nginx/sites-available',
             'vhost_enabled': '/etc/nginx/sites-enabled',
             'vhost_use_symlink': True,
-            'vhost_overwrite': True,
         },
         'Gentoo': {
             'package': 'www-servers/nginx',
@@ -76,7 +71,6 @@
             'vhost_available': '/etc/nginx/sites-available',
             'vhost_enabled': '/etc/nginx/sites-enabled',
             'vhost_use_symlink': True,
-            'vhost_overwrite': True,
         },
     }, default='Debian' ),
     'install_from_source': False,
@@ -87,7 +81,6 @@
     'source_hash': '8ed647c3dd65bc4ced03b0e0f6bf9e633eff6b01bac772bcf97077d58bc2be4d',
     'source': {
         'opts': {},
-        'modules': {}
     },
     'package': {
         'opts': {},
