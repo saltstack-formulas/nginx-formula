@@ -94,6 +94,10 @@ nginx_vhost_available_dir:
     - template: jinja
     - context:
         config: {{ settings.config|json() }}
+    {% if 'overwrite' in vhost and vhost.overwrite == False %}
+    - unless:
+      - test -e {{ vhost_curpath(vhost) }}
+    {% endif %}
 {% do vhost_states.append(conf_state_id) %}
 {% endif %}
 
