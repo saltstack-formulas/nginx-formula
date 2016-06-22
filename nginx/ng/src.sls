@@ -42,6 +42,8 @@ nginx_compile:
     - cwd: /tmp/nginx-{{ nginx.source_version }}
     - require:
       - cmd: nginx_configure
+    - onchanges:
+      - cmd: nginx_configure
 
 nginx_install:
   cmd.run:
