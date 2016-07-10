@@ -29,7 +29,7 @@ nginx:
     # Source install
     source_version: '1.10.0'
     source_hash: ''
-    
+
     # These are usually set by grains in map.jinja
     lookup:
       package: nginx-custom
@@ -62,7 +62,7 @@ nginx:
 
       # nginx.conf (main server) declarations
       # dictionaries map to blocks {} and lists cause the same declaration to repeat with different values
-      config: 
+      config:
         worker_processes: 4
         pid: /run/nginx.pid
         events:
@@ -91,14 +91,14 @@ nginx:
           disabled_name: mysite.aint_on # an alternative disabled name to be use when not symlinking
           enabled: True
           overwrite: True # overwrite an existing vhost file or not
-          
+
           # May be a list of config options or None, if None, no vhost file will be managed/templated
           # Take server directives as lists of dictionaries. If the dictionary value is another list of
           # dictionaries a block {} will be started with the dictionary key name
           config:
             - server:
               - server_name: localhost
-              - listen: 
+              - listen:
                 - 80
                 - default_server
               - index:
@@ -109,7 +109,7 @@ nginx:
                   - $uri
                   - $uri/ =404
                 - test: something else
-                
+
           # The above outputs:
           # server {
           #    server_name localhost;
@@ -119,7 +119,33 @@ nginx:
           #        try_files $uri $uri/ =404;
           #        test something else;
           #    }
-          # }         
+          # }
+
+        # You can also give these parameters as key/value pairs,
+        # this is usefull for the ext_pillar.mongo for example.
+
+        mysite2:
+          config:
+            - key: server_name
+              value: localhost2
+            - key: listen
+              value:
+                - 80
+                - default_server
+            - key: index
+              value:
+                - index.html
+                - index.htm
+            - key: location ~ .htm
+              value:
+                - key: try_files
+                  value:
+                  - $uri
+                  - $uri/ =404
+                - key: test
+                  value: something else
+
+        # This will output the same as the above example.
 
     # If you're doing SSL termination, you can deploy certificates this way.
     # The private one(s) should go in a separate pillar file not in version
