@@ -84,7 +84,7 @@ nginx_vhost_available_dir:
 
 # Managed enabled/disabled state for vhosts
 {% for vhost, settings in nginx.vhosts.managed.items() %}
-{% if settings.config != None %}
+{% if settings.get('config', False) %}
 {% set conf_state_id = 'vhost_conf_' ~ loop.index0 %}
 {{ conf_state_id }}:
   file.managed:
@@ -101,7 +101,7 @@ nginx_vhost_available_dir:
 {% do vhost_states.append(conf_state_id) %}
 {% endif %}
 
-{% if settings.enabled != None %}
+{% if settings.get('config', False) %}
 {% set status_state_id = 'vhost_state_' ~ loop.index0 %}
 {{ status_state_id }}:
 {{ manage_status(vhost, settings.enabled) }}
