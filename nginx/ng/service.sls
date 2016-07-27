@@ -27,6 +27,7 @@ nginx_service:
     - require:
       {% if nginx.install_from_source %}
       - sls: nginx.ng.src
+      - file: nginx_systemd_service_file
       {% else %}
       - sls: nginx.ng.pkg
       {% endif %}
