@@ -17,7 +17,7 @@ nginx_download:
     - source_hash: sha256={{ nginx.source_hash }}
     - archive_format: tar
     - if_missing: /usr/sbin/nginx-{{ nginx.source_version }}
-    - onchanges:
+    - require:
       - pkg: nginx_deps
 
 nginx_configure:
