@@ -4,18 +4,11 @@
 
 {% from 'nginx/ng/map.jinja' import nginx, sls_block with context %}
 
-nginx_build_dep:
-  {% if salt['grains.get']('os_family') == 'Debian' %}
+nginx_deps:
   pkg.installed:
     - pkgs:
       - libpcre3-dev
       - zlib1g-dev
-  {% elif salt['grains.get']('os_family') == 'RedHat' %}
-  cmd.run:
-    - name: yum-builddep -y nginx
-  {% else %}
-  ## install build deps for other distros
-  {% endif %}
 
 nginx_download:
   archive.extracted:
@@ -24,10 +17,8 @@ nginx_download:
     - source_hash: sha256={{ nginx.source_hash }}
     - archive_format: tar
     - if_missing: /usr/sbin/nginx-{{ nginx.source_version }}
-    - require:
-      - cmd: nginx_build_dep
     - onchanges:
-      - cmd: nginx_build_dep
+      - pkg: nginx_deps
 
 nginx_configure:
   cmd.run:
