@@ -6,8 +6,10 @@
 
 nginx_build_dep:
   {% if salt['grains.get']('os_family') == 'Debian' %}
-  cmd.run:
-    - name: apt-get -y build-dep nginx
+  pkg.installed:
+    - pkgs:
+      - libpcre3-dev
+      - zlib1g-dev
   {% elif salt['grains.get']('os_family') == 'RedHat' %}
   cmd.run:
     - name: yum-builddep -y nginx
