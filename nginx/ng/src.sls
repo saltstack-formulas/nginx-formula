@@ -24,8 +24,6 @@ nginx_configure:
   cmd.run:
     - name: ./configure --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --conf-path={{ nginx.lookup.conf_file or '/etc/nginx/nginx.conf' }} {{ nginx.source.opts | join(' ') }}
     - cwd: /tmp/nginx-{{ nginx.source_version }}
-    - require:
-      - archive: nginx_download
     - onchanges:
       - archive: nginx_download
 
@@ -33,8 +31,6 @@ nginx_compile:
   cmd.run:
     - name: make
     - cwd: /tmp/nginx-{{ nginx.source_version }}
-    - require:
-      - cmd: nginx_configure
     - onchanges:
       - cmd: nginx_configure
 
@@ -42,8 +38,6 @@ nginx_install:
   cmd.run:
     - name: make install
     - cwd: /tmp/nginx-{{ nginx.source_version }}
-    - require:
-      - cmd: nginx_compile
     - onchanges:
       - cmd: nginx_compile
 
@@ -51,7 +45,5 @@ nginx_link:
   file.copy:
     - name: /usr/sbin/nginx-{{ nginx.source_version }}
     - source: /usr/sbin/nginx
-    - require:
-      - cmd: nginx_install
     - onchanges:
       - cmd: nginx_install
