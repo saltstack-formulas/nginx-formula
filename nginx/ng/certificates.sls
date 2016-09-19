@@ -2,6 +2,24 @@ include:
   - nginx.ng.service
 
 {% set certificates_path = salt['pillar.get']('nginx:ng:certificates_path', '/etc/nginx/ssl') %}
+
+{% if salt.pillar.get('nginx:ng:dh_contents') %}
+create_nginx_dhparam_key:
+  file.managed:
+    - name: {{ certificates_path }}/dhparam.pem
+    - contents_pillar: nginx:ng:dh_contents
+    - makedirs: True
+{% elif salt.pillar.get('nginx:ng:dh_keygen', False) %}
+generate_nginx_dhparam_key:
+  file.directory:
+    - name: {{ certificates_path }}
+    - makedirs: True
+  cmd.run:
+    - name: openssl dhparam -out dhparam.pem {{ salt.pillar.get('nginx:ng:dh_keysize', 2048) }}
+    - cwd: {{ certificates_path }}
+    - creates: {{ certificates_path }}/dhparam.pem
+{% endif %}
+
 {%- for domain in salt['pillar.get']('nginx:ng:certificates', {}).keys() %}
 
 nginx_{{ domain }}_ssl_certificate:
