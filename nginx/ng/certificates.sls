@@ -11,6 +11,7 @@ nginx_{{ domain }}_ssl_certificate:
     - watch_in:
       - service: nginx_service
 
+{% if salt['pillar.get']("nginx:ng:certificates:{}:private_key".format(domain)) %}
 nginx_{{ domain }}_ssl_key:
   file.managed:
     - name: /etc/nginx/ssl/{{ domain }}.key
@@ -19,5 +20,5 @@ nginx_{{ domain }}_ssl_key:
     - contents_pillar: nginx:ng:certificates:{{ domain }}:private_key
     - watch_in:
       - service: nginx_service
-
+{% endif %}
 {%- endfor %}
