@@ -55,7 +55,7 @@ Next-generation, alternate approach
 ===================================
 
 The following states provide an alternate approach to managing Nginx and Nginx
-vhosts, as well as code organization. Please provide feedback by filing issues,
+servers, as well as code organization. Please provide feedback by filing issues,
 discussing in ``#salt`` in Freenode and the mailing list as normal.
 
 .. contents::
@@ -84,13 +84,13 @@ Manages the nginx main server configuration file.
 
 Manages the startup and running state of the nginx service.
 
-``nginx.ng.vhosts_config``
+``nginx.ng.servers_config``
 --------------------------
 
 Manages virtual host files. This state only manages the content of the files
 and does not bind them to service calls.
 
-``nginx.ng.vhosts``
+``nginx.ng.servers``
 -------------------
 
 Manages nginx virtual hosts files and binds them to service calls.

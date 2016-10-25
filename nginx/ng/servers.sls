@@ -1,9 +1,9 @@
-# nginx.ng.vhosts
+# nginx.ng.servers
 #
 # Manages virtual hosts and their relationship to the nginx service.
 
 {% from 'nginx/ng/map.jinja' import nginx, sls_block with context %}
-{% from 'nginx/ng/vhosts_config.sls' import vhost_states with context %}
+{% from 'nginx/ng/servers_config.sls' import server_states with context %}
 {% from 'nginx/ng/service.sls' import service_function with context %}
 
 {% macro file_requisites(states) %}
@@ -14,9 +14,9 @@
 
 include:
   - nginx.ng.service
-  - nginx.ng.vhosts_config
+  - nginx.ng.servers_config
 
-{% if vhost_states|length() > 0 %}
+{% if server_states|length() > 0 %}
 nginx_service_reload:
   service.{{ service_function }}:
     - name: {{ nginx.lookup.service }}
@@ -24,8 +24,8 @@ nginx_service_reload:
     - use:
       - service: nginx_service
     - watch:
-      {{ file_requisites(vhost_states) }}
+      {{ file_requisites(server_states) }}
     - require:
-      {{ file_requisites(vhost_states) }}
+      {{ file_requisites(server_states) }}
       - service: nginx_service
 {% endif %}
