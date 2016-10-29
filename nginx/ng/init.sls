@@ -13,7 +13,7 @@ include:
 extend:
   nginx_service:
     service:
-      - watch:
+      - listen:
         - file: nginx_config
       - require:
         - file: nginx_config

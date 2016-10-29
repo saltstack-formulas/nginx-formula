@@ -23,7 +23,7 @@ nginx_service_reload:
     - reload: True
     - use:
       - service: nginx_service
-    - watch:
+    - listen:
       {{ file_requisites(server_states) }}
     - require:
       {{ file_requisites(server_states) }}
