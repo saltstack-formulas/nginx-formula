@@ -30,7 +30,7 @@ nginx_service:
       {% else %}
       - sls: nginx.ng.pkg
       {% endif %}
-    - watch:
+    - listen:
       {% if nginx.install_from_source %}
       - cmd: nginx_install
       {% else %}
