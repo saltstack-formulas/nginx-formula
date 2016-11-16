@@ -5,6 +5,10 @@ htpasswd:
   pkg.installed:
     - name: {{ nginx.apache_utils }}
 
+make sure {{ htauth }} exists:
+  file.exists:
+    - name: {{ htauth }}
+
 {% for name, user in pillar.get('users', {}).items() %}
 {% if user['webauth'] is defined -%}
 
