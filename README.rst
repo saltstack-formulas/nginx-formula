@@ -49,7 +49,11 @@ Installs nginx via the source files.
 ``nginx.users``
 ---------------
 
-Installs apache utils, and configures nginx users specified in the pillar.
+Installs apache utils, and configures nginx users specified in the pillar. 
+This requires `basicauth <https://github.com/saltstack/salt-contrib/blob/master/modules/basicauth.py>`_ 
+from `salt-contrib <https://github.com/saltstack/salt-contrib/>`_ (either add it to your salt or ship 
+this single file in your `_modules` directory see `Dynamic Module Distribution 
+<https://docs.saltstack.com/en/latest/ref/file_server/dynamic-modules.html>`_
 
 Next-generation, alternate approach
 ===================================
