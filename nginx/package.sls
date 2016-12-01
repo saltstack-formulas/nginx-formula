@@ -28,6 +28,7 @@ nginx-old-init:
       - file: nginx-old-init
     - require_in:
       - file: nginx
+    - onlyif: [ -e /var/run/nginx.pid ]
 
 # RedHat requires the init file in place to chkconfig off
 {% if nginx['disable_before_rename'] %}
