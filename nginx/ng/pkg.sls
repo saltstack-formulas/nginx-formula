@@ -35,7 +35,6 @@ nginx_ppa_repo:
     - ppa: nginx/{{ nginx.ppa_version }}
     {% else %}
     - name: deb http://ppa.launchpad.net/nginx/{{ nginx.ppa_version }}/ubuntu {{ grains['oscodename'] }} main
-    #- name: deb http://ppa.launchpad.net/nginx/{{ nginx.ppa_version }}/ubuntu trusty main
     - keyid: C300EE8C
     - keyserver: keyserver.ubuntu.com
     {% endif %}
