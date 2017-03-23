@@ -93,7 +93,7 @@ nginx_server_available_dir:
     - source: salt://nginx/ng/files/server.conf
     - template: jinja
     - context:
-        config: {{ settings.config|json() }}
+        config: {{ settings.config|json(sort_keys=False) }}
     {% if 'overwrite' in settings and settings.overwrite == False %}
     - unless:
       - test -e {{ server_curpath(server) }}
