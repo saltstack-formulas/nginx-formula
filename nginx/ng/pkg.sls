@@ -20,9 +20,9 @@ nginx-official-repo:
     - keyid: ABF5BD827BD9BF62
     - keyserver: keyserver.ubuntu.com
     - require_in:
-      - pkg: nginx
+      - pkg: nginx_install
     - watch_in:
-      - pkg: nginx
+      - pkg: nginx_install
   {%- else %}
 nginx_ppa_repo:
   pkgrepo:
