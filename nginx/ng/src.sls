@@ -4,16 +4,11 @@
 
 {% from 'nginx/ng/map.jinja' import nginx, sls_block with context %}
 
-nginx_build_dep:
-  {% if salt['grains.get']('os_family') == 'Debian' %}
-  cmd.run:
-    - name: apt-get -y build-dep nginx
-  {% elif salt['grains.get']('os_family') == 'RedHat' %}
-  cmd.run:
-    - name: yum-builddep -y nginx
-  {% else %}
-  ## install build deps for other distros
-  {% endif %}
+nginx_deps:
+  pkg.installed:
+    - pkgs:
+      - libpcre3-dev
+      - zlib1g-dev
 
 nginx_download:
   archive.extracted:
@@ -23,16 +18,12 @@ nginx_download:
     - archive_format: tar
     - if_missing: /usr/sbin/nginx-{{ nginx.source_version }}
     - require:
-      - cmd: nginx_build_dep
-    - onchanges:
-      - cmd: nginx_build_dep
+      - pkg: nginx_deps
 
 nginx_configure:
   cmd.run:
     - name: ./configure --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --conf-path={{ nginx.lookup.conf_file or '/etc/nginx/nginx.conf' }} {{ nginx.source.opts | join(' ') }}
     - cwd: /tmp/nginx-{{ nginx.source_version }}
-    - require:
-      - archive: nginx_download
     - onchanges:
       - archive: nginx_download
 
@@ -40,8 +31,6 @@ nginx_compile:
   cmd.run:
     - name: make
     - cwd: /tmp/nginx-{{ nginx.source_version }}
-    - require:
-      - cmd: nginx_configure
     - onchanges:
       - cmd: nginx_configure
 
@@ -49,8 +38,6 @@ nginx_install:
   cmd.run:
     - name: make install
     - cwd: /tmp/nginx-{{ nginx.source_version }}
-    - require:
-      - cmd: nginx_compile
     - onchanges:
       - cmd: nginx_compile
 
@@ -58,7 +45,5 @@ nginx_link:
   file.copy:
     - name: /usr/sbin/nginx-{{ nginx.source_version }}
     - source: /usr/sbin/nginx
-    - require:
-      - cmd: nginx_install
     - onchanges:
       - cmd: nginx_install
