@@ -22,6 +22,11 @@
 /usr/share/nginx:
   file:
     - directory
+    
+apache2:
+  service.dead:
+  - watch:
+    - pkg: nginx
 
 {% for filename in ('default', 'example_ssl') %}
 {{ conf_dir }}/conf.d/{{ filename }}.conf:
