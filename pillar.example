@@ -21,8 +21,19 @@ nginx:
 
 nginx:
   ng:
+    # The following three `install_from_` options are mutually exclusive. If none is used, the distro's provided
+    # package will be installed. If one of the `install_from` option is set to `True`, the state will
+    # make sure the other two repos are removed.
+
+    # Use the official's nginx repo binaries
+    install_from_repo: false
+
+    # Use Phusionpassenger's repo to install nginx and passenger binaries
+    # Debian, Centos, Ubuntu and Redhat are currently available
+    install_from_phusionpassenger: false
+
     # PPA install
-    install_from_ppa: True
+    install_from_ppa: false
     # Set to 'stable', 'development' (mainline), 'community', or 'nightly' for each build accordingly ( https://launchpad.net/~nginx )
     ppa_version: 'stable'
 
@@ -140,3 +151,12 @@ nginx:
           -----BEGIN RSA PRIVATE KEY-----
           (Your Private Key: www.example.com.key)
           -----END RSA PRIVATE KEY-----
+
+    # Passenger configuration
+    # Default passenger configuration is provided, and will be deployed in
+    # /etc/nginx/conf.d/passenger.conf
+    passenger:
+      passenger_root: /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini
+      passenger_ruby: /usr/bin/ruby
+      passenger_instance_registry_dir: /var/run/passenger-instreg
+
