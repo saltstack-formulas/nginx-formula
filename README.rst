@@ -98,3 +98,12 @@ and does not bind them to service calls.
 -------------------
 
 Manages nginx virtual hosts files and binds them to service calls.
+
+``nginx.ng.passenger``
+----------------------
+
+Installs and configures Phusion Passenger module for nginx. You need to enable
+the upstream phusion passenger repository with `install_from_phusionpassenger: true`. 
+Nginx will also be installed from that repository, as it needs to be modified to
+allow the passenger module to work. 
+
