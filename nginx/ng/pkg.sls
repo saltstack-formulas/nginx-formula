@@ -15,6 +15,10 @@
   {% set from_official = false %}
   {% set from_ppa = false %}
   {% set from_phusionpassenger = true %}
+{% else %}
+  {% set from_official = false %}
+  {% set from_ppa = false %}
+  {% set from_phusionpassenger = false %}
 {%- endif %}
 
 nginx_install:
