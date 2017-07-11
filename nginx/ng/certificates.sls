@@ -12,6 +12,8 @@ create_nginx_dhparam_{{ dh_param }}_key:
     - name: {{ certificates_path }}/{{ dh_param }}
     - contents_pillar: nginx:ng:dh_param:{{ dh_param }}
     - makedirs: True
+    - watch_in:
+      - service: nginx_service
 {%- else %}
 generate_nginx_dhparam_{{ dh_param }}_key:
   pkg.installed:
@@ -23,6 +25,8 @@ generate_nginx_dhparam_{{ dh_param }}_key:
     - name: openssl dhparam -out {{ dh_param }} {{ value.get('keysize', 2048) }}
     - cwd: {{ certificates_path }}
     - creates: {{ certificates_path }}/{{ dh_param }}
+    - watch_in:
+      - service: nginx_service
 {%- endif %}
 {%- endfor %}
 
