@@ -16,6 +16,7 @@
             'server_enabled': '/etc/nginx/sites-enabled',
             'server_use_symlink': True,
             'pid_file': '/run/nginx.pid',
+            'openssl_package': 'openssl',
         },
         'CentOS': {
             'package': 'nginx',
@@ -30,6 +31,7 @@
             'rh_os_releasever': '$releasever',
             'gpg_check': False,
             'gpg_key': 'http://nginx.org/keys/nginx_signing.key',
+            'openssl_package': 'openssl',
         },
         'RedHat': {
             'package': 'nginx',
@@ -49,6 +51,7 @@
               'passenger_instance_registry_dir': ' /var/run/passenger-instreg',
               'passenger_ruby': '/usr/bin/ruby',
             },
+            'openssl_package': 'openssl',
         },
         'Suse': {
             'package': 'nginx',
@@ -60,7 +63,8 @@
             'server_use_symlink': False,
             'pid_file': '/run/nginx.pid',
             'gpg_check': True,
-            'gpg_key': 'http://download.opensuse.org/repositories/server:/http/openSUSE_13.2/repodata/repomd.xml.key'
+            'gpg_key': 'http://download.opensuse.org/repositories/server:/http/openSUSE_13.2/repodata/repomd.xml.key',
+            'openssl_package': 'openssl',
         },
         'Arch': {
             'package': 'nginx',
@@ -70,6 +74,7 @@
             'server_available': '/etc/nginx/sites-available',
             'server_enabled': '/etc/nginx/sites-enabled',
             'server_use_symlink': True,
+            'openssl_package': 'openssl',
         },
         'Gentoo': {
             'package': 'www-servers/nginx',
@@ -79,6 +84,7 @@
             'server_available': '/etc/nginx/sites-available',
             'server_enabled': '/etc/nginx/sites-enabled',
             'server_use_symlink': True,
+            'openssl_package': 'dev-libs/openssl',
         },
     }, default='Debian' ),
     'install_from_source': False,
