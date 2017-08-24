@@ -81,7 +81,7 @@ nginx_phusionpassenger_repo:
       - pkg: nginx_install
 {% endif %}
 
-{% if salt['grains.get']('os_family') == 'Suse' %}
+{% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
 nginx_zypp_repo:
   pkgrepo:
     {%- if from_official %}
