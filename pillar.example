@@ -1,19 +1,19 @@
 # nginx:
- #  install_from_source: True
- #  use_upstart: True
- #  use_sysvinit: False
- #  user_auth_enabled: True
- #  with_luajit: False
- #  with_openresty: True
- #  repo_version: development  # Must be using ppa install by setting `repo_source = ppa`
- #  set_real_ips: # NOTE: to use this, nginx must have http_realip module enabled
- #    from_ips:
- #      - 10.10.10.0/24
- #    real_ip_header: X-Forwarded-For
- #  modules:
- #    headers-more:
- #      source: http://github.com/agentzh/headers-more-nginx-module/tarball/v0.21
- #      source_hash: sha1=dbf914cbf3f7b6cb7e033fa7b7c49e2f8879113b
+   install_from_source: True
+   use_upstart: True
+   use_sysvinit: False
+   user_auth_enabled: True
+   with_luajit: False
+   with_openresty: True
+   repo_version: development  # Must be using ppa install by setting `repo_source = ppa`
+   set_real_ips: # NOTE: to use this, nginx must have http_realip module enabled
+     from_ips:
+       - 10.10.10.0/24
+     real_ip_header: X-Forwarded-For
+   modules:
+     headers-more:
+       source: http://github.com/agentzh/headers-more-nginx-module/tarball/v0.21
+       source_hash: sha1=dbf914cbf3f7b6cb7e033fa7b7c49e2f8879113b
 
 # ========
 # nginx.ng
@@ -42,18 +42,19 @@ nginx:
     source_hash: ''
     
     # These are usually set by grains in map.jinja
+    # Typically you can comment these out.
     lookup:
-      # package: nginx-custom
-      # service: nginx
-      # webuser: www-data
-      # conf_file: /etc/nginx/nginx.conf
-      # server_available: /etc/nginx/sites-available
-      # server_enabled: /etc/nginx/sites-enabled
-      # server_use_symlink: True
+      package: nginx-custom
+      service: nginx
+      webuser: www-data
+      conf_file: /etc/nginx/nginx.conf
+      server_available: /etc/nginx/sites-available
+      server_enabled: /etc/nginx/sites-enabled
+      server_use_symlink: True
       # This is required for RedHat like distros (Amazon Linux) that don't follow semantic versioning for $releasever
-      # rh_os_releasever: '6'
+      rh_os_releasever: '6'
       # Currently it can be used on rhel/centos/suse when installing from repo
-      # gpg_check: True
+      gpg_check: True
       pid_file: /var/run/nginx.pid   ### Prevent Rendering SLS error (map.jinja:149) if nginx.server.config.pid undefined (Ubuntu, etc) ###
       
 
@@ -102,7 +103,7 @@ nginx:
           # may be True, False, or None where True is enabled, False, disabled, and None indicates no action
           enabled: True
           ########### 
-          ## PLEASE MODIFY 'available_dir' AND 'enabled_dir' VALUES TO ALTERNATIVE VALUES ##
+          ## Modify  'available_dir' AND 'enabled_dir' '/etc/nginx' location to alternative value.
           ###########
           available_dir: /etc/nginx/sites-available # an alternate directory (not sites-available) where this server may be found
           enabled_dir: /etc/nginx/sites-enabled # an alternate directory (not sites-enabled) where this server may be found
