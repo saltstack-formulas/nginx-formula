@@ -102,7 +102,7 @@ nginx:
       symlink_opts: {} # partially exposes file.symlink params when symlinking enabled sites
       rename_opts: {} # partially exposes file.rename params when not symlinking disabled/enabled sites
       managed_opts: {} # partially exposes file.managed params for managed server files
-      dir_opts: {} # partially exposes file.directory params for site available/enabled dirs
+      dir_opts: {} # partially exposes file.directory params for site available/enabled and snippets dirs
 
       # server declarations
       # servers will default to being placed in server_available
