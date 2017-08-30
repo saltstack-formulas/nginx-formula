@@ -85,15 +85,22 @@ nginx_server_available_dir:
 # Managed enabled/disabled state for servers
 {% for server, settings in nginx.servers.managed.items() %}
 {% if settings.config != None %}
+{% if 'source' in settings.config %}
+{% set source_path = settings.config.source %}
+{% else %}
+{% set source_path = 'salt://nginx/ng/files/server.conf' %}
+{% endif %}
 {% set conf_state_id = 'server_conf_' ~ loop.index0 %}
 {{ conf_state_id }}:
   file.managed:
     {{ sls_block(nginx.servers.managed_opts) }}
     - name: {{ server_curpath(server) }}
-    - source: salt://nginx/ng/files/server.conf
+    - source: {{ source_path }}
     - template: jinja
+{% if 'source' not in settings.config %}
     - context:
         config: {{ settings.config|json() }}
+{% endif %}
     {% if 'overwrite' in settings and settings.overwrite == False %}
     - unless:
       - test -e {{ server_curpath(server) }}
