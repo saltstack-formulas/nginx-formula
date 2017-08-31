@@ -85,8 +85,8 @@ nginx_server_available_dir:
 # Managed enabled/disabled state for servers
 {% for server, settings in nginx.servers.managed.items() %}
 {% if settings.config != None %}
-{% if 'source' in settings.config %}
-{% set source_path = settings.config.source %}
+{% if 'source_path' in settings.config %}
+{% set source_path = settings.config.source_path %}
 {% else %}
 {% set source_path = 'salt://nginx/ng/files/server.conf' %}
 {% endif %}
@@ -97,7 +97,7 @@ nginx_server_available_dir:
     - name: {{ server_curpath(server) }}
     - source: {{ source_path }}
     - template: jinja
-{% if 'source' not in settings.config %}
+{% if 'source_path' not in settings.config %}
     - context:
         config: {{ settings.config|json() }}
 {% endif %}

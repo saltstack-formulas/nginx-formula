@@ -77,7 +77,7 @@ nginx:
       # nginx.conf (main server) declarations
       # dictionaries map to blocks {} and lists cause the same declaration to repeat with different values
       config: 
-        source: salt://path_to_nginx_conf_file/nginx.conf # IMPORTANT: This option is mutually exclusive with the rest of the
+        source_path: salt://path_to_nginx_conf_file/nginx.conf # IMPORTANT: This option is mutually exclusive with the rest of the
                                                           # options; if it is found other options (worker_processes: 4 and so 
                                                           # on) are not processed and just upload the file from source
         worker_processes: 4
@@ -141,12 +141,12 @@ nginx:
           #        test something else;
           #    }
           # }         
-        mysite2: # Using source options to upload the file instead of templating all the file
+        mysite2: # Using source_path options to upload the file instead of templating all the file
           enabled: True
           available_dir: /etc/nginx/sites-available
           enabled_dir: /etc/nginx/sites-enabled
           config:
-            source: salt://path-to-site-file/mysite2
+            source_path: salt://path-to-site-file/mysite2
 
     certificates_path: '/etc/nginx/ssl'  # Use this if you need to deploy below certificates in a custom path.
     # If you're doing SSL termination, you can deploy certificates this way.
