@@ -13,7 +13,7 @@ nginx_log_dir:
 {% endif %}
 
 {% if 'source_path' in nginx.server.config %}
-{% set source_path = nginx.server.config.source %}
+{% set source_path = nginx.server.config.source_path %}
 {% else %} 
 {% set source_path = 'salt://nginx/ng/files/nginx.conf' %} 
 {% endif %}
