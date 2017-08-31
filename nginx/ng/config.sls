@@ -12,7 +12,7 @@ nginx_log_dir:
     - group: {{ nginx.server.config.user }}
 {% endif %}
 
-{% if 'source' in nginx.server.config %}
+{% if 'source_path' in nginx.server.config %}
 {% set source_path = nginx.server.config.source %}
 {% else %} 
 {% set source_path = 'salt://nginx/ng/files/nginx.conf' %} 
@@ -23,7 +23,7 @@ nginx_config:
     - name: {{ nginx.lookup.conf_file }}
     - source: {{ source_path }}
     - template: jinja
-{% if 'source' not in nginx.server.config %} 
+{% if 'source_path' not in nginx.server.config %}
     - context:
         config: {{ nginx.server.config|json() }}
 {% endif %}
