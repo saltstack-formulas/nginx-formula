@@ -105,6 +105,10 @@ nginx:
         mysite: # relative pathname of the server file
           # may be True, False, or None where True is enabled, False, disabled, and None indicates no action
           enabled: True
+          # Remove the site config file. Nice to clean up the conf.d (or sites-available).
+          # It also remove the symlink (if it is exists).
+          # The site MUST be disabled before delete it (if not the nginx is not reloaded).
+          deleted: True 
           ########### 
           ## Modify  'available_dir' AND 'enabled_dir' '/etc/nginx' location to alternative value.
           ###########
