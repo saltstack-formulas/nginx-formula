@@ -37,7 +37,7 @@
 {%- endmacro %}
 
 # Creates the sls block that manages symlinking / renaming servers
-{% macro manage_status(server, state) -%}
+{% macro manage_status(server, state, deleted) -%}
   {%- set anti_state = {True:False, False:True}.get(state) -%}
   {% if state == True %}
     {%- if nginx.lookup.server_use_symlink %}
@@ -46,20 +46,30 @@
     - name: {{ server_path(server, state) }}
     - target: {{ server_path(server, anti_state) }}
     {%- else %}
+        {%- if deleted == True %}
+  file.absent:
+    - name: {{ server_path(server, state) }}
+        {%- else %}
   file.rename:
     {{ sls_block(nginx.servers.rename_opts) }}
     - name: {{ server_path(server, state) }}
     - source: {{ server_path(server, anti_state) }}
+        {%- endif %}
     {%- endif %}
   {%- elif state == False %}
     {%- if nginx.lookup.server_use_symlink %}
   file.absent:
     - name: {{ server_path(server, anti_state) }}
     {%- else %}
+        {%- if deleted == True %}
+  file.absent:
+    - name: {{ server_path(server, state) }}
+        {%- else %}
   file.rename:
     {{ sls_block(nginx.servers.rename_opts) }}
     - name: {{ server_path(server, state) }}
     - source: {{ server_path(server, anti_state) }}
+        {%- endif %}
     {%- endif -%}
   {%- endif -%}
 {%- endmacro %}
@@ -84,13 +94,18 @@ nginx_server_available_dir:
 
 # Managed enabled/disabled state for servers
 {% for server, settings in nginx.servers.managed.items() %}
-{% if settings.config != None %}
+{% set conf_state_id = 'server_conf_' ~ loop.index0 %}
+{% if 'deleted' in settings and settings.deleted %}
+{{ conf_state_id }}:
+    file.absent:
+        - name: {{ server_curpath(server) }}
+{% else %}
+{% if settings.config != None and settings.enabled == True %}
 {% if 'source_path' in settings.config %}
 {% set source_path = settings.config.source_path %}
 {% else %}
 {% set source_path = 'salt://nginx/ng/files/server.conf' %}
 {% endif %}
-{% set conf_state_id = 'server_conf_' ~ loop.index0 %}
 {{ conf_state_id }}:
   file.managed:
     {{ sls_block(nginx.servers.managed_opts) }}
@@ -107,16 +122,23 @@ nginx_server_available_dir:
     {% endif %}
 {% do server_states.append(conf_state_id) %}
 {% endif %}
+{% endif %}
 
 {% if settings.enabled != None %}
 {% set status_state_id = 'server_state_' ~ loop.index0 %}
 {{ status_state_id }}:
-{{ manage_status(server, settings.enabled) }}
-{% if settings.config != None %}
+{% if 'deleted' in settings and settings.deleted %}
+{{ manage_status(server, False, True) }}
+{% else %}
+{{ manage_status(server, settings.enabled, False) }}
+{% endif %}
+{% if settings.config != None and settings.enabled == True %}
     - require:
       - file: {{ conf_state_id }}
 {% endif %}
 
+{% if 'deleted' not in settings or ( 'deleted' in settings and settings.deleted == False ) %}
 {% do server_states.append(status_state_id) %}
+{% endif %}
 {% endif %}
 {% endfor %}
