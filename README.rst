@@ -73,10 +73,15 @@ Meta-state for inclusion of all ng states.
 **Note:** nginx.ng requires the merge parameter of salt.modules.pillar.get(),
 first available in the Helium release.
 
-``nginx.ng.install``
+``nginx.ng.pkg``
 --------------------
 
-Installs the nginx package.
+Installs nginx from package, from the distribution repositories, the official nginx repo or the ppa from Launchpad.
+
+``nginx.ng.src``
+--------------------
+
+Builds and installs nginx from source.
 
 ``nginx.ng.config``
 -------------------
