@@ -40,6 +40,17 @@ nginx:
     # Source install
     source_version: '1.10.0'
     source_hash: ''
+
+    # Diffie-Hellman Parameter Creation
+    dh_contents: |
+      -----BEGIN DH PARAMETERS-----
+      MIIBCAKCAQEAx+4Z1/d4seEO49mzns3DOH0obleZQWtSO7mzB5XLlHrZz/b3V+AI
+      Zma9zoyYGhoORaaXQEK4sLwiIj8e7nIfqQWcjKk1y9t9e9oZ1ZR6Vf7peFLoYFqk
+      xVYpfiDBknnjJ6SIv/puzJcdIfyUJ/2DsT96Im3zSYqBWZMmLw4QLAa58LCUEfkE
+      BzQTPHcBrt2l9LAHKs2RDE0s9WVmdkrOZK/nvoyWD+X9pSkA7RjgyS+tES5uNcNG
+      gaPY/+aaAP4gCbsBDQLqAxO5em8N9T/DlyZQmhiIsK+KT2VEkO8jIbiSZ3Ll0QZp
+      0teMSBZ30naZIKScO4spusyHZs/0CWuTAwIBAg==
+      -----END DH PARAMETERS-----
     
     # These are usually set by grains in map.jinja
     # Typically you can comment these out.
