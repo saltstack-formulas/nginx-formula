@@ -49,10 +49,10 @@ Installs nginx via the source files.
 ``nginx.users``
 ---------------
 
-Installs apache utils, and configures nginx users specified in the pillar. 
-This requires `basicauth <https://github.com/saltstack/salt-contrib/blob/master/modules/basicauth.py>`_ 
-from `salt-contrib <https://github.com/saltstack/salt-contrib/>`_ (either add it to your salt or ship 
-this single file in your `_modules` directory see `Dynamic Module Distribution 
+Installs apache utils, and configures nginx users specified in the pillar.
+This requires `basicauth <https://github.com/saltstack/salt-contrib/blob/master/modules/basicauth.py>`_
+from `salt-contrib <https://github.com/saltstack/salt-contrib/>`_ (either add it to your salt or ship
+this single file in your `_modules` directory see `Dynamic Module Distribution
 <https://docs.saltstack.com/en/latest/ref/file_server/dynamic-modules.html>`_
 
 Next-generation, alternate approach
@@ -108,7 +108,7 @@ Manages nginx virtual hosts files and binds them to service calls.
 ----------------------
 
 Installs and configures Phusion Passenger module for nginx. You need to enable
-the upstream phusion passenger repository with `install_from_phusionpassenger: true`. 
+the upstream phusion passenger repository with `install_from_phusionpassenger: true`.
 Nginx will also be installed from that repository, as it needs to be modified to
-allow the passenger module to work. 
+allow the passenger module to work.
 
