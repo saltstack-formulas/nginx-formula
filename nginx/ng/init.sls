@@ -6,6 +6,7 @@
 
 include:
   - nginx.ng.config
+  - nginx.ng.extra_config
   - nginx.ng.service
   - nginx.ng.servers
   - nginx.ng.certificates
