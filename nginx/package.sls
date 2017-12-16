@@ -102,7 +102,7 @@ nginx:
     - require:
       - pkg: nginx
       - file: nginx-old-init
-      - module: nginx-old-init      
+      - module: nginx-old-init
 {% endif %}
   service.running:
     - enable: True

@@ -21,10 +21,10 @@ get-openresty:
 install_openresty:
   cmd.wait:
     - cwd: {{ home }}/ngx_openresty-{{ openresty_version }}
-    - names: 
+    - names:
       - ./configure --with-luajit \
                     --with-http_drizzle_module \
-                    --with-http_postgres_module \ 
+                    --with-http_postgres_module \
                     --with-http_iconv_module
       - make && make install
     - watch:

@@ -40,7 +40,7 @@ nginx:
     # Source install
     source_version: '1.10.0'
     source_hash: ''
-    
+
     # These are usually set by grains in map.jinja
     # Typically you can comment these out.
     lookup:
@@ -56,7 +56,7 @@ nginx:
       # Currently it can be used on rhel/centos/suse when installing from repo
       gpg_check: True
       pid_file: /var/run/nginx.pid   ### Prevent Rendering SLS error (map.jinja:149) if nginx.server.config.pid undefined (Ubuntu, etc) ###
-      
+
 
     # Source compilation is not currently a part of nginx.ng
     from_source: False
@@ -76,9 +76,9 @@ nginx:
 
       # nginx.conf (main server) declarations
       # dictionaries map to blocks {} and lists cause the same declaration to repeat with different values
-      config: 
+      config:
         source_path: salt://path_to_nginx_conf_file/nginx.conf # IMPORTANT: This option is mutually exclusive with the rest of the
-                                                          # options; if it is found other options (worker_processes: 4 and so 
+                                                          # options; if it is found other options (worker_processes: 4 and so
                                                           # on) are not processed and just upload the file from source
         worker_processes: 4
         pid: /var/run/nginx.pid		### Directory location must exist
@@ -108,22 +108,22 @@ nginx:
           # Remove the site config file. Nice to clean up the conf.d (or sites-available).
           # It also remove the symlink (if it is exists).
           # The site MUST be disabled before delete it (if not the nginx is not reloaded).
-          deleted: True 
-          ########### 
+          deleted: True
+          ###########
           ## Modify  'available_dir' AND 'enabled_dir' '/etc/nginx' location to alternative value.
           ###########
           available_dir: /etc/nginx/sites-available # an alternate directory (not sites-available) where this server may be found
           enabled_dir: /etc/nginx/sites-enabled # an alternate directory (not sites-enabled) where this server may be found
           disabled_name: mysite.aint_on # an alternative disabled name to be use when not symlinking
           overwrite: True # overwrite an existing server file or not
-          
+
           # May be a list of config options or None, if None, no server file will be managed/templated
           # Take server directives as lists of dictionaries. If the dictionary value is another list of
           # dictionaries a block {} will be started with the dictionary key name
           config:
             - server:
               - server_name: localhost
-              - listen: 
+              - listen:
                 - 80
                 - default_server
               - index:
@@ -134,7 +134,7 @@ nginx:
                   - $uri
                   - $uri/ =404
                 - test: something else
-                
+
           # The above outputs:
           # server {
           #    server_name localhost;
@@ -144,7 +144,7 @@ nginx:
           #        try_files $uri $uri/ =404;
           #        test something else;
           #    }
-          # }         
+          # }
         mysite2: # Using source_path options to upload the file instead of templating all the file
           enabled: True
           available_dir: /etc/nginx/sites-available

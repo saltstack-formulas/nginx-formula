@@ -216,7 +216,7 @@ nginx:
 {% if use_sysvinit %}
     - watch_in:
       {% set logger_types = ('access', 'error') %}
-      {% for log_type in logger_types %}  
+      {% for log_type in logger_types %}
       - service: nginx-logger-{{ log_type }}
       {% endfor %}
 {% endif %}
