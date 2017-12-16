@@ -173,6 +173,15 @@ nginx:
           (Your Private Key: www.example.com.key)
           -----END RSA PRIVATE KEY-----
 
+    dh_param:
+      'mydhparam1.pem': |
+        -----BEGIN DH PARAMETERS-----
+        (Your custom DH prime)
+        -----END DH PARAMETERS-----
+      # or to generate one on-the-fly
+      'mydhparam2.pem':
+        keysize: 2048
+
     # Passenger configuration
     # Default passenger configuration is provided, and will be deployed in
     # /etc/nginx/conf.d/passenger.conf
@@ -180,4 +189,3 @@ nginx:
       passenger_root: /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini
       passenger_ruby: /usr/bin/ruby
       passenger_instance_registry_dir: /var/run/passenger-instreg
-
