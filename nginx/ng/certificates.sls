@@ -5,7 +5,7 @@ include:
 
 {% set certificates_path = salt['pillar.get']('nginx:ng:certificates_path', '/etc/nginx/ssl') %}
 
-{%- for dh_param, value in salt.pillar.get('nginx:ng:dh_param').items() %}
+{%- for dh_param, value in salt['pillar.get']('nginx:ng:dh_param', {}).items() %}
 {%- if value is string %}
 create_nginx_dhparam_{{ dh_param }}_key:
   file.managed:
