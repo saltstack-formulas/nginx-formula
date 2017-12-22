@@ -126,6 +126,9 @@ nginx_server_available_dir:
 
 {% if settings.enabled != None %}
 {% set status_state_id = 'server_state_' ~ loop.index0 %}
+{%- set enabled_dir = path_join(server, nginx.servers.managed.get(server).get('enabled_dir', nginx.lookup.server_enabled)) -%}
+{%- set available_dir = path_join(server, nginx.servers.managed.get(server).get('available_dir', nginx.lookup.server_available)) -%}
+{%- if enabled_dir != available_dir %}
 {{ status_state_id }}:
 {% if 'deleted' in settings and settings.deleted %}
 {{ manage_status(server, False, True) }}
@@ -140,5 +143,6 @@ nginx_server_available_dir:
 {% if 'deleted' not in settings or ( 'deleted' in settings and settings.deleted == False ) %}
 {% do server_states.append(status_state_id) %}
 {% endif %}
+{%- endif %} {# enabled != available_dir #}
 {% endif %}
 {% endfor %}
