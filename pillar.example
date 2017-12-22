@@ -152,6 +152,25 @@ nginx:
           config:
             source_path: salt://path-to-site-file/mysite2
 
+        # Below configuration becomes handy if you want to create custom configuration files
+        # for example if you want to create /usr/local/etc/nginx/http_options.conf with
+        # the following content:
+
+        # sendfile on;
+        # tcp_nopush on;
+        # tcp_nodelay on;
+        # send_iowait 12000;
+
+        http_options.conf:
+          enabled: True
+          available_dir: /usr/local/etc/nginx
+          enabled_dir: /usr/local/etc/nginx
+          config:
+            - sendfile: 'on'
+            - tcp_nopush: 'on'
+            - tcp_nodelay: 'on'
+            - send_iowait: 12000
+
     certificates_path: '/etc/nginx/ssl'  # Use this if you need to deploy below certificates in a custom path.
     # If you're doing SSL termination, you can deploy certificates this way.
     # The private one(s) should go in a separate pillar file not in version
