@@ -50,4 +50,14 @@ nginx_{{ domain }}_ssl_key:
     - watch_in:
       - service: nginx_service
 {% endif %}
+
+{% if salt['pillar.get']("nginx:ng:certificates:{}:ca_cert".format(domain)) %}
+nginx_{{ domain }}_ca_cert:
+  file.managed:
+    - name: {{ certificates_path }}/{{ domain }}-ca.crt
+    - makedirs: True
+    - contents_pillar: nginx:ng:certificates:{{ domain }}:ca_cert
+    - watch_in:
+      - service: nginx_service
+{% endif %}
 {%- endfor %}
