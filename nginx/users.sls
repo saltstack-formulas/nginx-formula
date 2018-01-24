@@ -5,9 +5,9 @@ htpasswd:
   pkg.installed:
     - name: {{ nginx.apache_utils }}
 
-touch /etc/nginx/.htpasswd:
+touch {{ htauth }}:
   cmd.run:
-    - creates: /etc/nginx/.htpasswd
+    - creates: {{ htauth }}
 
 make sure {{ htauth }} exists:
   file.exists:
