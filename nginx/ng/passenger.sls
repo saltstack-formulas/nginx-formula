@@ -26,7 +26,7 @@ passenger_install:
 passenger_config:
   file.managed:
     {{ sls_block(nginx.server.opts) }}
-    - name: /etc/nginx/conf.d/passenger.conf
+    - name: {{ nginx.lookup.passenger_config_file }}
     - source: salt://nginx/ng/files/nginx.conf
     - template: jinja
     - context:
