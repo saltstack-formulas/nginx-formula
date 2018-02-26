@@ -51,6 +51,10 @@ nginx:
       server_available: /etc/nginx/sites-available
       server_enabled: /etc/nginx/sites-enabled
       server_use_symlink: True
+      # If you install nginx+passenger from phusionpassenger in Debian, these values will probably be needed
+      passenger_package: libnginx-mod-http-passenger
+      passenger_config_file: /etc/nginx/conf.d/mod-http-passenger.conf
+
       # This is required for RedHat like distros (Amazon Linux) that don't follow semantic versioning for $releasever
       rh_os_releasever: '6'
       # Currently it can be used on rhel/centos/suse when installing from repo
