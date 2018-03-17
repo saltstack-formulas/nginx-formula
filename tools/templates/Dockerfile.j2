@@ -1,0 +1,14 @@
+FROM simplyadrian/allsalt:{{ image_tag }}
+
+{% if 'debian' in image_tag or 'ubuntu' in image_tag -%}
+RUN apt-get update && \
+    apt-get install -y python-pip
+{% endif %}
+
+RUN pip install pytest && \
+    sed -i "s/#master: salt/master: localhost/g" /etc/salt/minion
+
+ADD tests/srv /srv
+ADD {{ formula_name }} /srv/salt/{{ formula_name }}
+
+WORKDIR /srv/salt
