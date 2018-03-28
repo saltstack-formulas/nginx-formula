@@ -45,6 +45,7 @@
     {{ sls_block(nginx.servers.symlink_opts) }}
     - name: {{ server_path(server, state) }}
     - target: {{ server_path(server, anti_state) }}
+    - makedirs: True
     {%- else %}
         {%- if deleted == True %}
   file.absent:
@@ -111,6 +112,7 @@ nginx_server_available_dir:
     {{ sls_block(nginx.servers.managed_opts) }}
     - name: {{ server_curpath(server) }}
     - source: {{ source_path }}
+    - makedirs: True
     - template: jinja
 {% if 'source_path' not in settings.config %}
     - context:
