@@ -12,6 +12,7 @@ touch {{ htauth }}:
 make sure {{ htauth }} exists:
   file.exists:
     - name: {{ htauth }}
+    - makedirs: True
 
 {% for name, user in pillar.get('users', {}).items() %}
 {% if user['webauth'] is defined -%}
