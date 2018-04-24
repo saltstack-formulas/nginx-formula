@@ -10,7 +10,7 @@ touch {{ htauth }}:
     - creates: {{ htauth }}
 
 make sure {{ htauth }} exists:
-  file.exists:
+  file.managed:
     - name: {{ htauth }}
     - makedirs: True
 
