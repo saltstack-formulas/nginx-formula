@@ -6,7 +6,7 @@ htpasswd:
     - name: {{ nginx.apache_utils }}
 
 make sure {{ htauth }} exists:
-  file.exists:
+  file.managed:
     - name: {{ htauth }}
     - makedirs: True
 
