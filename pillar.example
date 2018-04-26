@@ -179,6 +179,10 @@ nginx:
     # If you're doing SSL termination, you can deploy certificates this way.
     # The private one(s) should go in a separate pillar file not in version
     # control (or use encrypted pillar data).
+
+    # ca_cert is useful for ssl_stapling (http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling)
+    # it will create a file called www.example.com-ca.crt with the content from pillar
+
     certificates:
       'www.example.com':
         public_cert: |
@@ -195,6 +199,13 @@ nginx:
           -----BEGIN RSA PRIVATE KEY-----
           (Your Private Key: www.example.com.key)
           -----END RSA PRIVATE KEY-----
+        ca_cert:
+          -----BEGIN CERTIFICATE-----
+          (Your Intermediate certificate: ExampleCA.crt)
+          -----END CERTIFICATE-----
+          -----BEGIN CERTIFICATE-----
+          (Your Root certificate: TrustedRoot.crt)
+          -----END CERTIFICATE-----
 
     dh_param:
       'mydhparam1.pem': |
