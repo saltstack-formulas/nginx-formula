@@ -83,6 +83,11 @@ Installs nginx from package, from the distribution repositories, the official ng
 
 Builds and installs nginx from source.
 
+``nginx.ng.certificates``
+-------------------
+
+Manages the deployment of nginx certificates.
+
 ``nginx.ng.config``
 -------------------
 
