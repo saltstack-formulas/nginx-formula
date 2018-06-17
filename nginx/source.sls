@@ -170,7 +170,11 @@ nginx:
     - cwd: {{ nginx_source }}
     - names:
       - (
+        {%- if nginx.get('debug_symbols', false) %}
+        CFLAGS="-g -O0" ./configure --conf-path={{ conf_dir }}/nginx.conf
+        {%- else %}
         ./configure --conf-path={{ conf_dir }}/nginx.conf
+        {%- endif %}
         --sbin-path={{ sbin_dir }}/nginx
         --user={{ nginx_map.default_user }}
         --group={{ nginx_map.default_group }}
@@ -216,7 +220,7 @@ nginx:
 {% if use_sysvinit %}
     - watch_in:
       {% set logger_types = ('access', 'error') %}
-      {% for log_type in logger_types %}  
+      {% for log_type in logger_types %}
       - service: nginx-logger-{{ log_type }}
       {% endfor %}
 {% endif %}

@@ -7,13 +7,13 @@
 include:
   - nginx.ng.config
   - nginx.ng.service
-  - nginx.ng.vhosts
+  - nginx.ng.servers
   - nginx.ng.certificates
 
 extend:
   nginx_service:
     service:
-      - watch:
+      - listen:
         - file: nginx_config
       - require:
         - file: nginx_config

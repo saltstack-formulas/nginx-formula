@@ -50,12 +50,16 @@ Installs nginx via the source files.
 ---------------
 
 Installs apache utils, and configures nginx users specified in the pillar.
+This requires `basicauth <https://github.com/saltstack/salt-contrib/blob/master/modules/basicauth.py>`_
+from `salt-contrib <https://github.com/saltstack/salt-contrib/>`_ (either add it to your salt or ship
+this single file in your `_modules` directory see `Dynamic Module Distribution
+<https://docs.saltstack.com/en/latest/ref/file_server/dynamic-modules.html>`_
 
 Next-generation, alternate approach
 ===================================
 
 The following states provide an alternate approach to managing Nginx and Nginx
-vhosts, as well as code organization. Please provide feedback by filing issues,
+servers, as well as code organization. Please provide feedback by filing issues,
 discussing in ``#salt`` in Freenode and the mailing list as normal.
 
 .. contents::
@@ -69,10 +73,20 @@ Meta-state for inclusion of all ng states.
 **Note:** nginx.ng requires the merge parameter of salt.modules.pillar.get(),
 first available in the Helium release.
 
-``nginx.ng.install``
+``nginx.ng.pkg``
 --------------------
 
-Installs the nginx package.
+Installs nginx from package, from the distribution repositories, the official nginx repo or the ppa from Launchpad.
+
+``nginx.ng.src``
+--------------------
+
+Builds and installs nginx from source.
+
+``nginx.ng.certificates``
+-------------------
+
+Manages the deployment of nginx certificates.
 
 ``nginx.ng.config``
 -------------------
@@ -84,13 +98,22 @@ Manages the nginx main server configuration file.
 
 Manages the startup and running state of the nginx service.
 
-``nginx.ng.vhosts_config``
+``nginx.ng.servers_config``
 --------------------------
 
 Manages virtual host files. This state only manages the content of the files
 and does not bind them to service calls.
 
-``nginx.ng.vhosts``
+``nginx.ng.servers``
 -------------------
 
 Manages nginx virtual hosts files and binds them to service calls.
+
+``nginx.ng.passenger``
+----------------------
+
+Installs and configures Phusion Passenger module for nginx. You need to enable
+the upstream phusion passenger repository with `install_from_phusionpassenger: true`.
+Nginx will also be installed from that repository, as it needs to be modified to
+allow the passenger module to work.
+

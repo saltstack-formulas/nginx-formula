@@ -17,8 +17,8 @@ nginx_systemd_service_file:
   file.managed:
     - name: /lib/systemd/system/nginx.service
     - source: salt://nginx/ng/files/nginx.service
-{% endif %} 
-  
+{% endif %}
+
 nginx_service:
   service.{{ service_function }}:
     {{ sls_block(nginx.service.opts) }}
@@ -30,7 +30,7 @@ nginx_service:
       {% else %}
       - sls: nginx.ng.pkg
       {% endif %}
-    - watch:
+    - listen:
       {% if nginx.install_from_source %}
       - cmd: nginx_install
       {% else %}
