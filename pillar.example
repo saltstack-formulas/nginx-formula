@@ -85,6 +85,7 @@ nginx:
                                                           # options; if it is found other options (worker_processes: 4 and so
                                                           # on) are not processed and just upload the file from source
         worker_processes: 4
+        load_module: modules/ngx_http_lua_module.so  # this will be passed very first in configuration; otherwise nginx will fail to start
         pid: /var/run/nginx.pid		### Directory location must exist
         events:
           worker_connections: 768
