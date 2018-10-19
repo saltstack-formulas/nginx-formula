@@ -24,7 +24,14 @@
 nginx_install:
   pkg.installed:
     {{ sls_block(nginx.package.opts) }}
+    {% if nginx.lookup.package is iterable and nginx.lookup.package is not string %}
+    - pkgs:
+      {% for pkg in nginx.lookup.package %}
+      - {{ pkg }}
+      {% endfor %}
+    {% else %}
     - name: {{ nginx.lookup.package }}
+    {% endif %}
 
 {% if salt['grains.get']('os_family') == 'Debian' %}
 nginx_official_repo:

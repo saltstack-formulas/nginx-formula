@@ -44,7 +44,7 @@ nginx:
     # These are usually set by grains in map.jinja
     # Typically you can comment these out.
     lookup:
-      package: nginx-custom
+      package: nginx-custom (can be a list)
       service: nginx
       webuser: www-data
       conf_file: /etc/nginx/nginx.conf
