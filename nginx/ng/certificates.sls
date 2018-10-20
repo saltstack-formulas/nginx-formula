@@ -36,17 +36,25 @@ nginx_{{ domain }}_ssl_certificate:
   file.managed:
     - name: {{ certificates_path }}/{{ domain }}.crt
     - makedirs: True
+{% if salt['pillar.get']("nginx:ng:certificates:{}:public_cert_pillar".format(domain)) %}
+    - contents_pillar: {{salt['pillar.get']('nginx:ng:certificates:{}:public_cert_pillar'.format(domain))}}
+{% else %}
     - contents_pillar: nginx:ng:certificates:{{ domain }}:public_cert
+{% endif %}
     - watch_in:
       - service: nginx_service
 
-{% if salt['pillar.get']("nginx:ng:certificates:{}:private_key".format(domain)) %}
+{% if salt['pillar.get']("nginx:ng:certificates:{}:private_key".format(domain)) or salt['pillar.get']("nginx:ng:certificates:{}:private_key_pillar".format(domain))%}
 nginx_{{ domain }}_ssl_key:
   file.managed:
     - name: {{ certificates_path }}/{{ domain }}.key
     - mode: 600
     - makedirs: True
+{% if salt['pillar.get']("nginx:ng:certificates:{}:private_key_pillar".format(domain)) %}
+    - contents_pillar: {{salt['pillar.get']('nginx:ng:certificates:{}:private_key_pillar'.format(domain))}}
+{% else %}
     - contents_pillar: nginx:ng:certificates:{{ domain }}:private_key
+{% endif %}
     - watch_in:
       - service: nginx_service
 {% endif %}

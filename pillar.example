@@ -188,6 +188,11 @@ nginx:
     # control (or use encrypted pillar data).
     certificates:
       'www.example.com':
+
+        # choose one of: deploying this cert by pillar (e.g. in combination with ext_pillar and file_tree)
+        # public_cert_pillar: certs:example.com:fullchain.pem
+        # private_key_pillar: certs:example.com:privkey.pem
+        # or directly pasting the cert
         public_cert: |
           -----BEGIN CERTIFICATE-----
           (Your Primary SSL certificate: www.example.com.crt)
