@@ -75,6 +75,11 @@ nginx:
       enable: True # Whether or not the service will be enabled/running or dead
       opts: {} # this partially exposes parameters of service.running / service.dead
 
+    snippets: # You can use snippets to define often repeated configuration once and include it later
+      letsencrypt: # e.g. this can be included using "- include: 'snippets/letsencrypt.conf'"
+        - location ^~ /.well-known/acme-challenge/:
+          - proxy_pass: http://localhost:9999
+
     server:
       opts: {} # this partially exposes file.managed parameters as they relate to the main nginx.conf file
 
@@ -139,6 +144,7 @@ nginx:
                   - $uri
                   - $uri/ =404
                 - test: something else
+              - include 'snippets/letsencrypt.conf'
 
           # The above outputs:
           # server {
