@@ -7,6 +7,9 @@
 include:
   - nginx.ng.config
   - nginx.ng.service
+  {% if nginx.snippets is defined %}
+  - nginx.ng.snippets
+  {% endif %}
   - nginx.ng.servers
   - nginx.ng.certificates
 
