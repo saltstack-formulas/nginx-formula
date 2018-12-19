@@ -89,9 +89,6 @@ nginx_server_available_dir:
 {%- endif %}
 
 # Manage the actual server files
-{% for server, settings in nginx.servers.managed.items() %}
-{% endfor %}
-
 # Managed enabled/disabled state for servers
 {% for server, settings in nginx.servers.managed.items() %}
 {% set conf_state_id = 'server_conf_' ~ loop.index0 %}
