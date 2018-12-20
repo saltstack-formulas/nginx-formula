@@ -1,7 +1,7 @@
 {% from "nginx/map.jinja" import nginx as nginx_map with context %}
 {% set nginx = pillar.get('nginx', {}) -%}
-{% set home = nginx.get('home', '/var/www') -%}
-{% set conf_dir = nginx.get('conf_dir', '/etc/nginx') -%}
+{% set home = nginx.get('home', nginx_map.home) -%}
+{% set conf_dir = nginx.get('conf_dir', nginx_map.conf_dir) -%}
 {% set conf_template = nginx.get('conf_template', 'salt://nginx/templates/config.jinja') -%}
 
 {{ home }}:
