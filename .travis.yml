@@ -1,0 +1,24 @@
+env:
+  matrix:
+    - OS_ID: centos_master_2017.7.2
+    - OS_ID: debian_master_2017.7.2
+    - OS_ID: opensuse_master_2017.7.2
+    - OS_ID: ubuntu_master_2016.11.3
+    - OS_ID: ubuntu_master_2017.7.2
+
+sudo: required
+
+language: python
+
+services:
+- docker
+
+before_install:
+- pip install Jinja2
+- python ${TRAVIS_BUILD_DIR}/tools/filltmpl.py nginx ${OS_ID}
+
+install:
+- docker build --force-rm -t "nginx:salt-testing-${OS_ID}" -f "Dockerfile.${OS_ID}" .
+
+script:
+- ./tools/run-tests.sh nginx ${OS_ID}
