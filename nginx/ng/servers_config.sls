@@ -112,6 +112,8 @@ nginx_server_available_dir:
     - name: {{ server_curpath(server) }}
     - source: {{ source_path }}
     - template: jinja
+    - require_in:
+      - service: nginx_service
 {% if 'source_path' not in settings.config %}
     - context:
         config: {{ settings.config|json() }}
