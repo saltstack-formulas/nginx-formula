@@ -8,39 +8,56 @@
     'lookup': salt['grains.filter_by']({
         'Debian': {
             'package': 'nginx',
+            'passenger_package': 'passenger',
+            'passenger_config_file': '/etc/nginx/conf.d/passenger.conf',
             'service': 'nginx',
             'webuser': 'www-data',
             'conf_file': '/etc/nginx/nginx.conf',
             'server_available': '/etc/nginx/sites-available',
             'server_enabled': '/etc/nginx/sites-enabled',
+            'snippets_dir': '/etc/nginx/snippets',
             'server_use_symlink': True,
             'pid_file': '/run/nginx.pid',
+            'openssl_package': 'openssl',
         },
         'CentOS': {
             'package': 'nginx',
+            'passenger_package': 'passenger',
+            'passenger_config_file': '/etc/nginx/conf.d/passenger.conf',
             'service': 'nginx',
             'webuser': 'nginx',
             'conf_file': '/etc/nginx/nginx.conf',
             'server_available': '/etc/nginx/conf.d',
             'server_enabled': '/etc/nginx/conf.d',
+            'snippets_dir': '/etc/nginx/snippets',
             'server_use_symlink': False,
             'pid_file': '/run/nginx.pid',
             'rh_os_releasever': '$releasever',
             'gpg_check': False,
             'gpg_key': 'http://nginx.org/keys/nginx_signing.key',
+            'openssl_package': 'openssl',
         },
         'RedHat': {
             'package': 'nginx',
+            'passenger_package': 'passenger',
+            'passenger_config_file': '/etc/nginx/conf.d/passenger.conf',
             'service': 'nginx',
             'webuser': 'nginx',
             'conf_file': '/etc/nginx/nginx.conf',
             'server_available': '/etc/nginx/conf.d',
             'server_enabled': '/etc/nginx/conf.d',
+            'snippets_dir': '/etc/nginx/snippets',
             'server_use_symlink': False,
             'pid_file': '/run/nginx.pid',
             'rh_os_releasever': '$releasever',
             'gpg_check': False,
             'gpg_key': 'http://nginx.org/keys/nginx_signing.key',
+            'passenger': {
+              'passenger_root': '/usr/share/ruby/vendor_ruby/phusion_passenger/locations.ini',
+              'passenger_instance_registry_dir': ' /var/run/passenger-instreg',
+              'passenger_ruby': '/usr/bin/ruby',
+            },
+            'openssl_package': 'openssl',
         },
         'Suse': {
             'package': 'nginx',
@@ -49,10 +66,12 @@
             'conf_file': '/etc/nginx/nginx.conf',
             'server_available': '/etc/nginx/conf.d',
             'server_enabled': '/etc/nginx/conf.d',
+            'snippets_dir': '/etc/nginx/snippets',
             'server_use_symlink': False,
             'pid_file': '/run/nginx.pid',
             'gpg_check': True,
-            'gpg_key': 'http://download.opensuse.org/repositories/server:/http/openSUSE_13.2/repodata/repomd.xml.key'
+            'gpg_key': 'http://download.opensuse.org/repositories/server:/http/openSUSE_13.2/repodata/repomd.xml.key',
+            'openssl_package': 'openssl',
         },
         'Arch': {
             'package': 'nginx',
@@ -61,7 +80,9 @@
             'conf_file': '/etc/nginx/nginx.conf',
             'server_available': '/etc/nginx/sites-available',
             'server_enabled': '/etc/nginx/sites-enabled',
+            'snippets_dir': '/etc/nginx/snippets',
             'server_use_symlink': True,
+            'openssl_package': 'openssl',
         },
         'Gentoo': {
             'package': 'www-servers/nginx',
@@ -70,12 +91,26 @@
             'conf_file': '/etc/nginx/nginx.conf',
             'server_available': '/etc/nginx/sites-available',
             'server_enabled': '/etc/nginx/sites-enabled',
+            'snippets_dir': '/etc/nginx/snippets',
             'server_use_symlink': True,
+            'openssl_package': 'dev-libs/openssl',
+        },
+        'FreeBSD': {
+            'package': 'nginx',
+            'passenger_package': 'passenger',
+            'service': 'nginx',
+            'webuser': 'www',
+            'conf_file': '/usr/local/etc/nginx/nginx.conf',
+            'server_available': '/usr/local/etc/nginx/sites-available',
+            'server_enabled': '/usr/local/etc/nginx/sites-enabled',
+            'server_use_symlink': True,
+            'pid_file': '/var/run/nginx.pid',
         },
     }, default='Debian' ),
     'install_from_source': False,
     'install_from_ppa': False,
     'install_from_repo': False,
+    'install_from_phusionpassenger': False,
     'ppa_version': 'stable',
     'source_version': '1.10.0',
     'source_hash': '8ed647c3dd65bc4ced03b0e0f6bf9e633eff6b01bac772bcf97077d58bc2be4d',
@@ -108,9 +143,9 @@
                 'gzip': 'off',
                 'gzip_disable': '"msie6"',
                 'include': [
-                    '/etc/nginx/mime.types',
-                    '/etc/nginx/conf.d/*.conf',
-                    '/etc/nginx/sites-enabled/*',
+                    'mime.types',
+                    'conf.d/*.conf',
+                    'sites-enabled/*',
                 ],
             },
         },
@@ -119,11 +154,17 @@
         'disabled_postfix': '.disabled',
         'symlink_opts': {},
         'rename_opts': {},
-        'managed_opts': {},
+        'managed_opts': {
+            'makedirs': True,
+            },
         'dir_opts': {
             'makedirs': True,
         },
         'managed': {},
+    },
+    'passenger': {
+        'passenger_root': '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini',
+        'passenger_ruby': '/usr/bin/ruby',
     },
 }, merge=True) %}
 
@@ -139,3 +180,17 @@
 })%}
 {% endif %}
 
+{% if salt['grains.get']('os_family') == 'RedHat' %}
+{% do nginx.passenger.update({
+    'passenger_root': '/usr/share/ruby/vendor_ruby/phusion_passenger/locations.ini',
+    'passenger_instance_registry_dir': '/var/run/passenger-instreg',
+})%}
+    {% if salt['grains.get']('osfinger') == 'CentOS-6' %}
+    {% do nginx.server.config.update({
+        'pid': '/var/run/nginx.pid',
+    })%}
+    {% do nginx.passenger.update({
+        'passenger_root': '/usr/lib/ruby/1.8/phusion_passenger/locations.ini',
+    })%}
+    {% endif %}
+{% endif %}

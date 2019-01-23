@@ -49,10 +49,10 @@ Installs nginx via the source files.
 ``nginx.users``
 ---------------
 
-Installs apache utils, and configures nginx users specified in the pillar. 
-This requires `basicauth <https://github.com/saltstack/salt-contrib/blob/master/modules/basicauth.py>`_ 
-from `salt-contrib <https://github.com/saltstack/salt-contrib/>`_ (either add it to your salt or ship 
-this single file in your `_modules` directory see `Dynamic Module Distribution 
+Installs apache utils, and configures nginx users specified in the pillar.
+This requires `basicauth <https://github.com/saltstack/salt-contrib/blob/master/modules/basicauth.py>`_
+from `salt-contrib <https://github.com/saltstack/salt-contrib/>`_ (either add it to your salt or ship
+this single file in your `_modules` directory see `Dynamic Module Distribution
 <https://docs.saltstack.com/en/latest/ref/file_server/dynamic-modules.html>`_
 
 Next-generation, alternate approach
@@ -73,10 +73,20 @@ Meta-state for inclusion of all ng states.
 **Note:** nginx.ng requires the merge parameter of salt.modules.pillar.get(),
 first available in the Helium release.
 
-``nginx.ng.install``
+``nginx.ng.pkg``
 --------------------
 
-Installs the nginx package.
+Installs nginx from package, from the distribution repositories, the official nginx repo or the ppa from Launchpad.
+
+``nginx.ng.src``
+--------------------
+
+Builds and installs nginx from source.
+
+``nginx.ng.certificates``
+-------------------
+
+Manages the deployment of nginx certificates.
 
 ``nginx.ng.config``
 -------------------
@@ -98,3 +108,57 @@ and does not bind them to service calls.
 -------------------
 
 Manages nginx virtual hosts files and binds them to service calls.
+
+``nginx.ng.passenger``
+----------------------
+
+Installs and configures Phusion Passenger module for nginx. You need to enable
+the upstream phusion passenger repository with `install_from_phusionpassenger: true`.
+Nginx will also be installed from that repository, as it needs to be modified to
+allow the passenger module to work.
+
+
+
+Running Tests
+=============
+
+This test runner was implemented using the formula-test-harness_ project.
+
+Tests will be run on the following base images:
+
+* ``simplyadrian/allsalt:centos_master_2017.7.2``
+* ``simplyadrian/allsalt:debian_master_2017.7.2``
+* ``simplyadrian/allsalt:opensuse_master_2017.7.2``
+* ``simplyadrian/allsalt:ubuntu_master_2016.11.3``
+* ``simplyadrian/allsalt:ubuntu_master_2017.7.2``
+
+Local Setup
+-----------
+
+.. code-block:: shell
+
+   pip install -U virtualenv
+   virtualenv .venv
+   source .venv/bin/activate
+   make setup
+
+Run tests
+---------
+
+* ``make test-centos_master_2017.7.2``
+* ``make test-debian_master_2017.7.2``
+* ``make test-opensuse_master_2017.7.2``
+* ``make test-ubuntu_master_2016.11.3``
+* ``make test-ubuntu_master_2017.7.2``
+
+Run Containers
+--------------
+
+* ``make local-centos_master_2017.7.2``
+* ``make local-debian_master_2017.7.2``
+* ``make local-opensuse_master_2017.7.2``
+* ``make local-ubuntu_master_2016.11.3``
+* ``make local-ubuntu_master_2017.7.2``
+
+
+.. _formula-test-harness: https://github.com/intuitivetechnologygroup/formula-test-harness
