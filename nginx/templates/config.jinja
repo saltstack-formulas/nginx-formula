@@ -13,7 +13,7 @@ worker_rlimit_nofile {{ worker_rlimit_nofile }};
 {% set error_log_level = nginx.get('error_log',{}).get('level', 'warn') -%}
 error_log {{ ' '.join([error_log_location, error_log_level]) }};
 pid {{ nginx.get('pid', '/var/run/nginx.pid') }};
-{% if salt['test.provider']('service') != 'systemd' -%}
+{% if not 'systemd' in salt['test.provider']('service') -%}
 daemon {{ nginx.get('daemon', 'on') }};
 {%- endif %}
 

@@ -41,4 +41,25 @@
         'install_prefix': '/usr/local/nginx',
         'make_flags': '-j2'
     },
+    'Suse': {
+        'apache_utils': 'apache2-utils',
+        'group_action': 'pkg.installed',
+        'group_pkg': 'patterns-devel-base-devel_rpm_build',
+        'libpcre_dev': 'pcre-devel',
+        'libssl_dev': 'openssl-devel',
+        'pid_path': '/run/nginx.pid',
+        'package': 'nginx',
+        'default_user': 'nginx',
+        'default_group': 'nginx',
+        'disable_before_rename': True,
+        'old_init_disable': 'chkconfig --del nginx',
+        'use_upstart': False,
+        'use_sysvinit': False,
+        'home': '/srv/www',
+        'conf_dir': '/etc/nginx',
+        'log_dir': '/var/log/nginx',
+        'sbin_dir': '/usr/sbin',
+        'install_prefix': '/usr/local/nginx',
+        'make_flags': '-j2'
+    },
 }, grain='os_family', merge=salt['pillar.get']('nginx:lookup'), default='Debian') %}
