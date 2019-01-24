@@ -116,7 +116,7 @@ nginx_server_available_dir:
       - service: nginx_service
 {% if 'source_path' not in settings.config %}
     - context:
-        config: {{ settings.config|json() }}
+        config: {{ settings.config|json(sort_keys=False) }}
 {% endif %}
     {% if 'overwrite' in settings and settings.overwrite == False %}
     - unless:

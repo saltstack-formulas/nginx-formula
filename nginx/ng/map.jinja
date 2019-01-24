@@ -1,6 +1,6 @@
 {% macro sls_block(dict) %}
     {% for key, value in dict.items() %}
-    - {{ key }}: {{ value|json() }}
+    - {{ key }}: {{ value|json(sort_keys=False) }}
     {% endfor %}
 {% endmacro %}
 
