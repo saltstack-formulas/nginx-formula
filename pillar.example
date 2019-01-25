@@ -127,23 +127,25 @@ nginx:
       managed_opts: {} # partially exposes file.managed params for managed server files
       dir_opts: {} # partially exposes file.directory params for site available/enabled and snippets dirs
 
-      # server declarations
-      # servers will default to being placed in server_available
+
+      #####################
+      # server declarations; placed by default in server "available" directory
+      #####################
       managed:
-        mysite: # relative pathname of the server file
+
+        mysite:  # relative filename of server file  (defaults to '/etc/nginx/sites-available/mysite')
           # may be True, False, or None where True is enabled, False, disabled, and None indicates no action
           enabled: True
-          # Remove the site config file. Nice to clean up the conf.d (or sites-available).
+
+          # Remove the site config file shipped by nginx (i.e. '/etc/nginx/sites-available/default' by default)
           # It also remove the symlink (if it is exists).
           # The site MUST be disabled before delete it (if not the nginx is not reloaded).
-          deleted: True
-          ###########
-          ## Modify  'available_dir' AND 'enabled_dir' '/etc/nginx' location to alternative value.
-          ###########
-          available_dir: /etc/nginx/sites-available # an alternate directory (not sites-available) where this server may be found
-          enabled_dir: /etc/nginx/sites-enabled # an alternate directory (not sites-enabled) where this server may be found
-          disabled_name: mysite.aint_on # an alternative disabled name to be use when not symlinking
-          overwrite: True # overwrite an existing server file or not
+          #deleted: True
+
+          #available_dir: /etc/nginx/sites-available-custom   # custom directory (not sites-available) for server filename
+          #enabled_dir: /etc/nginx/sites-enabled-custom       # custom directory (not sites-enabled) for server filename
+          disabled_name: mysite.aint_on                       # an alternative disabled name to be use when not symlinking
+          overwrite: True                                     # overwrite an existing server file or not
 
           # May be a list of config options or None, if None, no server file will be managed/templated
           # Take server directives as lists of dictionaries. If the dictionary value is another list of

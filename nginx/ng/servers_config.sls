@@ -33,7 +33,7 @@
 
 # Gets the current canonical name of a server
 {% macro server_curpath(server) -%}
-  {{ server_path(server, nginx.servers.managed.get(server).get('available')) }}
+  {{ server_path(server, nginx.servers.managed.get(server).get('available_dir')) }}
 {%- endmacro %}
 
 # Creates the sls block that manages symlinking / renaming servers
