@@ -103,11 +103,22 @@ nginx:
             - /etc/nginx/conf.d/*.conf
             - /etc/nginx/sites-enabled/*
 
-        ### Module ngx_http_log_module example ##
+        ### module ngx_http_log_module example
         log_format: |-
           main '...';
             access_log /var/log/nginx/access_log main
         access_log: []       #suppress default access_log option from being added
+
+        ### module nngx_stream_core_module
+        stream:
+          upstream lb-1000:
+            - server:
+              - hostname1.example.com:1000
+              - hostname2.example.com:1000
+          server:
+            listen: 1000
+            proxy_pass: lb-1000
+
 
     servers:
       disabled_postfix: .disabled # a postfix appended to files when doing non-symlink disabling
