@@ -85,6 +85,7 @@ nginx:
 
       # nginx.conf (main server) declarations
       # dictionaries map to blocks {} and lists cause the same declaration to repeat with different values
+      # see also http://nginx.org/en/docs/example.html
       config:
         source_path: salt://path_to_nginx_conf_file/nginx.conf # IMPORTANT: This option is mutually exclusive with the rest of the
                                                           # options; if it is found other options (worker_processes: 4 and so
@@ -101,6 +102,12 @@ nginx:
             - /etc/nginx/mime.types
             - /etc/nginx/conf.d/*.conf
             - /etc/nginx/sites-enabled/*
+
+        ### Module ngx_http_log_module example ##
+        log_format: |-
+          main '...';
+            access_log /var/log/nginx/access_log main
+        access_log: []       #suppress default access_log option from being added
 
     servers:
       disabled_postfix: .disabled # a postfix appended to files when doing non-symlink disabling
