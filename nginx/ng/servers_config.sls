@@ -111,6 +111,7 @@ nginx_server_available_dir:
     {{ sls_block(nginx.servers.managed_opts) }}
     - name: {{ server_curpath(server) }}
     - source: {{ source_path }}
+    - makedirs: True
     - template: jinja
     - require_in:
       - service: nginx_service
