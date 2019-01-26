@@ -75,18 +75,45 @@ nginx:
       enable: True # Whether or not the service will be enabled/running or dead
       opts: {} # this partially exposes parameters of service.running / service.dead
 
-    snippets: # You can use snippets to define often repeated configuration once and include it later
-      letsencrypt: # e.g. this can be included using "- include: 'snippets/letsencrypt.conf'"
+    ##--- --- - - - - - - -- - - - - -- - - --- -- - -- - - - -- - - - - -- - - - -- - - - -- - ##
+    ## You can use snippets to define often repeated configuration once and include it later
+    ## The letsencrypt example below is consumed by "- include: 'snippets/letsencrypt.conf'"
+    ##--- --- - - - - - - --  - - -- -- - - --- -- - -- - - - -- - - - - -- - - - -- - - - -- - ##
+    snippets:
+      letsencrypt:
         - location ^~ /.well-known/acme-challenge/:
           - proxy_pass: http://localhost:9999
+      cloudflare_proxy:
+        - set_real_ip_from: 103.21.244.0/22
+        - set_real_ip_from: 103.22.200.0/22
+        - set_real_ip_from: 104.16.0.0/12
+        - set_real_ip_from: 108.162.192.0/18
+      blacklist:
+        - map $http_user_agent $bad_bot:
+          - default: 0
+          - '~*^Lynx': 0
+          - '~*malicious': 1
+          - '~*bot': 1
+          - '~*crawler': 1
+          - '~*bandit': 1
+          - libwww-perl: 1
+          - '~(?i)(httrack|htmlparser|libwww)': 1
+      upstream_netdata_tcp:
+        - upstream netdata:
+          - server: 127.0.0.1:19999
+          - keepalive: 64
+
 
     server:
       opts: {} # this partially exposes file.managed parameters as they relate to the main nginx.conf file
 
+      #-- - - - - -- - - -- - - - - -- - - -- - - - -- - - - - - -- - - - - - -- - - - - -- - - - - -- - - #
       # nginx.conf (main server) declarations
       # dictionaries map to blocks {} and lists cause the same declaration to repeat with different values
       # see also http://nginx.org/en/docs/example.html
+      #-- - - - - -- - - -- - - - - -- - - -- - - - -- - - - - - -- - - - - - -- - - - - -- - - - - -- - - #
       config:
+        include 'snippets/letsencrypt.conf'
         source_path: salt://path_to_nginx_conf_file/nginx.conf # IMPORTANT: This option is mutually exclusive with the rest of the
                                                           # options; if it is found other options (worker_processes: 4 and so
                                                           # on) are not processed and just upload the file from source
@@ -100,8 +127,6 @@ nginx:
           include:
             #### Note: Syntax issues in these files generate nginx [emerg] errors on startup.  ####
             - /etc/nginx/mime.types
-            - /etc/nginx/conf.d/*.conf
-            - /etc/nginx/sites-enabled/*
 
         ### module ngx_http_log_module example
         log_format: |-
@@ -116,29 +141,25 @@ nginx:
             - server:
               - hostname1.example.com:1000
               - hostname2.example.com:1000
+          upstream stream_backend:
+            least_conn: ''
+            'server backend1.example.com:12345 weight=5':
+            'server backend2.example.com:12345 max_fails=2 fail_timeout=30s':
+            'server backend3.example.com:12345 max_conns=3':
+          upstream dns_servers:
+            least_conn:
+            'server 192.168.136.130:53':
+            'server 192.168.136.131:53':
+            'server 192.168.136.132:53':
           server:
             listen: 1000
             proxy_pass: lb-1000
-
-          upstream stream_backend:
-            least_conn: ''
-            'server': 'backend1.example.com:12345 weight=5'                       #one way
-            'server backend2.example.com:12345 max_fails=2 fail_timeout=30s': ''   
-            'server backend3.example.com:12345 max_conns=3': ''                   #another way
-          upstream dns_servers:
-            least_conn:
-            'server 192.168.136.130:53': ''
-            'server 192.168.136.131:53': ''
-            'server 192.168.136.132:53': ''
-
           'server ':
             listen: '53 udp'
             proxy_pass: dns_servers
-
-          'server  ':
+          'server   ':
             listen: 12346
             proxy_pass: backend4.example.com:12346
-
 
 
     servers:
