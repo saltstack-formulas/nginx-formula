@@ -201,28 +201,40 @@ nginx:
             - server:
               - server_name: localhost
               - listen:
-                - 80
-                - default_server
-              - index:
-                - index.html
-                - index.htm
+                - '80 default_server'
+              - listen:
+                - '443 ssl'
+              - index: 'index.html index.htm'
               - location ~ .htm:
-                - try_files:
-                  - $uri
-                  - $uri/ =404
+                - try_files: '$uri $uri/ =404'
                 - test: something else
               - include 'snippets/letsencrypt.conf'
 
-          # The above outputs:
+          # Or a slightly more compact alternative syntax:
+
+            - server:
+              - server_name: localhost
+              - listen:
+                - '80 default_server'
+                - '443 ssl'
+              - index: 'index.html index.htm'
+              - location ~ .htm:
+                - try_files: '$uri $uri/ =404'
+                - test: something else
+              - include 'snippets/letsencrypt.conf'
+
+          # both of those output:
           # server {
           #    server_name localhost;
           #    listen 80 default_server;
+          #    listen 443 ssl;
           #    index index.html index.htm;
           #    location ~ .htm {
           #        try_files $uri $uri/ =404;
           #        test something else;
           #    }
           # }
+
         mysite2: # Using source_path options to upload the file instead of templating all the file
           enabled: True
           available_dir: /etc/nginx/sites-available
