@@ -126,7 +126,7 @@ nginx:
         load_module: modules/ngx_http_lua_module.so  # pass as very first in configuration; otherwise nginx will fail to start
         #pid: /var/run/nginx.pid                     # Directory location must exist (i.e. it's  /run/nginx.pid on EL7)
         events:
-          worker_connections: 768
+          worker_connections: 1024
         http:
           sendfile: 'on'
           include:
