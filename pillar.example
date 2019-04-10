@@ -133,11 +133,11 @@ nginx:
             #### Note: Syntax issues in these files generate nginx [emerg] errors on startup.  ####
             - /etc/nginx/mime.types
 
-        ### module ngx_http_log_module example
-        log_format: |-
-          main '...';
-            access_log /var/log/nginx/access_log main
-        access_log: []       #suppress default access_log option from being added
+          ### module ngx_http_log_module example
+          log_format: |-
+            main '...';
+              access_log /var/log/nginx/access_log main
+          access_log: []       #suppress default access_log option from being added
 
         ### module nngx_stream_core_module
         ### https://docs.nginx.com/nginx/admin-guide/load-balancer/tcp-udp-load-balancer/#example
