@@ -118,7 +118,7 @@ nginx:
       # see also http://nginx.org/en/docs/example.html
       #-- - - - - -- - - -- - - - - -- - - -- - - - -- - - - - - -- - - - - - -- - - - - -- - - - - -- - - #
       config:
-        include 'snippets/letsencrypt.conf'
+        include: 'snippets/letsencrypt.conf'
         source_path: salt://path_to_nginx_conf_file/nginx.conf # IMPORTANT: This option is mutually exclusive with the rest of the
                                                           # options; if it is found other options (worker_processes: 4 and so
                                                           # on) are not processed and just upload the file from source
