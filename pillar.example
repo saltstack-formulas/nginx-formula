@@ -210,7 +210,7 @@ nginx:
               - location ~ .htm:
                 - try_files: '$uri $uri/ =404'
                 - test: something else
-              - include 'snippets/letsencrypt.conf'
+              - include: 'snippets/letsencrypt.conf'
 
           # Or a slightly more compact alternative syntax:
 
@@ -223,7 +223,7 @@ nginx:
               - location ~ .htm:
                 - try_files: '$uri $uri/ =404'
                 - test: something else
-              - include 'snippets/letsencrypt.conf'
+              - include: 'snippets/letsencrypt.conf'
 
           # both of those output:
           # server {
