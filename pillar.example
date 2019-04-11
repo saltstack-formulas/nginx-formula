@@ -118,7 +118,7 @@ nginx:
       # see also http://nginx.org/en/docs/example.html
       #-- - - - - -- - - -- - - - - -- - - -- - - - -- - - - - - -- - - - - - -- - - - - -- - - - - -- - - #
       config:
-        include 'snippets/letsencrypt.conf'
+        include: 'snippets/letsencrypt.conf'
         source_path: salt://path_to_nginx_conf_file/nginx.conf # IMPORTANT: This option is mutually exclusive with the rest of the
                                                           # options; if it is found other options (worker_processes: 4 and so
                                                           # on) are not processed and just upload the file from source
@@ -126,18 +126,18 @@ nginx:
         load_module: modules/ngx_http_lua_module.so  # pass as very first in configuration; otherwise nginx will fail to start
         #pid: /var/run/nginx.pid                     # Directory location must exist (i.e. it's  /run/nginx.pid on EL7)
         events:
-          worker_connections: 768
+          worker_connections: 1024
         http:
           sendfile: 'on'
           include:
             #### Note: Syntax issues in these files generate nginx [emerg] errors on startup.  ####
             - /etc/nginx/mime.types
 
-        ### module ngx_http_log_module example
-        log_format: |-
-          main '...';
-            access_log /var/log/nginx/access_log main
-        access_log: []       #suppress default access_log option from being added
+          ### module ngx_http_log_module example
+          log_format: |-
+            main '...';
+              access_log /var/log/nginx/access_log main
+          access_log: []       #suppress default access_log option from being added
 
         ### module nngx_stream_core_module
         ### https://docs.nginx.com/nginx/admin-guide/load-balancer/tcp-udp-load-balancer/#example
@@ -208,7 +208,7 @@ nginx:
               - location ~ .htm:
                 - try_files: '$uri $uri/ =404'
                 - test: something else
-              - include 'snippets/letsencrypt.conf'
+              - include: 'snippets/letsencrypt.conf'
 
           # Or a slightly more compact alternative syntax:
 
@@ -221,7 +221,7 @@ nginx:
               - location ~ .htm:
                 - try_files: '$uri $uri/ =404'
                 - test: something else
-              - include 'snippets/letsencrypt.conf'
+              - include: 'snippets/letsencrypt.conf'
 
           # both of those output:
           # server {
