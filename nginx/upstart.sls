@@ -14,7 +14,7 @@ nginx-logger-{{ log_type }}:
     - mode: 440
     - source: salt://nginx/templates/upstart-logger.jinja
     - context:
-      type: {{ log_type }}
+        type: {{ log_type }}
   service:
     - running
     - enable: True

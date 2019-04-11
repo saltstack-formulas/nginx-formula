@@ -19,7 +19,7 @@ nginx-logger-{{ log_type }}:
       - salt://nginx/templates/{{ grains['os_family'] }}-sysvinit-logger.jinja
       - salt://nginx/templates/sysvinit-logger.jinja
     - context:
-      type: {{ log_type }}
+        type: {{ log_type }}
   service:
     - running
     - enable: True

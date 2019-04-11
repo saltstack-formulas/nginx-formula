@@ -30,7 +30,7 @@ passenger_config:
     - source: salt://nginx/ng/files/nginx.conf
     - template: jinja
     - context:
-      config: {{ nginx.passenger|json() }}
+        config: {{ nginx.passenger|json() }}
     - watch_in:
       - service: nginx_service
     - require_in:
