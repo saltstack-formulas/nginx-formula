@@ -239,9 +239,9 @@ nginx:
     - group: root
     - mode: 0755
     - context:
-      service_name: {{ service_name }}
-      sbin_dir: {{ sbin_dir }}
-      pid_path: {{ pid_path }}
+        service_name: {{ service_name }}
+        sbin_dir: {{ sbin_dir }}
+        pid_path: {{ pid_path }}
 {% endif %}
   service:
 {% if service_enable %}
