@@ -10,3 +10,4 @@ __pycache__/
 Dockerfile.*_*
 ignore/
 tmp/
+.kitchen/

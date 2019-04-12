@@ -1,24 +1,66 @@
-env:
-  matrix:
-    - OS_ID: centos_master_2017.7.2
-    - OS_ID: debian_master_2017.7.2
-    - OS_ID: opensuse_master_2017.7.2
-    - OS_ID: ubuntu_master_2016.11.3
-    - OS_ID: ubuntu_master_2017.7.2
+stages:
+  - test
+  - commitlint
+  - name: release
+    if: branch = master AND type != pull_request
 
 sudo: required
-
-language: python
+cache: bundler
+language: ruby
 
 services:
-- docker
+  - docker
 
 before_install:
-- pip install Jinja2
-- python ${TRAVIS_BUILD_DIR}/tools/filltmpl.py nginx ${OS_ID}
+  - gem install bundle
+  - bundle install
 
-install:
-- docker build --force-rm -t "nginx:salt-testing-${OS_ID}" -f "Dockerfile.${OS_ID}" .
+# Make sure the instances listed below match up with
+# the `platforms` defined in `kitchen.yml`
+env:
+  matrix:
+    - INSTANCE: default-debian-9
+    - INSTANCE: default-debian-8
+    - INSTANCE: default-ubuntu-1804
+    - INSTANCE: default-ubuntu-1604
+    - INSTANCE: default-centos-7
+    # - INSTANCE: default-centos-6
+    - INSTANCE: default-fedora
+    - INSTANCE: default-opensuse-leap-salt-minion
 
 script:
-- ./tools/run-tests.sh nginx ${OS_ID}
+  - bundle exec kitchen verify ${INSTANCE}
+
+jobs:
+  include:
+    # Define the commitlint stage
+    - stage: commitlint
+      language: node_js
+      node_js: lts/*
+      before_install: skip
+      script:
+        - npm install @commitlint/config-conventional -D
+        - npm install @commitlint/travis-cli -D
+        - commitlint-travis
+    # Define the release stage that runs semantic-release
+    - stage: release
+      language: node_js
+      node_js: lts/*
+      before_install: skip
+      script:
+        # Update `AUTHORS.md`
+        - export MAINTAINER_TOKEN=${GH_TOKEN}
+        - go get github.com/myii/maintainer
+        - maintainer contributor
+
+        # Install all dependencies required for `semantic-release`
+        - npm install @semantic-release/changelog@3 -D
+        - npm install @semantic-release/exec@3 -D
+        - npm install @semantic-release/git@7 -D
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          # Run `semantic-release`
+          - npx semantic-release@15
+
