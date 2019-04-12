@@ -1,0 +1,104 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
+# For help on this file's format, see https://kitchen.ci/
+driver:
+  name: docker
+
+driver_config:
+  use_sudo: false
+  privileged: true
+  provision_command: mkdir -p /run/sshd
+
+# Make sure the platforms listed below match up with
+# the `env.matrix` instances defined in `.travis.yml`
+platforms:
+  # The `run_command` used for each platform is required to
+  # test `systemd` services in docker
+  - name: debian-9
+    driver_config:
+      image: debian:9
+      run_command: /lib/systemd/systemd
+      provision_command:
+        - apt-get update && apt-get install -y udev
+  - name: debian-8
+    driver_config:
+      image: debian:8
+      run_command: /lib/systemd/systemd
+      provision_command:
+        - apt-get update && apt-get install -y udev
+  - name: ubuntu-18.04
+    driver_config:
+      image: ubuntu:18.04
+      run_command: /lib/systemd/systemd
+      provision_command:
+        - apt-get update && apt-get install -y udev
+  - name: ubuntu-16.04
+    driver_config:
+      image: ubuntu:16.04
+      run_command: /lib/systemd/systemd
+      provision_command:
+        - apt-get update && apt-get install -y udev
+  - name: centos-7
+    driver_config:
+      image: centos:7
+      run_command: /usr/lib/systemd/systemd
+  # - name: centos-6
+  #   driver_config:
+  #     image: centos:6
+  #     run_command: /usr/lib/systemd/systemd
+  - name: fedora
+    driver_config:
+      image: fedora
+      run_command: /usr/lib/systemd/systemd
+      provision_command:
+        - yum -y update && yum -y install udev
+  # As of February 2019, there have been problems getting `opensuse` to work:
+  #   * `opensuse` is deprecated
+  #   * `opensuse/leap` grabs `15.x`, which doesn't run the `inspec` tests
+  #   * `opensuse/tumbleweed` doesn't install `salt-minion`
+  #   * `opensuse/leap:42.3` does work
+  #   * `opensuse/salt-minion` uses `42.3` with `salt-minion` pre-installed
+  - name: opensuse-leap-salt-minion
+    driver_config:
+      image: opensuse/salt-minion
+      run_command: /usr/lib/systemd/systemd
+      provision_command:
+        - zypper refresh && zypper install -y udev
+        - systemctl enable sshd.service
+        - cat /etc/os-release
+
+provisioner:
+  name: salt_solo
+  log_level: debug
+  require_chef: false
+  salt_version: latest
+  formula: nginx
+  salt_copy_filter:
+    - .kitchen
+    - .git
+  pillars_from_files:
+    nginx.sls: test/salt/default/pillar/nginx.sls
+  pillars:
+    top.sls:
+      base:
+        '*':
+          - nginx
+  state_top:
+    base:
+      '*':
+        - nginx.ng
+
+verifier:
+  # https://www.inspec.io/
+  name: inspec
+  sudo: true
+  # cli, documentation, html, progress, json, json-min, json-rspec, junit
+  reporter:
+    - cli
+  inspec_tests:
+    - path: test/integration/default
+
+suites:
+  - name: default
+
