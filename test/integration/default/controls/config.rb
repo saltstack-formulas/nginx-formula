@@ -8,6 +8,9 @@ case os[:name]
 when 'redhat', 'centos', 'fedora'
   server_available = '/etc/nginx/conf.d'
   server_enabled   = '/etc/nginx/conf.d'
+when 'opensuse'
+  server_available = '/etc/nginx/vhosts.d'
+  server_enabled   = '/etc/nginx/vhosts.d'
 end
 
 control 'Nginx configuration' do
