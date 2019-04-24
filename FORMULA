@@ -1,8 +1,9 @@
 name: nginx
-os: RedHat, Debian, Ubuntu, Suse, Gentoo
-os_family: RedHat, Debian, Suse, Gentoo
-version: 201507
+os: Debian, Ubuntu, Raspbian, RedHat, Fedora, CentOS, Suse, openSUSE, Gentoo, Funtoo, Arch, Manjaro, Alpine, FreeBSD, OpenBSD, Solaris, SmartOS, Windows, MacOS
+os_family: Debian, RedHat, Suse, Gentoo, Arch, Alpine, FreeBSD, OpenBSD, Solaris, Windows, MacOS
+version: 1.0.0rc
 release: 1
-minimum_version: 2015.8
-summary: Formula for installing Nginx
-description: Formula for installing Nginx web server
+minimum_version: 2017.3
+summary: nginx formula
+description: Formula to use to install and configure nginx
+top_level_dir: nginx
