@@ -12,27 +12,22 @@ services:
   - docker
 
 before_install:
-  - gem install bundler
   - bundle install
 
 # Make sure the instances listed below match up with
 # the `platforms` defined in `kitchen.yml`
 env:
   matrix:
-    - INSTANCE: v2019-2-py3-debian-9
-    - INSTANCE: v2019-2-py3-ubuntu-1804
-    - INSTANCE: v2019-2-py2-centos-7
-    - INSTANCE: v2019-2-py2-fedora-29
-
-    - INSTANCE: v2018-3-py2-debian-8
-    - INSTANCE: v2018-3-py2-ubuntu-1604
-    - INSTANCE: v2018-3-py2-bootstrap-centos-6
-    - INSTANCE: v2018-3-py2-forced-version-fedora-28
-    - INSTANCE: v2018-3-py2-opensuse-423
-
-    - INSTANCE: v2017-7-py2-debian-8
-    - INSTANCE: v2017-7-py2-ubuntu-1604
-    - INSTANCE: v2017-7-py2-bootstrap-centos-6
+    - INSTANCE: default-debian-9-2019-2-py3
+    - INSTANCE: default-ubuntu-1804-2019-2-py3
+    - INSTANCE: default-centos-7-2019-2-py2
+    - INSTANCE: default-fedora-29-2019-2-py2
+    - INSTANCE: default-opensuse-423-2018-3-py2
+    - INSTANCE: default-debian-8-2018-3-py2
+    - INSTANCE: default-ubuntu-1604-2018-3-py2
+    - INSTANCE: default-fedora-28-2018-3-py2
+    - INSTANCE: default-debian-8-2017-7-py2
+    - INSTANCE: default-ubuntu-1604-2017-7-py2
 
 script:
   - bundle exec kitchen verify ${INSTANCE}
