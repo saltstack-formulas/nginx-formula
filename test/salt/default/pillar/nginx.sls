@@ -10,6 +10,14 @@ nginx:
       letsencrypt:
         - location ^~ /.well-known/acme-challenge/:
           - proxy_pass: http://localhost:9999
+    server:
+      config:
+        http:
+          ### module ngx_http_log_module example
+          log_format: |-
+            main '$remote_addr - $remote_user [$time_local] $status '
+                                '"$request" $body_bytes_sent "$http_referer" '
+                                '"$http_user_agent" "$http_x_forwarded_for"'
     servers:
       managed:
         default:
