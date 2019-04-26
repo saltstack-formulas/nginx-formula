@@ -15,9 +15,9 @@ Avatar|Contributor|Contributions
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/445200?v=4' width='36' height='36' alt='@arthurlogilab'>|[@arthurlogilab](https://github.com/arthurlogilab)|8
 <img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/1184479?v=4' width='36' height='36' alt='@cheuschober'>|[@cheuschober](https://github.com/cheuschober)|8
 <img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/378158?v=4' width='36' height='36' alt='@dseira'>|[@dseira](https://github.com/dseira)|8
+<img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/52996?v=4' width='36' height='36' alt='@daks'>|[@daks](https://github.com/daks)|8
 <img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/941928?v=4' width='36' height='36' alt='@amontalban'>|[@amontalban](https://github.com/amontalban)|7
 <img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/528061?v=4' width='36' height='36' alt='@puneetk'>|[@puneetk](https://github.com/puneetk)|7
-<img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/52996?v=4' width='36' height='36' alt='@daks'>|[@daks](https://github.com/daks)|6
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/6354880?v=4' width='36' height='36' alt='@TaiSHiNet'>|[@TaiSHiNet](https://github.com/TaiSHiNet)|6
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/745513?v=4' width='36' height='36' alt='@EvaSDK'>|[@EvaSDK](https://github.com/EvaSDK)|6
 <img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/3280630?v=4' width='36' height='36' alt='@cackovic'>|[@cackovic](https://github.com/cackovic)|5
@@ -43,6 +43,7 @@ Avatar|Contributor|Contributions
 <img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/2200073?v=4' width='36' height='36' alt='@kmshultz'>|[@kmshultz](https://github.com/kmshultz)|2
 <img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/11417?v=4' width='36' height='36' alt='@malept'>|[@malept](https://github.com/malept)|2
 <img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/3279679?v=4' width='36' height='36' alt='@meganlkm'>|[@meganlkm](https://github.com/meganlkm)|2
+<img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/84885?v=4' width='36' height='36' alt='@garrettw'>|[@garrettw](https://github.com/garrettw)|2
 <img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/879922?v=4' width='36' height='36' alt='@myoung34'>|[@myoung34](https://github.com/myoung34)|2
 <img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/1922124?v=4' width='36' height='36' alt='@bebosudo'>|[@bebosudo](https://github.com/bebosudo)|1
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/8395913?v=4' width='36' height='36' alt='@aanriot'>|[@aanriot](https://github.com/aanriot)|1
@@ -56,7 +57,6 @@ Avatar|Contributor|Contributions
 <img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/72727?v=4' width='36' height='36' alt='@czarneckid'>|[@czarneckid](https://github.com/czarneckid)|1
 <img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/983?v=4' width='36' height='36' alt='@statik'>|[@statik](https://github.com/statik)|1
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/48329?v=4' width='36' height='36' alt='@ekristen'>|[@ekristen](https://github.com/ekristen)|1
-<img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/84885?v=4' width='36' height='36' alt='@garrettw'>|[@garrettw](https://github.com/garrettw)|1
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/75496?v=4' width='36' height='36' alt='@jeduardo'>|[@jeduardo](https://github.com/jeduardo)|1
 <img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/668449?v=4' width='36' height='36' alt='@stromnet'>|[@stromnet](https://github.com/stromnet)|1
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/744549?v=4' width='36' height='36' alt='@bsdlp'>|[@bsdlp](https://github.com/bsdlp)|1
