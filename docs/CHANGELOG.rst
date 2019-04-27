@@ -2,6 +2,15 @@
 Changelog
 =========
 
+`0.56.1 <https://github.com/saltstack-formulas/nginx-formula/compare/v0.56.0...v0.56.1>`_ (2019-04-27)
+----------------------------------------------------------------------------------------------------------
+
+Tests
+^^^^^
+
+
+* **inspec:** add test for ``log_format`` `#219 <https://github.com/saltstack-formulas/nginx-formula/issues/219>`_ (\ `4ed788e <https://github.com/saltstack-formulas/nginx-formula/commit/4ed788e>`_\ )
+
 `0.56.0 <https://github.com/saltstack-formulas/nginx-formula/compare/v0.55.1...v0.56.0>`_ (2019-04-26)
 ----------------------------------------------------------------------------------------------------------
 
