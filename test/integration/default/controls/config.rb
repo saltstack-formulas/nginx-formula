@@ -22,6 +22,9 @@ control 'Nginx configuration' do
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
     its('mode') { should cmp '0644' }
+    its('content') { should include %Q[    log_format main '$remote_addr - $remote_user [$time_local] $status '
+                    '"$request" $body_bytes_sent "$http_referer" '
+                    '"$http_user_agent" "$http_x_forwarded_for"';] }
   end
 
   # snippets configuration
