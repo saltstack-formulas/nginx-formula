@@ -1,8 +1,8 @@
-# nginx.ng.servers_config
+# nginx.servers_config
 #
 # Manages the configuration of virtual host files.
 
-{% from 'nginx/ng/map.jinja' import nginx, sls_block with context %}
+{% from 'nginx/map.jinja' import nginx, sls_block with context %}
 {% set server_states = [] %}
 
 # Simple path concatenation.
@@ -104,7 +104,7 @@ nginx_server_available_dir:
 {% if 'source_path' in settings.config %}
 {% set source_path = settings.config.source_path %}
 {% else %}
-{% set source_path = 'salt://nginx/ng/files/server.conf' %}
+{% set source_path = 'salt://nginx/files/server.conf' %}
 {% endif %}
 {{ conf_state_id }}:
   file.managed:

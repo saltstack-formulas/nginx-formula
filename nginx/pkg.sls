@@ -1,8 +1,8 @@
-# nginx.ng.pkg
+# nginx.pkg
 #
 # Manages installation of nginx from pkg.
 
-{% from 'nginx/ng/map.jinja' import nginx, sls_block with context %}
+{% from 'nginx/map.jinja' import nginx, sls_block with context %}
 {%- if nginx.install_from_repo %}
   {% set from_official = true %}
   {% set from_ppa = false %}

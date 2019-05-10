@@ -1,8 +1,8 @@
-# nginx.ng.src
+# nginx.src
 #
 # Manages installation of nginx from source.
 
-{% from 'nginx/ng/map.jinja' import nginx, sls_block with context %}
+{% from 'nginx/map.jinja' import nginx, sls_block with context %}
 
 nginx_deps:
   pkg.installed:
@@ -23,7 +23,7 @@ nginx_download:
 
 nginx_configure:
   cmd.run:
-    - name: ./configure --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --conf-path={{ nginx.lookup.conf_file or '/etc/nginx/nginx.conf' }} {{ nginx.source.opts | join(' ') }}
+    - name: ./configure --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --conf-path={{ nginx.lookup.conf_file }} {{ nginx.source.opts | join(' ') }}
     - cwd: /tmp/nginx-{{ nginx.source_version }}
     - onchanges:
       - archive: nginx_download

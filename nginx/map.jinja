@@ -1,65 +1,197 @@
-{% set nginx = salt['grains.filter_by']({
-    'Debian': {
-        'apache_utils': 'apache2-utils',
-        'group_action': 'pkg.installed',
-        'group_pkg': 'build-essential',
-        'libpcre_dev': 'libpcre3-dev',
-        'libssl_dev': 'libssl-dev',
-        'pid_path': '/var/run/nginx.pid',
-        'package': 'nginx-full',
-        'default_user': 'www-data',
-        'default_group': 'www-data',
-        'disable_before_rename': False,
-        'old_init_disable': 'update-rc.d -f nginx remove',
-        'use_upstart': True,
-        'use_sysvinit': False,
-        'home': '/var/www',
-        'conf_dir': '/etc/nginx',
-        'log_dir': '/var/log/nginx',
-        'sbin_dir': '/usr/sbin',
-        'install_prefix': '/usr/local/nginx',
-        'make_flags': '-j2'
+{% macro sls_block(dict) %}
+    {% for key, value in dict.items() %}
+    - {{ key }}: {{ value|json(sort_keys=False) }}
+    {% endfor %}
+{% endmacro %}
+
+{% set nginx = salt['pillar.get']('nginx', {
+    'lookup': salt['grains.filter_by']({
+        'Debian': {
+            'package': 'nginx',
+            'passenger_package': 'passenger',
+            'passenger_config_file': '/etc/nginx/conf.d/passenger.conf',
+            'service': 'nginx',
+            'webuser': 'www-data',
+            'conf_file': '/etc/nginx/nginx.conf',
+            'server_available': '/etc/nginx/sites-available',
+            'server_enabled': '/etc/nginx/sites-enabled',
+            'snippets_dir': '/etc/nginx/snippets',
+            'server_use_symlink': True,
+            'pid_file': '/run/nginx.pid',
+            'openssl_package': 'openssl',
+        },
+        'CentOS': {
+            'package': 'nginx',
+            'passenger_package': 'passenger',
+            'passenger_config_file': '/etc/nginx/conf.d/passenger.conf',
+            'service': 'nginx',
+            'webuser': 'nginx',
+            'conf_file': '/etc/nginx/nginx.conf',
+            'server_available': '/etc/nginx/conf.d',
+            'server_enabled': '/etc/nginx/conf.d',
+            'snippets_dir': '/etc/nginx/snippets',
+            'server_use_symlink': False,
+            'pid_file': '/run/nginx.pid',
+            'rh_os_releasever': '$releasever',
+            'gpg_check': False,
+            'gpg_key': 'http://nginx.org/keys/nginx_signing.key',
+            'openssl_package': 'openssl',
+        },
+        'RedHat': {
+            'package': 'nginx',
+            'passenger_package': 'passenger',
+            'passenger_config_file': '/etc/nginx/conf.d/passenger.conf',
+            'service': 'nginx',
+            'webuser': 'nginx',
+            'conf_file': '/etc/nginx/nginx.conf',
+            'server_available': '/etc/nginx/conf.d',
+            'server_enabled': '/etc/nginx/conf.d',
+            'snippets_dir': '/etc/nginx/snippets',
+            'server_use_symlink': False,
+            'pid_file': '/run/nginx.pid',
+            'rh_os_releasever': '$releasever',
+            'gpg_check': False,
+            'gpg_key': 'http://nginx.org/keys/nginx_signing.key',
+            'passenger': {
+              'passenger_root': '/usr/share/ruby/vendor_ruby/phusion_passenger/locations.ini',
+              'passenger_instance_registry_dir': ' /var/run/passenger-instreg',
+              'passenger_ruby': '/usr/bin/ruby',
+            },
+            'openssl_package': 'openssl',
+        },
+        'Suse': {
+            'package': 'nginx',
+            'service': 'nginx',
+            'webuser': 'nginx',
+            'conf_file': '/etc/nginx/nginx.conf',
+            'server_available': '/etc/nginx/vhosts.d',
+            'server_enabled': '/etc/nginx/vhosts.d',
+            'snippets_dir': '/etc/nginx/snippets',
+            'server_use_symlink': False,
+            'pid_file': '/run/nginx.pid',
+            'gpg_check': True,
+            'gpg_key': 'http://download.opensuse.org/repositories/server:/http/openSUSE_{{ grains.osrelease }}/repodata/repomd.xml.key',
+            'openssl_package': 'openssl',
+        },
+        'Arch': {
+            'package': 'nginx',
+            'service': 'nginx',
+            'webuser': 'http',
+            'conf_file': '/etc/nginx/nginx.conf',
+            'server_available': '/etc/nginx/sites-available',
+            'server_enabled': '/etc/nginx/sites-enabled',
+            'snippets_dir': '/etc/nginx/snippets',
+            'server_use_symlink': True,
+            'openssl_package': 'openssl',
+        },
+        'Gentoo': {
+            'package': 'www-servers/nginx',
+            'service': 'nginx',
+            'webuser': 'nginx',
+            'conf_file': '/etc/nginx/nginx.conf',
+            'server_available': '/etc/nginx/sites-available',
+            'server_enabled': '/etc/nginx/sites-enabled',
+            'snippets_dir': '/etc/nginx/snippets',
+            'server_use_symlink': True,
+            'openssl_package': 'dev-libs/openssl',
+        },
+        'FreeBSD': {
+            'package': 'nginx',
+            'passenger_package': 'passenger',
+            'service': 'nginx',
+            'webuser': 'www',
+            'conf_file': '/usr/local/etc/nginx/nginx.conf',
+            'server_available': '/usr/local/etc/nginx/sites-available',
+            'server_enabled': '/usr/local/etc/nginx/sites-enabled',
+            'snippets_dir': '/usr/local/etc/nginx/snippets',
+            'server_use_symlink': True,
+            'pid_file': '/var/run/nginx.pid',
+        },
+    }, default='Debian' ),
+    'install_from_source': False,
+    'install_from_ppa': False,
+    'install_from_repo': False,
+    'install_from_phusionpassenger': False,
+    'ppa_version': 'stable',
+    'source_version': '1.10.0',
+    'source_hash': '8ed647c3dd65bc4ced03b0e0f6bf9e633eff6b01bac772bcf97077d58bc2be4d',
+    'source': {
+        'opts': {},
     },
-    'RedHat': {
-        'apache_utils': 'httpd-tools',
-        'group_action': 'pkg.group_installed',
-        'group_pkg': 'Development Tools',
-        'libpcre_dev': 'pcre-devel',
-        'libssl_dev': 'openssl-devel',
-        'pid_path': '/run/nginx.pid',
-        'package': 'nginx',
-        'default_user': 'nginx',
-        'default_group': 'nginx',
-        'disable_before_rename': True,
-        'old_init_disable': 'chkconfig --del nginx',
-        'use_upstart': True,
-        'use_sysvinit': False,
-        'home': '/var/www',
-        'conf_dir': '/etc/nginx',
-        'log_dir': '/var/log/nginx',
-        'sbin_dir': '/usr/sbin',
-        'install_prefix': '/usr/local/nginx',
-        'make_flags': '-j2'
+    'package': {
+        'opts': {},
     },
-    'Suse': {
-        'apache_utils': 'apache2-utils',
-        'group_action': 'pkg.installed',
-        'group_pkg': 'patterns-devel-base-devel_rpm_build',
-        'libpcre_dev': 'pcre-devel',
-        'libssl_dev': 'openssl-devel',
-        'pid_path': '/run/nginx.pid',
-        'package': 'nginx',
-        'default_user': 'nginx',
-        'default_group': 'nginx',
-        'disable_before_rename': True,
-        'old_init_disable': 'chkconfig --del nginx',
-        'use_upstart': False,
-        'use_sysvinit': False,
-        'home': '/srv/www',
-        'conf_dir': '/etc/nginx',
-        'log_dir': '/var/log/nginx',
-        'sbin_dir': '/usr/sbin',
-        'install_prefix': '/usr/local/nginx',
-        'make_flags': '-j2'
+    'service': {
+        'enable': True,
+        'opts': {},
     },
-}, grain='os_family', merge=salt['pillar.get']('nginx:lookup'), default='Debian') %}
+    'server': {
+        'opts': {},
+        'config': {
+            'worker_processes': 'auto',
+            'events': {
+                'worker_connections': 768,
+            },
+            'http': {
+                'sendfile': 'on',
+                'tcp_nopush': 'on',
+                'tcp_nodelay': 'on',
+                'keepalive_timeout': '65',
+                'types_hash_max_size': '2048',
+                'default_type': 'application/octet-stream',
+                'access_log': '/var/log/nginx/access.log',
+                'error_log': '/var/log/nginx/error.log',
+                'gzip': 'off',
+                'gzip_disable': '"msie6"',
+                'include': [
+                    'mime.types',
+                    'conf.d/*.conf',
+                    'sites-enabled/*',
+                ],
+            },
+        },
+    },
+    'servers': {
+        'disabled_postfix': '.disabled',
+        'symlink_opts': {},
+        'rename_opts': {},
+        'managed_opts': {
+            'makedirs': True,
+            },
+        'dir_opts': {
+            'makedirs': True,
+        },
+        'managed': {},
+    },
+    'passenger': {
+        'passenger_root': '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini',
+        'passenger_ruby': '/usr/bin/ruby',
+    },
+}, merge=True) %}
+
+{% if 'user' not in nginx.server.config %}
+{% do nginx.server.config.update({
+    'user': nginx.lookup.webuser,
+})%}
+{% endif %}
+
+{% if 'pid' not in nginx.server.config and 'pid_file' in nginx.lookup %}
+{% do nginx.server.config.update({
+    'pid': nginx.lookup.pid_file,
+})%}
+{% endif %}
+
+{% if salt['grains.get']('os_family') == 'RedHat' %}
+{% do nginx.passenger.update({
+    'passenger_root': '/usr/share/ruby/vendor_ruby/phusion_passenger/locations.ini',
+    'passenger_instance_registry_dir': '/var/run/passenger-instreg',
+})%}
+    {% if salt['grains.get']('osfinger') == 'CentOS-6' %}
+    {% do nginx.server.config.update({
+        'pid': '/var/run/nginx.pid',
+    })%}
+    {% do nginx.passenger.update({
+        'passenger_root': '/usr/lib/ruby/1.8/phusion_passenger/locations.ini',
+    })%}
+    {% endif %}
+{% endif %}

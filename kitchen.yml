@@ -72,7 +72,7 @@ provisioner:
   state_top:
     base:
       '*':
-        - nginx.ng
+        - nginx
   pillars:
     top.sls:
       base:
