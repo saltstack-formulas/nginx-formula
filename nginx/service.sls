@@ -1,22 +1,22 @@
-# nginx.ng.service
+# nginx.service
 #
 # Manages the nginx service.
 
-{% from 'nginx/ng/map.jinja' import nginx, sls_block with context %}
+{% from 'nginx/map.jinja' import nginx, sls_block with context %}
 {% set service_function = {True:'running', False:'dead'}.get(nginx.service.enable) %}
 
 include:
   {% if nginx.install_from_source %}
-  - nginx.ng.src
+  - nginx.src
   {% else %}
-  - nginx.ng.pkg
+  - nginx.pkg
   {% endif %}
 
 {% if nginx.install_from_source %}
 nginx_systemd_service_file:
   file.managed:
     - name: /lib/systemd/system/nginx.service
-    - source: salt://nginx/ng/files/nginx.service
+    - source: salt://nginx/files/nginx.service
 {% endif %}
 
 nginx_service:
@@ -26,9 +26,9 @@ nginx_service:
     - enable: {{ nginx.service.enable }}
     - require:
       {% if nginx.install_from_source %}
-      - sls: nginx.ng.src
+      - sls: nginx.src
       {% else %}
-      - sls: nginx.ng.pkg
+      - sls: nginx.pkg
       {% endif %}
     - listen:
       {% if nginx.install_from_source %}

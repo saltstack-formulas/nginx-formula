@@ -1,8 +1,8 @@
-# nginx.ng.config
+# nginx.config
 #
 # Manages the main nginx server configuration file.
 
-{% from 'nginx/ng/map.jinja' import nginx, sls_block with context %}
+{% from 'nginx/map.jinja' import nginx, sls_block with context %}
 
 {% if nginx.install_from_source %}
 nginx_log_dir:
@@ -15,7 +15,7 @@ nginx_log_dir:
 {% if 'source_path' in nginx.server.config %}
 {% set source_path = nginx.server.config.source_path %}
 {% else %}
-{% set source_path = 'salt://nginx/ng/files/nginx.conf' %}
+{% set source_path = 'salt://nginx/files/nginx.conf' %}
 {% endif %}
 nginx_config:
   file.managed:

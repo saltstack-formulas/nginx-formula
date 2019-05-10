@@ -1,18 +1,30 @@
-{% from "nginx/map.jinja" import nginx as nginx_map with context %}
+# nginx
+#
+# Meta-state to fully install nginx.
+
+{% from 'nginx/map.jinja' import nginx, sls_block with context %}
 
 include:
-  - nginx.common
-{% if salt['pillar.get']('nginx:use_upstart', nginx_map['use_upstart']) %}
-  - nginx.upstart
-{% elif salt['pillar.get']('nginx:use_sysvinit', nginx_map['use_sysvinit']) %}
-  - nginx.sysvinit
-{% endif %}
-{% if pillar.get('nginx', {}).get('user_auth_enabled', true) %}
-  - nginx.users
-{% endif %}
-{% if pillar.get('nginx', {}).get('install_from_source', false) %}
-  - nginx.source
-{% else %}
-  - nginx.package
-{% endif -%}
+  - nginx.config
+  - nginx.service
+  {% if nginx.snippets is defined %}
+  - nginx.snippets
+  {% endif %}
+  - nginx.servers
+  - nginx.certificates
 
+extend:
+  nginx_service:
+    service:
+      - listen:
+        - file: nginx_config
+      - require:
+        - file: nginx_config
+  nginx_config:
+    file:
+      - require:
+        {% if nginx.install_from_source %}
+        - cmd: nginx_install
+        {% else %}
+        - pkg: nginx_install
+        {% endif %}

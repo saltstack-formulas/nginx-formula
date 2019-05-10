@@ -1,14 +1,14 @@
-# nginx.ng.passenger
+# nginx.passenger
 #
 # Manages installation of passenger from repo.
 # Requires install_from_phusionpassenger = True
 
-{% from 'nginx/ng/map.jinja' import nginx, sls_block with context %}
+{% from 'nginx/map.jinja' import nginx, sls_block with context %}
 
 {% if salt['grains.get']('os_family') in ['Debian', 'RedHat'] %}
 include:
-  - nginx.ng.pkg
-  - nginx.ng.service
+  - nginx.pkg
+  - nginx.service
 
 passenger_install:
   pkg.installed:
@@ -27,7 +27,7 @@ passenger_config:
   file.managed:
     {{ sls_block(nginx.server.opts) }}
     - name: {{ nginx.lookup.passenger_config_file }}
-    - source: salt://nginx/ng/files/nginx.conf
+    - source: salt://nginx/files/nginx.conf
     - template: jinja
     - context:
         config: {{ nginx.passenger|json() }}
