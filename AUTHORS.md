@@ -62,6 +62,7 @@ Avatar|Contributor|Contributions
 <img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/5306980?v=4' width='36' height='36' alt='@johnkeates'>|[@johnkeates](https://github.com/johnkeates)|1
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/744549?v=4' width='36' height='36' alt='@bsdlp'>|[@bsdlp](https://github.com/bsdlp)|1
 <img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/5395035?v=4' width='36' height='36' alt='@MEschenbacher'>|[@MEschenbacher](https://github.com/MEschenbacher)|1
+<img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/3433835?v=4' width='36' height='36' alt='@n-rodriguez'>|[@n-rodriguez](https://github.com/n-rodriguez)|1
 <img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/225115?v=4' width='36' height='36' alt='@renich'>|[@renich](https://github.com/renich)|1
 <img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/62993?v=4' width='36' height='36' alt='@outime'>|[@outime](https://github.com/outime)|1
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/991850?v=4' width='36' height='36' alt='@scub'>|[@scub](https://github.com/scub)|1

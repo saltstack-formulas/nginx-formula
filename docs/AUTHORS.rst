@@ -187,6 +187,9 @@ This list is sorted by the number of commits per contributor in *descending* ord
    * - :raw-html-m2r:`<img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/5395035?v=4' width='36' height='36' alt='@MEschenbacher'>`
      - `@MEschenbacher <https://github.com/MEschenbacher>`_
      - 1
+   * - :raw-html-m2r:`<img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/3433835?v=4' width='36' height='36' alt='@n-rodriguez'>`
+     - `@n-rodriguez <https://github.com/n-rodriguez>`_
+     - 1
    * - :raw-html-m2r:`<img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/225115?v=4' width='36' height='36' alt='@renich'>`
      - `@renich <https://github.com/renich>`_
      - 1
