@@ -27,10 +27,13 @@ This list is sorted by the number of commits per contributor in *descending* ord
      - 17
    * - :raw-html-m2r:`<img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/13322818?v=4' width='36' height='36' alt='@noelmcloughlin'>`
      - `@noelmcloughlin <https://github.com/noelmcloughlin>`_
-     - 14
+     - 15
    * - :raw-html-m2r:`<img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/4956475?v=4' width='36' height='36' alt='@ross-p'>`
      - `@ross-p <https://github.com/ross-p>`_
      - 13
+   * - :raw-html-m2r:`<img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/52996?v=4' width='36' height='36' alt='@daks'>`
+     - `@daks <https://github.com/daks>`_
+     - 10
    * - :raw-html-m2r:`<img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/287147?v=4' width='36' height='36' alt='@techhat'>`
      - `@techhat <https://github.com/techhat>`_
      - 10
@@ -45,9 +48,6 @@ This list is sorted by the number of commits per contributor in *descending* ord
      - 8
    * - :raw-html-m2r:`<img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/378158?v=4' width='36' height='36' alt='@dseira'>`
      - `@dseira <https://github.com/dseira>`_
-     - 8
-   * - :raw-html-m2r:`<img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/52996?v=4' width='36' height='36' alt='@daks'>`
-     - `@daks <https://github.com/daks>`_
      - 8
    * - :raw-html-m2r:`<img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/941928?v=4' width='36' height='36' alt='@amontalban'>`
      - `@amontalban <https://github.com/amontalban>`_
@@ -177,6 +177,9 @@ This list is sorted by the number of commits per contributor in *descending* ord
      - 1
    * - :raw-html-m2r:`<img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/668449?v=4' width='36' height='36' alt='@stromnet'>`
      - `@stromnet <https://github.com/stromnet>`_
+     - 1
+   * - :raw-html-m2r:`<img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/5306980?v=4' width='36' height='36' alt='@johnkeates'>`
+     - `@johnkeates <https://github.com/johnkeates>`_
      - 1
    * - :raw-html-m2r:`<img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/744549?v=4' width='36' height='36' alt='@bsdlp'>`
      - `@bsdlp <https://github.com/bsdlp>`_

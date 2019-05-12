@@ -8,14 +8,14 @@ Avatar|Contributor|Contributions
 <img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/1396878?v=4' width='36' height='36' alt='@gravyboat'>|[@gravyboat](https://github.com/gravyboat)|27
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/3374962?v=4' width='36' height='36' alt='@nmadhok'>|[@nmadhok](https://github.com/nmadhok)|24
 <img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/91293?v=4' width='36' height='36' alt='@whiteinge'>|[@whiteinge](https://github.com/whiteinge)|17
-<img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/13322818?v=4' width='36' height='36' alt='@noelmcloughlin'>|[@noelmcloughlin](https://github.com/noelmcloughlin)|14
+<img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/13322818?v=4' width='36' height='36' alt='@noelmcloughlin'>|[@noelmcloughlin](https://github.com/noelmcloughlin)|15
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/4956475?v=4' width='36' height='36' alt='@ross-p'>|[@ross-p](https://github.com/ross-p)|13
+<img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/52996?v=4' width='36' height='36' alt='@daks'>|[@daks](https://github.com/daks)|10
 <img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/287147?v=4' width='36' height='36' alt='@techhat'>|[@techhat](https://github.com/techhat)|10
 <img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/242396?v=4' width='36' height='36' alt='@javierbertoli'>|[@javierbertoli](https://github.com/javierbertoli)|9
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/445200?v=4' width='36' height='36' alt='@arthurlogilab'>|[@arthurlogilab](https://github.com/arthurlogilab)|8
 <img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/1184479?v=4' width='36' height='36' alt='@cheuschober'>|[@cheuschober](https://github.com/cheuschober)|8
 <img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/378158?v=4' width='36' height='36' alt='@dseira'>|[@dseira](https://github.com/dseira)|8
-<img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/52996?v=4' width='36' height='36' alt='@daks'>|[@daks](https://github.com/daks)|8
 <img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/941928?v=4' width='36' height='36' alt='@amontalban'>|[@amontalban](https://github.com/amontalban)|7
 <img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/528061?v=4' width='36' height='36' alt='@puneetk'>|[@puneetk](https://github.com/puneetk)|7
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/6354880?v=4' width='36' height='36' alt='@TaiSHiNet'>|[@TaiSHiNet](https://github.com/TaiSHiNet)|6
@@ -59,6 +59,7 @@ Avatar|Contributor|Contributions
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/48329?v=4' width='36' height='36' alt='@ekristen'>|[@ekristen](https://github.com/ekristen)|1
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/75496?v=4' width='36' height='36' alt='@jeduardo'>|[@jeduardo](https://github.com/jeduardo)|1
 <img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/668449?v=4' width='36' height='36' alt='@stromnet'>|[@stromnet](https://github.com/stromnet)|1
+<img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/5306980?v=4' width='36' height='36' alt='@johnkeates'>|[@johnkeates](https://github.com/johnkeates)|1
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/744549?v=4' width='36' height='36' alt='@bsdlp'>|[@bsdlp](https://github.com/bsdlp)|1
 <img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/5395035?v=4' width='36' height='36' alt='@MEschenbacher'>|[@MEschenbacher](https://github.com/MEschenbacher)|1
 <img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/225115?v=4' width='36' height='36' alt='@renich'>|[@renich](https://github.com/renich)|1
