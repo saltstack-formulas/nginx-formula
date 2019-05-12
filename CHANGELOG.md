@@ -1,5 +1,24 @@
 # Changelog
 
+# [1.0.0](https://github.com/saltstack-formulas/nginx-formula/compare/v0.56.1...v1.0.0) (2019-05-12)
+
+
+### Build System
+
+* remove obsolete Makefile ([4961b04](https://github.com/saltstack-formulas/nginx-formula/commit/4961b04))
+
+
+### Code Refactoring
+
+* replace old `nginx` with `nginx.ng` ([0fc5070](https://github.com/saltstack-formulas/nginx-formula/commit/0fc5070))
+
+
+### BREAKING CHANGES
+
+* all previous `nginx` based configurations must be reviewed;
+`nginx.ng` usage must be promoted to `nginx` and any uses of the original
+`nginx` will have to be converted.
+
 ## [0.56.1](https://github.com/saltstack-formulas/nginx-formula/compare/v0.56.0...v0.56.1) (2019-04-27)
 
 
