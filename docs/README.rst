@@ -14,7 +14,36 @@ nginx-formula
    :scale: 100%
    :target: https://github.com/semantic-release/semantic-release
 
-Formula to set up and configure nginx
+Formula to set up and configure
+`NGINX <https://www.nginx.com/>`_.
+
+.. list-table::
+   :name: banner-breaking-changes-v1.0.0
+   :header-rows: 1
+   :widths: 1
+
+   * - WARNING: BREAKING CHANGES SINCE ``v1.0.0``
+   * - Prior to
+       `v1.0.0 <https://github.com/saltstack-formulas/nginx-formula/releases/tag/v1.0.0>`_,
+       this formula provided two methods for managing NGINX;
+       the old method under ``nginx`` and the new method under ``nginx.ng``.
+       The old method has now been removed and ``nginx.ng`` has been promoted to
+       be ``nginx`` in its place.
+
+       If you are not in a position to migrate, please pin your repo to the final
+       release tag before
+       `v1.0.0 <https://github.com/saltstack-formulas/nginx-formula/releases/tag/v1.0.0>`_,
+       i.e.
+       `v0.56.1 <https://github.com/saltstack-formulas/nginx-formula/releases/tag/v0.56.1>`_.
+
+       To migrate from ``nginx.ng``, simply modify your pillar to promote the
+       entire section under ``nginx:ng`` so that it is under ``nginx`` instead.
+       So with the editor of your choice, highlight the entire section and then
+       unindent one level.  Finish by removing the ``ng:`` line.
+
+       To migrate from the old ``nginx``, first convert to ``nginx.ng`` under
+       `v0.56.1 <https://github.com/saltstack-formulas/nginx-formula/releases/tag/v0.56.1>`_
+       and then follow the steps laid out in the paragraph directly above.
 
 .. contents:: **Table of Contents**
 
