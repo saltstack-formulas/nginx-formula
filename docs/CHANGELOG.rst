@@ -2,6 +2,15 @@
 Changelog
 =========
 
+`1.0.4 <https://github.com/saltstack-formulas/nginx-formula/compare/v1.0.3...v1.0.4>`_ (2019-05-13)
+-------------------------------------------------------------------------------------------------------
+
+Bug Fixes
+^^^^^^^^^
+
+
+* prevent running of states deprecated in ``v1.0.0`` (\ `46dff15 <https://github.com/saltstack-formulas/nginx-formula/commit/46dff15>`_\ )
+
 `1.0.3 <https://github.com/saltstack-formulas/nginx-formula/compare/v1.0.2...v1.0.3>`_ (2019-05-13)
 -------------------------------------------------------------------------------------------------------
 
