@@ -2,6 +2,15 @@
 Changelog
 =========
 
+`1.0.5 <https://github.com/saltstack-formulas/nginx-formula/compare/v1.0.4...v1.0.5>`_ (2019-05-13)
+-------------------------------------------------------------------------------------------------------
+
+Documentation
+^^^^^^^^^^^^^
+
+
+* **readme:** improve readme sections (\ `3cc3407 <https://github.com/saltstack-formulas/nginx-formula/commit/3cc3407>`_\ )
+
 `1.0.4 <https://github.com/saltstack-formulas/nginx-formula/compare/v1.0.3...v1.0.4>`_ (2019-05-13)
 -------------------------------------------------------------------------------------------------------
 

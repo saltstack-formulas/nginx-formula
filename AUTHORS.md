@@ -16,9 +16,9 @@ Avatar|Contributor|Contributions
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/445200?v=4' width='36' height='36' alt='@arthurlogilab'>|[@arthurlogilab](https://github.com/arthurlogilab)|8
 <img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/1184479?v=4' width='36' height='36' alt='@cheuschober'>|[@cheuschober](https://github.com/cheuschober)|8
 <img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/378158?v=4' width='36' height='36' alt='@dseira'>|[@dseira](https://github.com/dseira)|8
+<img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/10231489?v=4' width='36' height='36' alt='@myii'>|[@myii](https://github.com/myii)|8
 <img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/941928?v=4' width='36' height='36' alt='@amontalban'>|[@amontalban](https://github.com/amontalban)|7
 <img class='float-left rounded-1' src='https://avatars1.githubusercontent.com/u/528061?v=4' width='36' height='36' alt='@puneetk'>|[@puneetk](https://github.com/puneetk)|7
-<img class='float-left rounded-1' src='https://avatars2.githubusercontent.com/u/10231489?v=4' width='36' height='36' alt='@myii'>|[@myii](https://github.com/myii)|7
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/6354880?v=4' width='36' height='36' alt='@TaiSHiNet'>|[@TaiSHiNet](https://github.com/TaiSHiNet)|6
 <img class='float-left rounded-1' src='https://avatars0.githubusercontent.com/u/745513?v=4' width='36' height='36' alt='@EvaSDK'>|[@EvaSDK](https://github.com/EvaSDK)|6
 <img class='float-left rounded-1' src='https://avatars3.githubusercontent.com/u/3280630?v=4' width='36' height='36' alt='@cackovic'>|[@cackovic](https://github.com/cackovic)|5
