@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/saltstack-formulas/nginx-formula/compare/v1.0.2...v1.0.3) (2019-05-13)
+
+
+### Documentation
+
+* **readme:** add warning banner about `v1.0.0` breaking changes ([d553821](https://github.com/saltstack-formulas/nginx-formula/commit/d553821))
+
 ## [1.0.2](https://github.com/saltstack-formulas/nginx-formula/compare/v1.0.1...v1.0.2) (2019-05-12)
 
 
