@@ -2,7 +2,9 @@
 #
 # Manages creation of snippets
 
-{% from 'nginx/map.jinja' import nginx, sls_block with context %}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ '/map.jinja' import nginx, sls_block with context %}
+{%- from tplroot ~ '/libtofs.jinja' import files_switch with context %}
 
 nginx_snippets_dir:
   file.directory:
@@ -12,8 +14,11 @@ nginx_snippets_dir:
 {% for snippet, config in nginx.snippets.items() %}
 nginx_snippet_{{ snippet }}:
   file.managed:
-    - name: {{ nginx.lookup.snippets_dir }}/{{ snippet }}.conf
-    - source: salt://nginx/files/server.conf
+    - name: {{ nginx.lookup.snippets_dir ~ '/' ~ snippet ~ '.conf' }}
+    - source: {{ files_switch([ snippet, 'server.conf' ],
+                              'nginx_snippet_file_managed'
+                 )
+              }}
     - template: jinja
     - context:
         config: {{ config|json() }}

@@ -2,7 +2,9 @@
 #
 # Manages the main nginx server configuration file.
 
-{% from 'nginx/map.jinja' import nginx, sls_block with context %}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ '/map.jinja' import nginx, sls_block with context %}
+{%- from tplroot ~ '/libtofs.jinja' import files_switch with context %}
 
 {% if nginx.install_from_source %}
 nginx_log_dir:
@@ -12,16 +14,18 @@ nginx_log_dir:
     - group: {{ nginx.server.config.user }}
 {% endif %}
 
-{% if 'source_path' in nginx.server.config %}
-{% set source_path = nginx.server.config.source_path %}
-{% else %}
-{% set source_path = 'salt://nginx/files/nginx.conf' %}
-{% endif %}
 nginx_config:
   file.managed:
     {{ sls_block(nginx.server.opts) }}
     - name: {{ nginx.lookup.conf_file }}
-    - source: {{ source_path }}
+    - source:
+{% if 'source_path' in nginx.server.config %}
+      - {{ nginx.server.config.source_path }}
+{% endif %}
+      {{ files_switch(['nginx.conf'],
+                      'nginx_config_file_managed'
+          )
+      }}
     - template: jinja
 {% if 'source_path' not in nginx.server.config %}
     - context:

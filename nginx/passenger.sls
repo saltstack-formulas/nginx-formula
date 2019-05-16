@@ -3,7 +3,9 @@
 # Manages installation of passenger from repo.
 # Requires install_from_phusionpassenger = True
 
-{% from 'nginx/map.jinja' import nginx, sls_block with context %}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ '/map.jinja' import nginx, sls_block with context %}
+{%- from tplroot ~ '/libtofs.jinja' import files_switch with context %}
 
 {% if salt['grains.get']('os_family') in ['Debian', 'RedHat'] %}
 include:
@@ -27,7 +29,10 @@ passenger_config:
   file.managed:
     {{ sls_block(nginx.server.opts) }}
     - name: {{ nginx.lookup.passenger_config_file }}
-    - source: salt://nginx/files/nginx.conf
+    - source: {{ files_switch(['nginx.conf'],
+                              'passenger_config_file_managed'
+                 )
+              }}
     - template: jinja
     - context:
         config: {{ nginx.passenger|json() }}

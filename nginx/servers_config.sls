@@ -2,7 +2,11 @@
 #
 # Manages the configuration of virtual host files.
 
-{% from 'nginx/map.jinja' import nginx, sls_block with context %}
+{#- Get the `tplroot` from `tpldir` #}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ '/map.jinja' import nginx, sls_block with context %}
+{%- from tplroot ~ '/libtofs.jinja' import files_switch with context %}
+
 {% set server_states = [] %}
 
 # Simple path concatenation.
@@ -100,17 +104,19 @@ nginx_server_available_dir:
     file.absent:
         - name: {{ server_curpath(server) }}
 {% else %}
-{% if settings.config != None and settings.enabled == True %}
-{% if 'source_path' in settings.config %}
-{% set source_path = settings.config.source_path %}
-{% else %}
-{% set source_path = 'salt://nginx/files/server.conf' %}
-{% endif %}
+{% if settings.enabled == True %}
 {{ conf_state_id }}:
   file.managed:
     {{ sls_block(nginx.servers.managed_opts) }}
     - name: {{ server_curpath(server) }}
-    - source: {{ source_path }}
+    - source:
+{%- if 'source_path' in settings.config %}
+      - {{ settings.config.source_path }}
+{%- endif %}
+      {{ files_switch([server, 'server.conf'],
+                      'server_conf_file_managed'
+         )
+      }}
     - makedirs: True
     - template: jinja
     - require_in:
@@ -138,7 +144,7 @@ nginx_server_available_dir:
 {% else %}
 {{ manage_status(server, settings.enabled, False) }}
 {% endif %}
-{% if settings.config != None and settings.enabled == True %}
+{% if settings.enabled == True %}
     - require:
       - file: {{ conf_state_id }}
 {% endif %}
