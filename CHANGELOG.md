@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.1.0](https://github.com/saltstack-formulas/nginx-formula/compare/v1.0.5...v1.1.0) (2019-06-03)
+
+
+### Features
+
+* **tofs:** first implemetation + tplroot ([d5262ea](https://github.com/saltstack-formulas/nginx-formula/commit/d5262ea))
+
 ## [1.0.5](https://github.com/saltstack-formulas/nginx-formula/compare/v1.0.4...v1.0.5) (2019-05-13)
 
 
