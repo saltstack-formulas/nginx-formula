@@ -2,9 +2,10 @@
 #
 # Manages virtual hosts and their relationship to the nginx service.
 
-{% from 'nginx/map.jinja' import nginx, sls_block with context %}
-{% from 'nginx/servers_config.sls' import server_states with context %}
-{% from 'nginx/service.sls' import service_function with context %}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ '/map.jinja' import nginx, sls_block with context %}
+{%- from tplroot ~ '/servers_config.sls' import server_states with context %}
+{%- from tplroot ~ '/service.sls' import service_function with context %}
 
 {% macro file_requisites(states) %}
       {%- for state in states %}

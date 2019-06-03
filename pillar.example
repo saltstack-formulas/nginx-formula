@@ -60,6 +60,7 @@ nginx:
   ##--- --- - - - - - - -- - - - - -- - - --- -- - -- - - - -- - - - - -- - - - -- - - - -- - ##
   ## You can use snippets to define often repeated configuration once and include it later
   ## The letsencrypt example below is consumed by "- include: 'snippets/letsencrypt.conf'"
+  ## Files or Templates can be retrieved by TOFS with snippet name ( Fallback to server.conf )
   ##--- --- - - - - - - --  - - -- -- - - --- -- - -- - - - -- - - - - -- - - - -- - - - -- - ##
   snippets:
     letsencrypt:
@@ -85,7 +86,6 @@ nginx:
         - server: 127.0.0.1:19999
         - keepalive: 64
 
-
   server:
     opts: {} # this partially exposes file.managed parameters as they relate to the main nginx.conf file
 
@@ -93,12 +93,14 @@ nginx:
     # nginx.conf (main server) declarations
     # dictionaries map to blocks {} and lists cause the same declaration to repeat with different values
     # see also http://nginx.org/en/docs/example.html
+    # Nginx config file or template can be retrieved by TOFS ( Fallback to nginx.conf )
     #-- - - - - -- - - -- - - - - -- - - -- - - - -- - - - - - -- - - - - - -- - - - - -- - - - - -- - - #
     config:
       include: 'snippets/letsencrypt.conf'
-      source_path: salt://path_to_nginx_conf_file/nginx.conf # IMPORTANT: This option is mutually exclusive with the rest of the
-                                                        # options; if it is found other options (worker_processes: 4 and so
-                                                        # on) are not processed and just upload the file from source
+      source_path: salt://path_to_nginx_conf_file/nginx.conf # IMPORTANT: This option is mutually exclusive with TOFS and
+                                                             # the rest of the options; if it is found other options
+                                                             # (worker_processes: 4 and so on) are not processed
+                                                             # and just upload the file from source
       worker_processes: 4
       load_module: modules/ngx_http_lua_module.so  # pass as very first in configuration; otherwise nginx will fail to start
       #pid: /var/run/nginx.pid                     # Directory location must exist (i.e. it's  /run/nginx.pid on EL7)
@@ -218,7 +220,8 @@ nginx:
         available_dir: /etc/nginx/sites-available
         enabled_dir: /etc/nginx/sites-enabled
         config:
-          source_path: salt://path-to-site-file/mysite2
+          source_path: salt://path-to-site-file/mysite2 # IMPORTANT: This field is mutually exclusive with TOFS
+                                                        # and other config options, it just uploads the specified file
 
       # Below configuration becomes handy if you want to create custom configuration files
       # for example if you want to create /usr/local/etc/nginx/http_options.conf with
@@ -277,7 +280,39 @@ nginx:
   # Passenger configuration
   # Default passenger configuration is provided, and will be deployed in
   # /etc/nginx/conf.d/passenger.conf
+  # Passenger conf can be retrieved by TOFS ( Fallback to nginx.conf )
   passenger:
     passenger_root: /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini
     passenger_ruby: /usr/bin/ruby
     passenger_instance_registry_dir: /var/run/passenger-instreg
+
+  tofs:
+    # The files_switch key serves as a selector for alternative
+    # directories under the formula files directory. See TOFS pattern
+    # doc for more info.
+    # Note: Any value not evaluated by `config.get` will be used literally.
+    # This can be used to set custom paths, as many levels deep as required.
+    # files_switch:
+    #   - any/path/can/be/used/here
+    #   - id
+    #   - role
+    #   - osfinger
+    #   - os
+    #   - os_family
+    # All aspects of path/file resolution are customisable using the options below.
+    # This is unnecessary in most cases; there are sensible defaults.
+    # path_prefix: template_alt
+    # dirs:
+    #   files: files_alt
+    #   default: default_alt
+    source_files:
+      nginx_config_file_managed:
+        - alt_nginx.conf
+      passenger_config_file_managed:
+        - alt_nginx.conf
+      server_conf_file_managed:
+        - alt_server.conf
+      nginx_systemd_service_file:
+        - alt_nginx.service
+      nginx_snippet_file_managed:
+        - alt_server.conf

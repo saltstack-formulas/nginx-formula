@@ -2,7 +2,10 @@
 #
 # Manages the nginx service.
 
-{% from 'nginx/map.jinja' import nginx, sls_block with context %}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ '/map.jinja' import nginx, sls_block with context %}
+{%- from tplroot ~ '/libtofs.jinja' import files_switch with context %}
+
 {% set service_function = {True:'running', False:'dead'}.get(nginx.service.enable) %}
 
 include:
@@ -16,7 +19,10 @@ include:
 nginx_systemd_service_file:
   file.managed:
     - name: /lib/systemd/system/nginx.service
-    - source: salt://nginx/files/nginx.service
+    - source: {{ files_switch(['nginx.service'],
+                              'nginx_systemd_service_file'
+                 )
+              }}
 {% endif %}
 
 nginx_service:
