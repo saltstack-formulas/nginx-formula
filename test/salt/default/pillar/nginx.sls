@@ -6,7 +6,7 @@
 
 nginx:
   snippets:
-    letsencrypt:
+    letsencrypt.conf:
       - location ^~ /.well-known/acme-challenge/:
         - proxy_pass: http://localhost:9999
   server:

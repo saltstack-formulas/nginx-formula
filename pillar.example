@@ -63,15 +63,15 @@ nginx:
   ## Files or Templates can be retrieved by TOFS with snippet name ( Fallback to server.conf )
   ##--- --- - - - - - - --  - - -- -- - - --- -- - -- - - - -- - - - - -- - - - -- - - - -- - ##
   snippets:
-    letsencrypt:
+    letsencrypt.conf:
       - location ^~ /.well-known/acme-challenge/:
         - proxy_pass: http://localhost:9999
-    cloudflare_proxy:
+    cloudflare_proxy.conf:
       - set_real_ip_from: 103.21.244.0/22
       - set_real_ip_from: 103.22.200.0/22
       - set_real_ip_from: 104.16.0.0/12
       - set_real_ip_from: 108.162.192.0/18
-    blacklist:
+    blacklist.conf:
       - map $http_user_agent $bad_bot:
         - default: 0
         - '~*^Lynx': 0
@@ -81,7 +81,7 @@ nginx:
         - '~*bandit': 1
         - libwww-perl: 1
         - '~(?i)(httrack|htmlparser|libwww)': 1
-    upstream_netdata_tcp:
+    upstream_netdata_tcp.conf:
       - upstream netdata:
         - server: 127.0.0.1:19999
         - keepalive: 64
