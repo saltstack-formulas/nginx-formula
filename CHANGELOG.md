@@ -1,5 +1,19 @@
 # Changelog
 
+# [2.0.0](https://github.com/saltstack-formulas/nginx-formula/compare/v1.1.0...v2.0.0) (2019-06-19)
+
+
+### Bug Fixes
+
+* **snippets:** removed appending of ".conf" ([aa87721](https://github.com/saltstack-formulas/nginx-formula/commit/aa87721))
+
+
+### BREAKING CHANGES
+
+* **snippets:** Users have to modify their pillar
+according to this commit. Users MUST append '.conf' for their
+existing managed snippets.
+
 # [1.1.0](https://github.com/saltstack-formulas/nginx-formula/compare/v1.0.5...v1.1.0) (2019-06-03)
 
 
