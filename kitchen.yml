@@ -11,54 +11,100 @@ driver:
 # Make sure the platforms listed below match up with
 # the `env.matrix` instances defined in `.travis.yml`
 platforms:
+  ## SALT `develop`
+  - name: debian-9-develop-py3
+    driver:
+      image: netmanagers/salt-develop-py3:debian-9
+      provision_command:
+        - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
+        - sh bootstrap-salt.sh -XdPbfrq -x python3 git develop
+  - name: ubuntu-1804-develop-py3
+    driver:
+      image: netmanagers/salt-develop-py3:ubuntu-18.04
+      provision_command:
+        - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
+        - sh bootstrap-salt.sh -XdPbfrq -x python3 git develop
+  - name: centos-7-develop-py3
+    driver:
+      image: netmanagers/salt-develop-py3:centos-7
+      provision_command:
+        - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
+        - sh bootstrap-salt.sh -XdPbfrq -x python3 git develop
+  - name: fedora-29-develop-py3
+    driver:
+      image: netmanagers/salt-develop-py3:fedora-29
+      provision_command:
+        - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
+        - sh bootstrap-salt.sh -XdPbfrq -x python3 git develop
+  - name: opensuse-leap-15-develop-py3
+    driver:
+      image: netmanagers/salt-develop-py3:opensuse-leap-15
+      provision_command:
+        - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
+        - sh bootstrap-salt.sh -XdPbfrq -x python3 git develop
+      run_command: /usr/lib/systemd/systemd
+
   ## SALT 2019.2
   - name: debian-9-2019-2-py3
     driver:
       image: netmanagers/salt-2019.2-py3:debian-9
   - name: ubuntu-1804-2019-2-py3
     driver:
-      image: netmanagers/salt-2019.2-py3:ubuntu-1804
-  - name: centos-7-2019-2-py2
+      image: netmanagers/salt-2019.2-py3:ubuntu-18.04
+  - name: centos-7-2019-2-py3
     driver:
-      image: netmanagers/salt-2019.2-py2:centos-7
-  - name: fedora-29-2019-2-py2
+      image: netmanagers/salt-2019.2-py3:centos-7
+  - name: fedora-29-2019-2-py3
     driver:
-      image: netmanagers/salt-2019.2-py2:fedora-29
+      image: netmanagers/salt-2019.2-py3:fedora-29
+  - name: opensuse-leap-15-2019-2-py3
+    driver:
+      image: netmanagers/salt-2019.2-py3:opensuse-leap-15
+      run_command: /usr/lib/systemd/systemd
 
   ## SALT 2018.3
-  - name: opensuse-423-2018-3-py2
+  - name: debian-9-2018-3-py2
     driver:
-      image: netmanagers/salt-2018.3-py2:opensuse-423
-      run_command: /usr/lib/systemd/systemd
-  - name: debian-8-2018-3-py2
-    driver:
-      image: netmanagers/salt-2018.3-py2:debian-8
+      image: netmanagers/salt-2018.3-py2:debian-9
   - name: ubuntu-1604-2018-3-py2
     driver:
-      image: netmanagers/salt-2018.3-py2:ubuntu-1604
-  - name: fedora-28-2018-3-py2
+      image: netmanagers/salt-2018.3-py2:ubuntu-16.04
+  - name: centos-7-2018-3-py2
     driver:
-      image: netmanagers/salt-2018.3-py2:fedora-28
-
-  # centos-6 guest fails on Debian hosts due to vsyscall issues, see
-  # https://hub.docker.com/_/centos, "A note about vsyscall"
-  # Disabled for `template-formula` because not `systemd` based
-  # - name: centos-6-2018-3
+      image: netmanagers/salt-2018.3-py2:centos-7
+  - name: fedora-29-2018-3-py2
+    driver:
+      image: netmanagers/salt-2018.3-py2:fedora-29
+  # TODO: Use this when fixed instead of `opensuse-leap-42`
+  # Ref: https://github.com/netmanagers/salt-image-builder/issues/2
+  # - name: opensuse-leap-15-2018-3-py2
   #   driver:
-  #     image: netmanagers/salt-2018.3-py2:centos-6
-  #     run_command: /sbin/init
+  #     image: netmanagers/salt-2018.3-py2:opensuse-leap-15
+  #     run_command: /usr/lib/systemd/systemd
+  - name: opensuse-leap-42-2018-3-py2
+    driver:
+      image: netmanagers/salt-2018.3-py2:opensuse-leap-42
+      run_command: /usr/lib/systemd/systemd
 
-  ##S SALT 2017.7
+  ## SALT 2017.7
   - name: debian-8-2017-7-py2
     driver:
       image: netmanagers/salt-2017.7-py2:debian-8
   - name: ubuntu-1604-2017-7-py2
     driver:
-      image: netmanagers/salt-2017.7-py2:ubuntu-1604
-  # - name: centos-6-2017-7
-  #   driver:
-  #     image: netmanagers/salt-2017.7-py2:centos-6
-  #     run_command: /sbin/init
+      image: netmanagers/salt-2017.7-py2:ubuntu-16.04
+  # TODO: Modify the formula to work for non-`systemd` platforms
+  - name: centos-6-2017-7-py2
+    driver:
+      image: netmanagers/salt-2017.7-py2:centos-6
+      run_command: /sbin/init
+  - name: fedora-28-2017-7-py2
+    driver:
+      image: netmanagers/salt-2017.7-py2:fedora-28
+  - name: opensuse-leap-42-2017-7-py2
+    driver:
+      image: netmanagers/salt-2017.7-py2:opensuse-leap-42
+      run_command: /usr/lib/systemd/systemd
 
 provisioner:
   name: salt_solo
