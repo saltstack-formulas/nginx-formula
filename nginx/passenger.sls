@@ -35,7 +35,7 @@ passenger_config:
   file.managed:
     {{ sls_block(nginx.server.opts) }}
     - name: {{ nginx.lookup.passenger_config_file }}
-    - source: {{ files_switch(['nginx.conf'],
+    - source: {{ files_switch(['passenger.conf'],
                               'passenger_config_file_managed'
                  )
               }}

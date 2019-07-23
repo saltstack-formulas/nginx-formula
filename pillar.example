@@ -303,7 +303,7 @@ nginx:
     # All aspects of path/file resolution are customisable using the options below.
     # This is unnecessary in most cases; there are sensible defaults.
     # Path pattern: salt://{{ path_prefix or 'nginx' }}/{{ dirs.files or 'files' }}/{{ dirs.default or 'default' }}
-    # path_prefix: template_alt 
+    # path_prefix: template_alt
     # dirs:
     #   files: files_alt
     #   default: default_alt
@@ -311,10 +311,10 @@ nginx:
       nginx_config_file_managed:
         - alt_nginx.conf
       passenger_config_file_managed:
-        - alt_nginx.conf
+        - alt_passenger.conf
       server_conf_file_managed:
         - alt_server.conf
       nginx_systemd_service_file:
         - alt_nginx.service
       nginx_snippet_file_managed:
-        - alt_server.conf
+        - alt_snippet.conf
