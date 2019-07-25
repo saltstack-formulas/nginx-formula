@@ -10,7 +10,7 @@
 
     Params:
       * source_files: ordered list of files to look for
-      * lookup: key under '<tplroot>:tofs:source_files' to override
+      * lookup: key under '<tplroot>:tofs:source_files' to prepend to the
         list of source files
       * default_files_switch: if there's no config (e.g. pillar)
         '<tplroot>:tofs:files_switch' this is the ordered list of grains to
@@ -55,14 +55,13 @@
       tplroot ~ ':tofs:files_switch',
       default_files_switch
   ) %}
-  {#- Lookup source_files (v2), files (v1), or fallback to source_files parameter #}
+  {#- Lookup source_files (v2), files (v1), or fallback to an empty list #}
   {%- set src_files = salt['config.get'](
       tplroot ~ ':tofs:source_files:' ~ lookup,
-      salt['config.get'](
-          tplroot ~ ':tofs:files:' ~ lookup,
-          source_files
-      )
+      salt['config.get'](tplroot ~ ':tofs:files:' ~ lookup, [])
   ) %}
+  {#- Append the default source_files #}
+  {%- set src_files = src_files + source_files %}
   {#- Only add to [''] when supporting older TOFS implementations #}
   {%- set path_prefix_exts = [''] %}
   {%- if v1_path_prefix != '' %}
@@ -83,18 +82,25 @@
     {%- for fs in fsl %}
       {%- for src_file in src_files %}
         {%- if fs %}
-          {%- set fs_dir = salt['config.get'](fs, fs) %}
+          {%- set fs_dirs = salt['config.get'](fs, fs) %}
         {%- else %}
-          {%- set fs_dir = salt['config.get'](tplroot ~ ':tofs:dirs:default', 'default') %}
+          {%- set fs_dirs = salt['config.get'](tplroot ~ ':tofs:dirs:default', 'default') %}
         {%- endif %}
-        {%- set url = [
-            '- salt:/',
-            path_prefix_inc_ext.strip('/'),
-            files_dir.strip('/'),
-            fs_dir.strip('/'),
-            src_file.strip('/'),
-        ] | select | join('/') %}
+        {#- Force the `config.get` lookup result as a list where necessary #}
+        {#- since we need to also handle grains that are lists #}
+        {%- if fs_dirs is string %}
+          {%- set fs_dirs = [fs_dirs] %}
+        {%- endif %}
+        {%- for fs_dir in fs_dirs %}
+          {%- set url = [
+              '- salt:/',
+              path_prefix_inc_ext.strip('/'),
+              files_dir.strip('/'),
+              fs_dir.strip('/'),
+              src_file.strip('/'),
+          ] | select | join('/') %}
 {{ url | indent(indent_width, true) }}
+        {%- endfor %}
       {%- endfor %}
     {%- endfor %}
   {%- endfor %}

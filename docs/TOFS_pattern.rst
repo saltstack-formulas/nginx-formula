@@ -325,6 +325,7 @@ We can simplify the ``conf.sls`` with the new ``files_switch`` macro to use in t
 
 
 * This uses ``config.get``, searching for ``ntp:tofs:source_files:Configure NTP`` to determine the list of template files to use.
+* If this returns a result, the default of ``['/etc/ntp.conf.jinja']`` will be appended to it.
 * If this does not yield any results, the default of ``['/etc/ntp.conf.jinja']`` will be used.
 
 In ``libtofs.jinja``, we define this new macro ``files_switch``.
@@ -426,7 +427,6 @@ The list of ``source_files`` can be given:
      tofs:
        source_files:
          Configure NTP:
-           - '/etc/ntp.conf.jinja'
            - '/etc/ntp.conf_alt.jinja'
 
 Resulting in:
@@ -434,10 +434,13 @@ Resulting in:
 .. code-block:: sls
 
          - source:
-           - salt://ntp/files/theminion/etc/ntp.conf.jinja
            - salt://ntp/files/theminion/etc/ntp.conf_alt.jinja
-           - salt://ntp/files/Debian/etc/ntp.conf.jinja
+           - salt://ntp/files/theminion/etc/ntp.conf.jinja
            - salt://ntp/files/Debian/etc/ntp.conf_alt.jinja
-           - salt://ntp/files/default/etc/ntp.conf.jinja
+           - salt://ntp/files/Debian/etc/ntp.conf.jinja
            - salt://ntp/files/default/etc/ntp.conf_alt.jinja
+           - salt://ntp/files/default/etc/ntp.conf.jinja
+
+Note: This does *not* override the default value.
+Rather, the value from the pillar/config is prepended to the default.
 
