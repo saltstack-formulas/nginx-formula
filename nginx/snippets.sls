@@ -15,7 +15,7 @@ nginx_snippets_dir:
 nginx_snippet_{{ snippet }}:
   file.managed:
     - name: {{ nginx.lookup.snippets_dir ~ '/' ~ snippet }}
-    - source: {{ files_switch([ snippet, 'server.conf' ],
+    - source: {{ files_switch([ snippet, 'snippet.conf' ],
                               'nginx_snippet_file_managed'
                  )
               }}
