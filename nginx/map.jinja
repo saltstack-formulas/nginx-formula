@@ -186,7 +186,7 @@
     'passenger_root': '/usr/share/ruby/vendor_ruby/phusion_passenger/locations.ini',
     'passenger_instance_registry_dir': '/var/run/passenger-instreg',
 })%}
-    {% if salt['grains.get']('osfinger') == 'CentOS-6' %}
+    {% if 'osfinger' in grains and salt['grains.get']('osfinger') == 'CentOS-6' %}
     {% do nginx.server.config.update({
         'pid': '/var/run/nginx.pid',
     })%}
