@@ -2,6 +2,21 @@
 Changelog
 =========
 
+`2.1.0 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.0.0...v2.1.0>`_ (2019-08-04)
+-------------------------------------------------------------------------------------------------------
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **kitchen+travis:** modify matrix to include ``develop`` platform (\ `f6b357d <https://github.com/saltstack-formulas/nginx-formula/commit/f6b357d>`_\ )
+
+Features
+^^^^^^^^
+
+
+* **linux:** archlinux support (no osfinger grain) (\ `ab6148c <https://github.com/saltstack-formulas/nginx-formula/commit/ab6148c>`_\ )
+
 `2.0.0 <https://github.com/saltstack-formulas/nginx-formula/compare/v1.1.0...v2.0.0>`_ (2019-06-19)
 -------------------------------------------------------------------------------------------------------
 
