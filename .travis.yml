@@ -3,7 +3,7 @@
 ---
 stages:
   - test
-  - commitlint
+  - lint
   - name: release
     if: branch = master AND type != pull_request
 
@@ -45,16 +45,21 @@ script:
 
 jobs:
   include:
-    # Define the commitlint stage
-    - stage: commitlint
+    # Define the `lint` stage (runs `yamllint` and `commitlint`)
+    - stage: lint
       language: node_js
       node_js: lts/*
       before_install: skip
       script:
+        # Install and run `yamllint`
+        - pip install --user yamllint
+        # yamllint disable-line rule:line-length
+        - yamllint -s . .yamllint pillar.example test/salt/default/pillar/nginx.sls
+        # Install and run `commitlint`
         - npm install @commitlint/config-conventional -D
         - npm install @commitlint/travis-cli -D
         - commitlint-travis
-    # Define the release stage that runs semantic-release
+    # Define the release stage that runs `semantic-release`
     - stage: release
       language: node_js
       node_js: lts/*
