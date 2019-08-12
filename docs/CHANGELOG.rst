@@ -2,6 +2,15 @@
 Changelog
 =========
 
+`2.2.0 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.1.0...v2.2.0>`_ (2019-08-12)
+-------------------------------------------------------------------------------------------------------
+
+Features
+^^^^^^^^
+
+
+* **yamllint:** include for this repo and apply rules throughout (\ `6b7d1fe <https://github.com/saltstack-formulas/nginx-formula/commit/6b7d1fe>`_\ )
+
 `2.1.0 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.0.0...v2.1.0>`_ (2019-08-04)
 -------------------------------------------------------------------------------------------------------
 
