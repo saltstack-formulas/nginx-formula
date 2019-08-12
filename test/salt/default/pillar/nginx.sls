@@ -1,4 +1,6 @@
-
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
 # Simple pillar setup
 # - snippet letsencrypt
 # - remove 'default' site
@@ -8,7 +10,7 @@ nginx:
   snippets:
     letsencrypt.conf:
       - location ^~ /.well-known/acme-challenge/:
-        - proxy_pass: http://localhost:9999
+          - proxy_pass: http://localhost:9999
   server:
     config:
       http:
@@ -20,19 +22,18 @@ nginx:
   servers:
     managed:
       default:
-        deleted: True
-        enabled: False
+        deleted: true
+        enabled: false
         config: {}
 
       mysite:
-        enabled: True
+        enabled: true
         config:
           - server:
-            - server_name: localhost
-            - listen:
-              - '80 default_server'
-            - index: 'index.html index.htm'
-            - location ~ .htm:
-              - try_files: '$uri $uri/ =404'
-            - include: 'snippets/letsencrypt.conf'
-
+              - server_name: localhost
+              - listen:
+                  - '80 default_server'
+              - index: 'index.html index.htm'
+              - location ~ .htm:
+                  - try_files: '$uri $uri/ =404'
+              - include: 'snippets/letsencrypt.conf'
