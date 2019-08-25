@@ -2,6 +2,15 @@
 Changelog
 =========
 
+`2.2.1 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.2.0...v2.2.1>`_ (2019-08-25)
+-------------------------------------------------------------------------------------------------------
+
+Documentation
+^^^^^^^^^^^^^
+
+
+* **readme:** update testing section (\ `182f216 <https://github.com/saltstack-formulas/nginx-formula/commit/182f216>`_\ )
+
 `2.2.0 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.1.0...v2.2.0>`_ (2019-08-12)
 -------------------------------------------------------------------------------------------------------
 
