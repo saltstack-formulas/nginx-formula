@@ -19,26 +19,30 @@ services:
 # the `platforms` defined in `kitchen.yml`
 env:
   matrix:
-    - INSTANCE: default-debian-9-develop-py3
+    - INSTANCE: default-debian-10-develop-py3
     # - INSTANCE: default-ubuntu-1804-develop-py3
     # - INSTANCE: default-centos-7-develop-py3
-    # - INSTANCE: default-fedora-29-develop-py3
+    # - INSTANCE: default-fedora-30-develop-py3
     # - INSTANCE: default-opensuse-leap-15-develop-py3
+    # - INSTANCE: default-amazonlinux-2-develop-py2
     # - INSTANCE: default-debian-9-2019-2-py3
     - INSTANCE: default-ubuntu-1804-2019-2-py3
     - INSTANCE: default-centos-7-2019-2-py3
-    # - INSTANCE: default-fedora-29-2019-2-py3
+    # - INSTANCE: default-fedora-30-2019-2-py3
     # - INSTANCE: default-opensuse-leap-15-2019-2-py3
+    # - INSTANCE: default-amazonlinux-2-2019-2-py2
     # - INSTANCE: default-debian-9-2018-3-py2
     # - INSTANCE: default-ubuntu-1604-2018-3-py2
     # - INSTANCE: default-centos-7-2018-3-py2
     - INSTANCE: default-fedora-29-2018-3-py2
-    - INSTANCE: default-opensuse-leap-42-2018-3-py2
+    - INSTANCE: default-opensuse-leap-15-2018-3-py2
+    # - INSTANCE: default-amazonlinux-2-2018-3-py2
     # - INSTANCE: default-debian-8-2017-7-py2
     # - INSTANCE: default-ubuntu-1604-2017-7-py2
     - INSTANCE: default-centos-6-2017-7-py2
-    # - INSTANCE: default-fedora-28-2017-7-py2
-    # - INSTANCE: default-opensuse-leap-42-2017-7-py2
+    # - INSTANCE: default-fedora-29-2017-7-py2
+    # - INSTANCE: default-opensuse-leap-15-2017-7-py2
+    # - INSTANCE: default-amazonlinux-2-2017-7-py2
 
 script:
   - bin/kitchen verify ${INSTANCE}
