@@ -2,6 +2,21 @@
 Changelog
 =========
 
+`2.3.0 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.2.1...v2.3.0>`_ (2019-09-01)
+-------------------------------------------------------------------------------------------------------
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **kitchen+travis:** replace EOL pre-salted images (\ `70e1426 <https://github.com/saltstack-formulas/nginx-formula/commit/70e1426>`_\ )
+
+Features
+^^^^^^^^
+
+
+* **passenger:** inc config, snippets, servers, etc (\ `e07b558 <https://github.com/saltstack-formulas/nginx-formula/commit/e07b558>`_\ )
+
 `2.2.1 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.2.0...v2.2.1>`_ (2019-08-25)
 -------------------------------------------------------------------------------------------------------
 
