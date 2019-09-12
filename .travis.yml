@@ -56,9 +56,9 @@ jobs:
       before_install: skip
       script:
         # Install and run `yamllint`
-        - pip install --user yamllint
-        # yamllint disable-line rule:line-length
-        - yamllint -s . .yamllint pillar.example test/salt/default/pillar/nginx.sls
+        # Need at least `v1.17.0` for the `yaml-files` setting
+        - pip install --user yamllint>=1.17.0
+        - yamllint -s .
         # Install and run `commitlint`
         - npm install @commitlint/config-conventional -D
         - npm install @commitlint/travis-cli -D
