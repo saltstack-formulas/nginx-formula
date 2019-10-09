@@ -146,7 +146,7 @@ nginx_phusionpassenger_yum_repo:
     - humanname: nginx phusionpassenger repo
     - baseurl: 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch'
     - repo_gpgcheck: 1
-    - gpgcheck: 0 
+    - gpgcheck: 0
     - gpgkey: 'https://packagecloud.io/gpg.key'
     - enabled: True
     - sslverify: 1
