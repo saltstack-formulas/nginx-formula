@@ -2,6 +2,35 @@
 Changelog
 =========
 
+`2.3.1 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.3.0...v2.3.1>`_ (2019-10-10)
+-------------------------------------------------------------------------------------------------------
+
+Bug Fixes
+^^^^^^^^^
+
+
+* **certificates.sls:** fix ``salt-lint`` errors (\ ` <https://github.com/saltstack-formulas/nginx-formula/commit/bedc1b6>`_\ )
+* **map.jinja:** fix ``salt-lint`` errors (\ ` <https://github.com/saltstack-formulas/nginx-formula/commit/0772d8a>`_\ )
+* **pkg.sls:** fix ``salt-lint`` errors (\ ` <https://github.com/saltstack-formulas/nginx-formula/commit/06d055e>`_\ )
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **kitchen:** change ``log_level`` to ``debug`` instead of ``info`` (\ ` <https://github.com/saltstack-formulas/nginx-formula/commit/671a4ce>`_\ )
+* **kitchen:** install required packages to bootstrapped ``opensuse`` [skip ci] (\ ` <https://github.com/saltstack-formulas/nginx-formula/commit/17291a0>`_\ )
+* **kitchen:** use bootstrapped ``opensuse`` images until ``2019.2.2`` [skip ci] (\ ` <https://github.com/saltstack-formulas/nginx-formula/commit/a39e124>`_\ )
+* **platform:** add ``arch-base-latest`` (\ ` <https://github.com/saltstack-formulas/nginx-formula/commit/c921086>`_\ )
+* **yamllint:** add rule ``empty-values`` & use new ``yaml-files`` setting (\ ` <https://github.com/saltstack-formulas/nginx-formula/commit/3d48b1b>`_\ )
+* merge travis matrix, add ``salt-lint`` & ``rubocop`` to ``lint`` job (\ ` <https://github.com/saltstack-formulas/nginx-formula/commit/08ce3ed>`_\ )
+* use ``dist: bionic`` & apply ``opensuse-leap-15`` SCP error workaround (\ ` <https://github.com/saltstack-formulas/nginx-formula/commit/8ddb921>`_\ )
+
+Documentation
+^^^^^^^^^^^^^
+
+
+* **pillar.example:** fix TOFS comment to explain the default path [skip ci] (\ ` <https://github.com/saltstack-formulas/nginx-formula/commit/714f547>`_\ ), closes `/github.com/saltstack-formulas/libvirt-formula/pull/60#issuecomment-537965254 <https://github.com//github.com/saltstack-formulas/libvirt-formula/pull/60/issues/issuecomment-537965254>`_ `/github.com/saltstack-formulas/libvirt-formula/pull/60#issuecomment-537988138 <https://github.com//github.com/saltstack-formulas/libvirt-formula/pull/60/issues/issuecomment-537988138>`_
+
 `2.3.0 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.2.1...v2.3.0>`_ (2019-09-01)
 -------------------------------------------------------------------------------------------------------
 
