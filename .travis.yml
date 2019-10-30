@@ -36,7 +36,7 @@ jobs:
       script:
         # Install and run `salt-lint`
         - pip install --user salt-lint
-        - git ls-files | grep '\.sls$\|\.jinja$\|\.j2$\|\.tmpl$'
+        - git ls-files | grep '\.sls$\|\.jinja$\|\.j2$\|\.tmpl$\|\.tst$'
                        | xargs -I {} salt-lint {}
         # Install and run `yamllint`
         # Need at least `v1.17.0` for the `yaml-files` setting
@@ -62,31 +62,33 @@ jobs:
     # Make sure the instances listed below match up with
     # the `platforms` defined in `kitchen.yml`
     - env: INSTANCE=default-debian-10-master-py3
-    # - env: INSTANCE=default-ubuntu-1804-develop-py3
-    # - env: INSTANCE=default-centos-7-develop-py3
-    # - env: INSTANCE=default-fedora-30-develop-py3
-    # - env: INSTANCE=default-opensuse-leap-15-develop-py3
-    # - env: INSTANCE=default-amazonlinux-2-develop-py2
-    # - env: INSTANCE=default-arch-base-latest-develop-py2
+    # - env: INSTANCE=default-ubuntu-1804-master-py3
+    # - env: INSTANCE=default-centos-8-master-py3
+    # - env: INSTANCE=default-fedora-31-master-py3
+    # - env: INSTANCE=default-opensuse-leap-151-master-py3
+    # - env: INSTANCE=default-amazonlinux-2-master-py2
+    # - env: INSTANCE=default-arch-base-latest-master-py2
+    # - env: INSTANCE=default-debian-10-2019-2-py3
     # - env: INSTANCE=default-debian-9-2019-2-py3
     - env: INSTANCE=default-ubuntu-1804-2019-2-py3
-    - env: INSTANCE=default-centos-7-2019-2-py3
-    # - env: INSTANCE=default-fedora-30-2019-2-py3
-    # - env: INSTANCE=default-opensuse-leap-15-2019-2-py3
+    - env: INSTANCE=default-centos-8-2019-2-py3
+    # - env: INSTANCE=default-fedora-31-2019-2-py3
+    # - env: INSTANCE=default-opensuse-leap-151-2019-2-py3
+    # - env: INSTANCE=default-centos-7-2019-2-py2
     # - env: INSTANCE=default-amazonlinux-2-2019-2-py2
     - env: INSTANCE=default-arch-base-latest-2019-2-py2
+    - env: INSTANCE=default-fedora-30-2018-3-py3
     # - env: INSTANCE=default-debian-9-2018-3-py2
     # - env: INSTANCE=default-ubuntu-1604-2018-3-py2
     # - env: INSTANCE=default-centos-7-2018-3-py2
-    - env: INSTANCE=default-fedora-29-2018-3-py2
-    - env: INSTANCE=default-opensuse-leap-15-2018-3-py2
+    - env: INSTANCE=default-opensuse-leap-151-2018-3-py2
     # - env: INSTANCE=default-amazonlinux-2-2018-3-py2
     # - env: INSTANCE=default-arch-base-latest-2018-3-py2
     # - env: INSTANCE=default-debian-8-2017-7-py2
     # - env: INSTANCE=default-ubuntu-1604-2017-7-py2
     - env: INSTANCE=default-centos-6-2017-7-py2
-    # - env: INSTANCE=default-fedora-29-2017-7-py2
-    # - env: INSTANCE=default-opensuse-leap-15-2017-7-py2
+    # - env: INSTANCE=default-fedora-30-2017-7-py2
+    # - env: INSTANCE=default-opensuse-leap-151-2017-7-py2
     # - env: INSTANCE=default-amazonlinux-2-2017-7-py2
     # - env: INSTANCE=default-arch-base-latest-2017-7-py2
 
