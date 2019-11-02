@@ -37,7 +37,7 @@ jobs:
         # Install and run `salt-lint`
         - pip install --user salt-lint
         - git ls-files | grep '\.sls$\|\.jinja$\|\.j2$\|\.tmpl$\|\.tst$'
-                       | xargs -I {} salt-lint {}
+                       | xargs salt-lint
         # Install and run `yamllint`
         # Need at least `v1.17.0` for the `yaml-files` setting
         - pip install --user yamllint>=1.17.0
