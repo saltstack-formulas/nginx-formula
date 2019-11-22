@@ -37,3 +37,6 @@ nginx:
               - location ~ .htm:
                   - try_files: '$uri $uri/ =404'
               - include: 'snippets/letsencrypt.conf'
+  dh_param:
+    'mydhparam2.pem':
+      keysize: 2048
