@@ -2,6 +2,48 @@
 Changelog
 =========
 
+`2.3.2 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.3.1...v2.3.2>`_ (2019-11-25)
+-------------------------------------------------------------------------------------------------------
+
+Bug Fixes
+^^^^^^^^^
+
+
+* **certificates.sls:** prepare ``certificates_path`` dir separately (\ `297e3ac <https://github.com/saltstack-formulas/nginx-formula/commit/297e3ac400707cdd8f396da4c23ba30fc719a2cd>`_\ ), closes `#241 <https://github.com/saltstack-formulas/nginx-formula/issues/241>`_
+* **release.config.js:** use full commit hash in commit link [skip ci] (\ `b13ec85 <https://github.com/saltstack-formulas/nginx-formula/commit/b13ec85433d85b8ca87c3798db9cab3e297b81cf>`_\ )
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **kitchen:** use ``debian-10-master-py3`` instead of ``develop`` [skip ci] (\ `0665878 <https://github.com/saltstack-formulas/nginx-formula/commit/066587829c5a40967b0e7926f12202b07b51ab3c>`_\ )
+* **kitchen:** use ``develop`` image until ``master`` is ready (\ ``amazonlinux``\ ) [skip ci] (\ `e8ed39a <https://github.com/saltstack-formulas/nginx-formula/commit/e8ed39a62cd40fe43af2aae67a3e2347d02b6b6a>`_\ )
+* **kitchen+travis:** upgrade matrix after ``2019.2.2`` release [skip ci] (\ `faefcab <https://github.com/saltstack-formulas/nginx-formula/commit/faefcabd654e5323b6ca146fb0046dd636ed5f68>`_\ )
+* **travis:** apply changes from build config validation [skip ci] (\ `4125887 <https://github.com/saltstack-formulas/nginx-formula/commit/41258874a52df3da7a9f036b5378eb12b7a1a537>`_\ )
+* **travis:** opt-in to ``dpl v2`` to complete build config validation [skip ci] (\ `dbeb2da <https://github.com/saltstack-formulas/nginx-formula/commit/dbeb2da3e43aa13f162b1ac4c6203ecff60e0102>`_\ )
+* **travis:** update ``salt-lint`` config for ``v0.0.10`` [skip ci] (\ `a8382b5 <https://github.com/saltstack-formulas/nginx-formula/commit/a8382b51a028ed5f069ff0168127ef3c8a4337da>`_\ )
+* **travis:** use build config validation (beta) [skip ci] (\ `bbf91c9 <https://github.com/saltstack-formulas/nginx-formula/commit/bbf91c9f1432118a9eafde507de9ffa7b3ff5093>`_\ )
+* merge travis matrix, add ``salt-lint`` & ``rubocop`` to ``lint`` job (\ `567c08c <https://github.com/saltstack-formulas/nginx-formula/commit/567c08c9adf752eb95627b0e914804645015ee20>`_\ )
+
+Documentation
+^^^^^^^^^^^^^
+
+
+* **contributing:** remove to use org-level file instead [skip ci] (\ `2e58d63 <https://github.com/saltstack-formulas/nginx-formula/commit/2e58d636aaa8a66ec9540238b2f4e267172e10c2>`_\ )
+* **readme:** update link to ``CONTRIBUTING`` [skip ci] (\ `3ff6692 <https://github.com/saltstack-formulas/nginx-formula/commit/3ff6692590932e7cc7609fdc0f52fc261228f290>`_\ )
+
+Performance Improvements
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **travis:** improve ``salt-lint`` invocation [skip ci] (\ `e586fbe <https://github.com/saltstack-formulas/nginx-formula/commit/e586fbeebc758cdfd6d381a6ef9ad72231523dea>`_\ )
+
+Tests
+^^^^^
+
+
+* **pillar/nginx.sls:** add reprodicible snippet based on issue `#241 <https://github.com/saltstack-formulas/nginx-formula/issues/241>`_ (\ `4ba3524 <https://github.com/saltstack-formulas/nginx-formula/commit/4ba35247ed742393367968db34ff61a6b07f6695>`_\ )
+
 `2.3.1 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.3.0...v2.3.1>`_ (2019-10-10)
 -------------------------------------------------------------------------------------------------------
 
