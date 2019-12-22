@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.3.3](https://github.com/saltstack-formulas/nginx-formula/compare/v2.3.2...v2.3.3) (2019-12-22)
+
+
+### Bug Fixes
+
+* **map.jinja:** use upstream default for `worker_connections` ([49caf8c](https://github.com/saltstack-formulas/nginx-formula/commit/49caf8cd69be49bd7773949c9f29e147732140a5)), closes [#261](https://github.com/saltstack-formulas/nginx-formula/issues/261)
+
+
+### Continuous Integration
+
+* **gemfile:** restrict `train` gem version until upstream fix [skip ci] ([09be54d](https://github.com/saltstack-formulas/nginx-formula/commit/09be54d05fb3ce7cff039aa74633a3b29dcbbcee))
+* **travis:** quote pathspecs used with `git ls-files` [skip ci] ([091c614](https://github.com/saltstack-formulas/nginx-formula/commit/091c61448dd068e2734869caeb91cedb6f4264e2))
+* **travis:** run `shellcheck` during lint job [skip ci] ([ccf64d9](https://github.com/saltstack-formulas/nginx-formula/commit/ccf64d9be2f0aa07dfb72ed25352197081e9e388))
+* **travis:** use `major.minor` for `semantic-release` version [skip ci] ([facbaa1](https://github.com/saltstack-formulas/nginx-formula/commit/facbaa1e392de9238cf494964e57af73e1bf709a))
+
 ## [2.3.2](https://github.com/saltstack-formulas/nginx-formula/compare/v2.3.1...v2.3.2) (2019-11-25)
 
 
