@@ -15,52 +15,29 @@ platforms:
   - name: debian-10-master-py3
     driver:
       image: netmanagers/salt-master-py3:debian-10
-      provision_command:
-        - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
-        - sh bootstrap-salt.sh -XdPbfrq -x python3 git master
   - name: ubuntu-1804-master-py3
     driver:
       image: netmanagers/salt-master-py3:ubuntu-18.04
-      provision_command:
-        - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
-        - sh bootstrap-salt.sh -XdPbfrq -x python3 git master
   - name: centos-8-master-py3
     driver:
       image: netmanagers/salt-master-py3:centos-8
-      provision_command:
-        - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
-        - sh bootstrap-salt.sh -XdPbfrq -x python3 git master
   - name: fedora-31-master-py3
     driver:
       image: netmanagers/salt-master-py3:fedora-31
-      provision_command:
-        - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
-        - sh bootstrap-salt.sh -XdPbfrq -x python3 git master
   - name: opensuse-leap-151-master-py3
     driver:
       image: netmanagers/salt-master-py3:opensuse-leap-15.1
-      provision_command:
-        - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
-        - sh bootstrap-salt.sh -XdPbfrq -x python3 git master
       run_command: /usr/lib/systemd/systemd
     # Workaround to avoid intermittent failures on `opensuse-leap-15.1`:
     # => SCP did not finish successfully (255):  (Net::SCP::Error)
     transport:
       max_ssh_sessions: 1
-  # Use the `develop` image temporarily until the `master` image is available
-  # Not changing the name to minimise disruption across all of the formulas
-  - name: amazonlinux-2-master-py2
+  - name: amazonlinux-2-master-py3
     driver:
-      image: netmanagers/salt-develop-py2:amazonlinux-2
-      provision_command:
-        - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
-        - sh bootstrap-salt.sh -XdPbfrq -x python2 git develop
+      image: netmanagers/salt-master-py3:amazonlinux-2
   - name: arch-base-latest-master-py2
     driver:
       image: netmanagers/salt-master-py2:arch-base-latest
-      provision_command:
-        - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
-        - sh bootstrap-salt.sh -XdPbfrq -x python2 git master
       run_command: /usr/lib/systemd/systemd
 
   ## SALT `2019.2`
@@ -90,9 +67,9 @@ platforms:
   - name: centos-7-2019-2-py2
     driver:
       image: netmanagers/salt-2019.2-py2:centos-7
-  - name: amazonlinux-2-2019-2-py2
+  - name: amazonlinux-2-2019-2-py3
     driver:
-      image: netmanagers/salt-2019.2-py2:amazonlinux-2
+      image: netmanagers/salt-2019.2-py3:amazonlinux-2
   - name: arch-base-latest-2019-2-py2
     driver:
       image: netmanagers/salt-2019.2-py2:arch-base-latest
@@ -119,9 +96,10 @@ platforms:
     # => SCP did not finish successfully (255):  (Net::SCP::Error)
     transport:
       max_ssh_sessions: 1
-  - name: amazonlinux-2-2018-3-py2
+  - name: amazonlinux-1-2018-3-py2
     driver:
-      image: netmanagers/salt-2018.3-py2:amazonlinux-2
+      image: netmanagers/salt-2018.3-py2:amazonlinux-1
+      run_command: /sbin/init
   - name: arch-base-latest-2018-3-py2
     driver:
       image: netmanagers/salt-2018.3-py2:arch-base-latest
@@ -149,9 +127,10 @@ platforms:
     # => SCP did not finish successfully (255):  (Net::SCP::Error)
     transport:
       max_ssh_sessions: 1
-  - name: amazonlinux-2-2017-7-py2
+  - name: amazonlinux-1-2017-7-py2
     driver:
-      image: netmanagers/salt-2017.7-py2:amazonlinux-2
+      image: netmanagers/salt-2017.7-py2:amazonlinux-1
+      run_command: /sbin/init
   - name: arch-base-latest-2017-7-py2
     driver:
       image: netmanagers/salt-2017.7-py2:arch-base-latest

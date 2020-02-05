@@ -74,7 +74,7 @@ jobs:
     # - env: INSTANCE=default-centos-8-master-py3
     # - env: INSTANCE=default-fedora-31-master-py3
     # - env: INSTANCE=default-opensuse-leap-151-master-py3
-    # - env: INSTANCE=default-amazonlinux-2-master-py2
+    # - env: INSTANCE=default-amazonlinux-2-master-py3
     # - env: INSTANCE=default-arch-base-latest-master-py2
     # - env: INSTANCE=default-debian-10-2019-2-py3
     # - env: INSTANCE=default-debian-9-2019-2-py3
@@ -83,21 +83,21 @@ jobs:
     # - env: INSTANCE=default-fedora-31-2019-2-py3
     # - env: INSTANCE=default-opensuse-leap-151-2019-2-py3
     # - env: INSTANCE=default-centos-7-2019-2-py2
-    # - env: INSTANCE=default-amazonlinux-2-2019-2-py2
+    # - env: INSTANCE=default-amazonlinux-2-2019-2-py3
     - env: INSTANCE=default-arch-base-latest-2019-2-py2
     - env: INSTANCE=default-fedora-30-2018-3-py3
     # - env: INSTANCE=default-debian-9-2018-3-py2
     # - env: INSTANCE=default-ubuntu-1604-2018-3-py2
     # - env: INSTANCE=default-centos-7-2018-3-py2
     - env: INSTANCE=default-opensuse-leap-151-2018-3-py2
-    # - env: INSTANCE=default-amazonlinux-2-2018-3-py2
+    # - env: INSTANCE=default-amazonlinux-1-2018-3-py2
     # - env: INSTANCE=default-arch-base-latest-2018-3-py2
     # - env: INSTANCE=default-debian-8-2017-7-py2
     # - env: INSTANCE=default-ubuntu-1604-2017-7-py2
     - env: INSTANCE=default-centos-6-2017-7-py2
     # - env: INSTANCE=default-fedora-30-2017-7-py2
     # - env: INSTANCE=default-opensuse-leap-151-2017-7-py2
-    # - env: INSTANCE=default-amazonlinux-2-2017-7-py2
+    # - env: INSTANCE=default-amazonlinux-1-2017-7-py2
     # - env: INSTANCE=default-arch-base-latest-2017-7-py2
 
     ## Define the release stage that runs `semantic-release`
