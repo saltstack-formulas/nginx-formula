@@ -105,6 +105,7 @@ ENV/
 .mypy_cache/
 
 # Bundler
+.bundle/
 Gemfile.lock
 
 # copied `.md` files used for conversion to `.rst` using `m2r`
