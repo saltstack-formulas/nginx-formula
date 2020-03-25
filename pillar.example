@@ -174,6 +174,9 @@ nginx:
     # partially exposes file.directory params for site available/enabled and
     # snippets dirs
     dir_opts: {}
+    # let the choice to purge site-available and site-enable folders before add new ones
+    # (if True it removes all non-salt-managed files)
+    purge_servers_config: false
 
 
     #####################
