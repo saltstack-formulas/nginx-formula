@@ -1,5 +1,22 @@
 # Changelog
 
+# [2.4.0](https://github.com/saltstack-formulas/nginx-formula/compare/v2.3.3...v2.4.0) (2020-03-31)
+
+
+### Bug Fixes
+
+* **libtofs:** “files_switch” mess up the variable exported by “map.jinja” [skip ci] ([10b446e](https://github.com/saltstack-formulas/nginx-formula/commit/10b446ed1ed295e5bf75fcb437953df61b39ba9e))
+
+
+### Continuous Integration
+
+* **kitchen:** avoid using bootstrap for `master` instances [skip ci] ([efebb0a](https://github.com/saltstack-formulas/nginx-formula/commit/efebb0af6b4cda41a75d571fe5adc869b32febb7))
+
+
+### Features
+
+* **add purge option:** purge sites option ([a373bda](https://github.com/saltstack-formulas/nginx-formula/commit/a373bdab79e854c43c61de7edd65d460c73f0477))
+
 ## [2.3.3](https://github.com/saltstack-formulas/nginx-formula/compare/v2.3.2...v2.3.3) (2019-12-22)
 
 
