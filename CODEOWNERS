@@ -1,0 +1,39 @@
+# https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
+
+# SECTION: Owner(s) for everything in the repo, unless a later match takes precedence
+#          **************************************************************************
+#          ***                    NO GLOBAL OWNER(S) SPECIFIED                    ***
+#          ***  Ideally this will be defined for a healthy, well-maintained repo  ***
+#          **************************************************************************
+# FILE PATTERN                              OWNER(S)
+*                                           @NONE
+
+# SECTION: Owner(s) for specific directories
+# FILE PATTERN                              OWNER(S)
+
+# SECTION: Owner(s) for files/directories related to `semantic-release`
+# FILE PATTERN                              OWNER(S)
+/.github/workflows/                         @saltstack-formulas/ssf
+/bin/kitchen                                @saltstack-formulas/ssf
+/docs/TOFS_pattern.rst                      @saltstack-formulas/ssf
+/nginx/libsaltcli.jinja                     @saltstack-formulas/ssf
+/nginx/libtofs.jinja                        @saltstack-formulas/ssf
+/test/integration/**/inspec.yml             @saltstack-formulas/ssf
+/test/integration/**/README.md              @saltstack-formulas/ssf
+/.gitignore                                 @saltstack-formulas/ssf
+/.cirrus.yml                                @saltstack-formulas/ssf
+/.rubocop.yml                               @saltstack-formulas/ssf
+/.salt-lint                                 @saltstack-formulas/ssf
+/.travis.yml                                @saltstack-formulas/ssf
+/.yamllint                                  @saltstack-formulas/ssf
+/commitlint.config.js                       @saltstack-formulas/ssf
+/CODEOWNERS                                 @saltstack-formulas/ssf
+/Gemfile                                    @saltstack-formulas/ssf
+/Gemfile.lock                               @saltstack-formulas/ssf
+/kitchen.yml                                @saltstack-formulas/ssf
+/pre-commit_semantic-release.sh             @saltstack-formulas/ssf
+/release-rules.js                           @saltstack-formulas/ssf
+/release.config.js                          @saltstack-formulas/ssf
+
+# SECTION: Owner(s) for specific files
+# FILE PATTERN                              OWNER(S)
