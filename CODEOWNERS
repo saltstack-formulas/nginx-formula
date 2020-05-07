@@ -1,12 +1,8 @@
 # https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
 
 # SECTION: Owner(s) for everything in the repo, unless a later match takes precedence
-#          **************************************************************************
-#          ***                    NO GLOBAL OWNER(S) SPECIFIED                    ***
-#          ***  Ideally this will be defined for a healthy, well-maintained repo  ***
-#          **************************************************************************
 # FILE PATTERN                              OWNER(S)
-*                                           @NONE
+*                                           @sticky-note
 
 # SECTION: Owner(s) for specific directories
 # FILE PATTERN                              OWNER(S)
