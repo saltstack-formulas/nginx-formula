@@ -11,6 +11,7 @@ nginx:
   install_from_ppa: false
   install_from_repo: false
   install_from_phusionpassenger: false
+  install_from_openresty: false
   ppa_version: stable
   source_version: 1.10.0
   source_hash: 8ed647c3dd65bc4ced03b0e0f6bf9e633eff6b01bac772bcf97077d58bc2be4d
