@@ -1,5 +1,5 @@
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ '/map.jinja' import nginx with context %}
+{%- from tplroot ~ '/map.jinja' import nginx, pillar_namespace with context %}
 
 include:
   - .service
@@ -14,7 +14,7 @@ prepare_certificates_path_dir:
 create_nginx_dhparam_{{ dh_param }}_key:
   file.managed:
     - name: {{ nginx.certificates_path }}/{{ dh_param }}
-    - contents_pillar: nginx:dh_param:{{ dh_param }}
+    - contents_pillar: {{ pillar_namespace }}:dh_param:{{ dh_param }}
     - makedirs: True
     - require:
       - file: prepare_certificates_path_dir
@@ -44,7 +44,7 @@ nginx_{{ domain }}_ssl_certificate:
 {% if domain in nginx.certificates and 'public_cert_pillar' in nginx.certificates[domain] %}
     - contents_pillar: {{ nginx.certificates[domain].public_cert_pillar }}
 {% else %}
-    - contents_pillar: nginx:certificates:{{ domain }}:public_cert
+    - contents_pillar: {{ pillar_namespace }}:certificates:{{ domain }}:public_cert
 {% endif %}
     - watch_in:
       - service: nginx_service
@@ -58,7 +58,7 @@ nginx_{{ domain }}_ssl_key:
 {% if 'private_key_pillar' in nginx.certificates[domain] %}
     - contents_pillar: {{ nginx.certificates[domain].private_key_pillar }}
 {% else %}
-    - contents_pillar: nginx:certificates:{{ domain }}:private_key
+    - contents_pillar: {{ pillar_namespace }}:certificates:{{ domain }}:private_key
 {% endif %}
     - watch_in:
       - service: nginx_service

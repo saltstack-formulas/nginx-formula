@@ -4,7 +4,9 @@
     {% endfor %}
 {% endmacro %}
 
-{% set nginx = salt['pillar.get']('nginx', {
+{%- set tplroot = tpldir.split('/')[0] %}
+{% set pillar_namespace = salt['pillar.get']('{}:pillar:namespace'.format(tplroot), tplroot) %}
+{% set nginx = salt['pillar.get'](pillar_namespace, {
     'lookup': salt['grains.filter_by']({
         'Debian': {
             'package': 'nginx',
