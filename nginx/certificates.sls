@@ -1,4 +1,5 @@
-{% from 'nginx/map.jinja' import nginx with context %}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ '/map.jinja' import nginx with context %}
 
 include:
   - nginx.service

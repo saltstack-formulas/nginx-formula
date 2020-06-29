@@ -2,7 +2,8 @@
 #
 # Meta-state to fully install nginx.
 
-{%- from 'nginx/map.jinja' import nginx, sls_block with context %}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ '/map.jinja' import nginx with context %}
 
 include:
   {%- if nginx.ng is defined %}
