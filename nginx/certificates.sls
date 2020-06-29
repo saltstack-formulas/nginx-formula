@@ -2,7 +2,7 @@
 {%- from tplroot ~ '/map.jinja' import nginx with context %}
 
 include:
-  - nginx.service
+  - .service
 
 prepare_certificates_path_dir:
   file.directory:

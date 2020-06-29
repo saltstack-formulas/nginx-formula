@@ -14,8 +14,8 @@
 {% endmacro %}
 
 include:
-  - nginx.service
-  - nginx.servers_config
+  - .service
+  - .servers_config
 
 {% if server_states|length() > 0 %}
 nginx_service_reload:
