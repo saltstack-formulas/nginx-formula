@@ -4,7 +4,7 @@
 include:
   - .service
 
-prepare_certificates_path_dir:
+{{ tplroot }}_prepare_certificates_path_dir:
   file.directory:
     - name: {{ nginx.certificates_path }}
     - makedirs: True
@@ -17,9 +17,9 @@ create_nginx_dhparam_{{ dh_param }}_key:
     - contents_pillar: {{ pillar_namespace }}:dh_param:{{ dh_param }}
     - makedirs: True
     - require:
-      - file: prepare_certificates_path_dir
+      - file: {{ tplroot }}_prepare_certificates_path_dir
     - watch_in:
-      - service: nginx_service
+      - service: {{ tplroot }}_nginx_service
 {%- else %}
 generate_nginx_dhparam_{{ dh_param }}_key:
   pkg.installed:
@@ -29,9 +29,9 @@ generate_nginx_dhparam_{{ dh_param }}_key:
     - cwd: {{ nginx.certificates_path }}
     - creates: {{ nginx.certificates_path }}/{{ dh_param }}
     - require:
-      - file: prepare_certificates_path_dir
+      - file: {{ tplroot }}_prepare_certificates_path_dir
     - watch_in:
-      - service: nginx_service
+      - service: {{ tplroot }}_nginx_service
 {%- endif %}
 {%- endfor %}
 
@@ -47,7 +47,7 @@ nginx_{{ domain }}_ssl_certificate:
     - contents_pillar: {{ pillar_namespace }}:certificates:{{ domain }}:public_cert
 {% endif %}
     - watch_in:
-      - service: nginx_service
+      - service: {{ tplroot }}_nginx_service
 
 {% if 'private_key' in nginx.certificates[domain] or 'private_key_pillar' in nginx.certificates[domain] %}
 nginx_{{ domain }}_ssl_key:
@@ -61,6 +61,6 @@ nginx_{{ domain }}_ssl_key:
     - contents_pillar: {{ pillar_namespace }}:certificates:{{ domain }}:private_key
 {% endif %}
     - watch_in:
-      - service: nginx_service
+      - service: {{ tplroot }}_nginx_service
 {% endif %}
 {%- endfor %}

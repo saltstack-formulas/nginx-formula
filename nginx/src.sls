@@ -5,14 +5,14 @@
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ '/map.jinja' import nginx, sls_block with context %}
 
-nginx_deps:
+{{ tplroot }}_nginx_deps:
   pkg.installed:
     - pkgs:
       - libpcre3-dev
       - libssl-dev
       - zlib1g-dev
 
-nginx_download:
+{{ tplroot }}_nginx_download:
   archive.extracted:
     - name: /tmp/
     - source: http://nginx.org/download/nginx-{{ nginx.source_version }}.tar.gz
@@ -20,32 +20,32 @@ nginx_download:
     - archive_format: tar
     - if_missing: /usr/sbin/nginx-{{ nginx.source_version }}
     - require:
-      - pkg: nginx_deps
+      - pkg: {{ tplroot }_nginx_deps
 
-nginx_configure:
+{{ tplroot }}_nginx_configure:
   cmd.run:
     - name: ./configure --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --conf-path={{ nginx.lookup.conf_file }} {{ nginx.source.opts | join(' ') }}
     - cwd: /tmp/nginx-{{ nginx.source_version }}
     - onchanges:
-      - archive: nginx_download
+      - archive: {{ tplroot }}_nginx_download
 
-nginx_compile:
+{{ tplroot }}_nginx_compile:
   cmd.run:
     - name: make
     - cwd: /tmp/nginx-{{ nginx.source_version }}
     - onchanges:
-      - cmd: nginx_configure
+      - cmd: {{ tplroot }}_nginx_configure
 
-nginx_install:
+{{ tplroot }}_nginx_install:
   cmd.run:
     - name: make install
     - cwd: /tmp/nginx-{{ nginx.source_version }}
     - onchanges:
-      - cmd: nginx_compile
+      - cmd: {{ tplroot }}_nginx_compile
 
-nginx_link:
+{{ tplroot }}_nginx_link:
   file.copy:
     - name: /usr/sbin/nginx-{{ nginx.source_version }}
     - source: /usr/sbin/nginx
     - onchanges:
-      - cmd: nginx_install
+      - cmd: {{ tplroot }}_nginx_install

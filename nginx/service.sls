@@ -16,7 +16,7 @@ include:
   {% endif %}
 
 {% if nginx.install_from_source %}
-nginx_systemd_service_file:
+{{ tplroot }}_nginx_systemd_service_file:
   file.managed:
     - name: /lib/systemd/system/nginx.service
     - source: {{ files_switch(['nginx.service'],
@@ -25,7 +25,7 @@ nginx_systemd_service_file:
               }}
 {% endif %}
 
-nginx_service:
+{{ tplroot }}_nginx_service:
   service.{{ service_function }}:
     {{ sls_block(nginx.service.opts) }}
     - name: {{ nginx.lookup.service }}
@@ -38,7 +38,7 @@ nginx_service:
       {% endif %}
     - listen:
       {% if nginx.install_from_source %}
-      - cmd: nginx_install
+      - cmd: {{ tplroot }}_nginx_install
       {% else %}
-      - pkg: nginx_install
+      - pkg: {{ tplroot }}_nginx_install
       {% endif %}

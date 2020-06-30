@@ -31,7 +31,7 @@
   {% set from_openresty = false %}
 {%- endif %}
 
-nginx_install:
+{{ tplroot }}_nginx_install:
   pkg.installed:
     {{ sls_block(nginx.package.opts) }}
     {% if nginx.lookup.package is iterable and nginx.lookup.package is not string %}
@@ -44,7 +44,7 @@ nginx_install:
     {% endif %}
 
 {% if salt['grains.get']('os_family') == 'Debian' %}
-nginx_official_repo:
+{{ tplroot }}_nginx_official_repo:
   pkgrepo:
     {%- if from_official %}
     - managed
@@ -57,9 +57,9 @@ nginx_official_repo:
     - keyid: ABF5BD827BD9BF62
     - keyserver: keyserver.ubuntu.com
     - require_in:
-      - pkg: nginx_install
+      - pkg: {{ tplroot }}_nginx_install
     - watch_in:
-      - pkg: nginx_install
+      - pkg: {{ tplroot }}_nginx_install
 
 openresty_official_repo:
   pkgrepo:
@@ -73,13 +73,13 @@ openresty_official_repo:
     - file: /etc/apt/sources.list.d/openresty-{{ grains['oscodename'] }}.list
     - key_url: https://openresty.org/package/pubkey.gpg
     - require_in:
-      - pkg: nginx_install
+      - pkg: {{ tplroot }}_nginx_install
     - watch_in:
-      - pkg: nginx_install
+      - pkg: {{ tplroot }}_nginx_install
 
    {%- if grains.os not in ('Debian',) %}
        ## applies to Ubuntu and derivatives only #}
-nginx_ppa_repo:
+{{ tplroot }}_nginx_ppa_repo:
   pkgrepo:
     {%- if from_ppa %}
     - managed
@@ -94,12 +94,12 @@ nginx_ppa_repo:
     - keyserver: keyserver.ubuntu.com
     {% endif %}
     - require_in:
-      - pkg: nginx_install
+      - pkg: {{ tplroot }}_nginx_install
     - watch_in:
-      - pkg: nginx_install
+      - pkg: {{ tplroot }}_nginx_install
    {%- endif %}
 
-nginx_phusionpassenger_repo:
+{{ tplroot }}_nginx_phusionpassenger_repo:
   pkgrepo:
     {%- if from_phusionpassenger %}
     - managed
@@ -112,13 +112,13 @@ nginx_phusionpassenger_repo:
     - keyid: 561F9B9CAC40B2F7
     - keyserver: keyserver.ubuntu.com
     - require_in:
-      - pkg: nginx_install
+      - pkg: {{ tplroot }}_nginx_install
     - watch_in:
-      - pkg: nginx_install
+      - pkg: {{ tplroot }}_nginx_install
 {% endif %}
 
 {% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
-nginx_zypp_repo:
+{{ tplroot }}_nginx_zypp_repo:
   pkgrepo:
     {%- if from_official %}
     - managed
@@ -133,13 +133,13 @@ nginx_zypp_repo:
     - gpgcheck: {{ nginx.lookup.gpg_check }}
     - gpgkey: {{ nginx.lookup.gpg_key }}
     - require_in:
-      - pkg: nginx_install
+      - pkg: {{ tplroot }}_nginx_install
     - watch_in:
-      - pkg: nginx_install
+      - pkg: {{ tplroot }}_nginx_install
 {% endif %}
 
 {% if salt['grains.get']('os_family') == 'RedHat' %}
-nginx_yum_repo:
+{{ tplroot }}_nginx_yum_repo:
   pkgrepo:
     {%- if from_official %}
     - managed
@@ -157,11 +157,11 @@ nginx_yum_repo:
     - gpgkey: {{ nginx.lookup.gpg_key }}
     - enabled: True
     - require_in:
-      - pkg: nginx_install
+      - pkg: {{ tplroot }}_nginx_install
     - watch_in:
-      - pkg: nginx_install
+      - pkg: {{ tplroot }}_nginx_install
 
-nginx_phusionpassenger_yum_repo:
+{{ tplroot }}_nginx_phusionpassenger_yum_repo:
   pkgrepo:
     {%- if from_phusionpassenger %}
     - managed
@@ -178,7 +178,7 @@ nginx_phusionpassenger_yum_repo:
     - sslverify: 1
     - sslcacert: /etc/pki/tls/certs/ca-bundle.crt
     - require_in:
-      - pkg: nginx_install
+      - pkg: {{ tplroot }}_nginx_install
     - watch_in:
-      - pkg: nginx_install
+      - pkg: {{ tplroot }}_nginx_install
 {% endif %}

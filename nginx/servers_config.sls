@@ -79,7 +79,7 @@
 {%- endmacro %}
 
 # Makes sure the enabled directory exists
-nginx_server_enabled_dir:
+{{ tplroot }}_nginx_server_enabled_dir:
   file.directory:
     {{ sls_block(nginx.servers.dir_opts) }}
     - name: {{ nginx.lookup.server_enabled }}
@@ -87,7 +87,7 @@ nginx_server_enabled_dir:
 
 # If enabled and available are not the same, create available
 {% if nginx.lookup.server_enabled != nginx.lookup.server_available -%}
-nginx_server_available_dir:
+{{ tplroot }}_nginx_server_available_dir:
   file.directory:
     {{ sls_block(nginx.servers.dir_opts) }}
     - name: {{ nginx.lookup.server_available }}

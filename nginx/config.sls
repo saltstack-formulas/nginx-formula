@@ -7,14 +7,14 @@
 {%- from tplroot ~ '/libtofs.jinja' import files_switch with context %}
 
 {% if nginx.install_from_source %}
-nginx_log_dir:
+{{ tplroot }}_nginx_log_dir:
   file.directory:
     - name: /var/log/nginx
     - user: {{ nginx.server.config.user }}
     - group: {{ nginx.server.config.user }}
 {% endif %}
 
-nginx_config:
+{{ tplroot }}_nginx_config:
   file.managed:
     {{ sls_block(nginx.server.opts) }}
     - name: {{ nginx.lookup.conf_file }}
