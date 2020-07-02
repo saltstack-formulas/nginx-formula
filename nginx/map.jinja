@@ -13,7 +13,7 @@
 {% set osfamily = salt['grains.filter_by'](osfamilymap, grain='os_family') or {} %}
 {% do salt['defaults.merge'](defaults.nginx, osfamily) %}
 
-{% if salt['pillar.get']('{}:install_from_openresty'.format(pillar_namespace), False) %}
+{% if salt['pillar.get']('{}:install_from_openresty'.format(pillar_namespace), tplroot == 'openresty') %}
 {% import_yaml tplroot ~ "/openresty.yaml" as openrestymap %}
 {% set openresty = salt['grains.filter_by'](openrestymap, grain='os_family') or {} %}
 {% do salt['defaults.merge'](defaults.nginx, openresty) %}
