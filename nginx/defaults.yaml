@@ -1,0 +1,56 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
+nginx:
+  lookup: {}
+  install_from_source: false
+  install_from_ppa: false
+  install_from_repo: false
+  install_from_phusionpassenger: false
+  ppa_version: stable
+  source_version: 1.10.0
+  source_hash: 8ed647c3dd65bc4ced03b0e0f6bf9e633eff6b01bac772bcf97077d58bc2be4d
+  source:
+    opts: {}
+  package:
+    opts: {}
+  service:
+    enable: true
+    opts: {}
+  certificates_path: /etc/nginx/ssl
+  dh_param: {}
+  certificates: {}
+  server:
+    opts: {}
+    config:
+      worker_processes: auto
+      events:
+        worker_connections: 512
+      http:
+        sendfile: 'on'
+        tcp_nopush: 'on'
+        tcp_nodelay: 'on'
+        keepalive_timeout: 65
+        types_hash_max_size: 2048
+        default_type: application/octet-stream
+        access_log: /var/log/nginx/access.log
+        error_log: /var/log/nginx/error.log
+        gzip: 'off'
+        gzip_disable: '"msie6"'
+        include:
+          - mime.types
+          - conf.d/*.conf
+          - sites-enabled/*
+  servers:
+    disabled_postfix: .disabled
+    symlink_opts: {}
+    rename_opts: {}
+    managed_opts:
+      makedirs: true
+    dir_opts:
+      makedirs: true
+    managed: {}
+    purge_servers_config: false
+  passenger:
+    passenger_root: /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini
+    passenger_ruby: /usr/bin/ruby
