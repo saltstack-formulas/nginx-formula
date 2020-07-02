@@ -3,30 +3,22 @@
 ---
 Debian:
   lookup:
-    package: nginx
     passenger_package: passenger
     passenger_config_file: /etc/nginx/conf.d/passenger.conf
-    service: nginx
     webuser: www-data
-    conf_file: /etc/nginx/nginx.conf
     server_available: /etc/nginx/sites-available
     server_enabled: /etc/nginx/sites-enabled
-    snippets_dir: /etc/nginx/snippets
     server_use_symlink: true
     pid_file: /run/nginx.pid
     openssl_package: openssl
 
 CentOS:
   lookup:
-    package: nginx
     passenger_package: passenger
     passenger_config_file: /etc/nginx/conf.d/passenger.conf
-    service: nginx
     webuser: nginx
-    conf_file: /etc/nginx/nginx.conf
     server_available: /etc/nginx/conf.d
     server_enabled: /etc/nginx/conf.d
-    snippets_dir: /etc/nginx/snippets
     server_use_symlink: false
     pid_file: /run/nginx.pid
     rh_os_releasever: $releasever
@@ -36,15 +28,11 @@ CentOS:
 
 RedHat:
   lookup:
-    package: nginx
     passenger_package: passenger
     passenger_config_file: /etc/nginx/conf.d/passenger.conf
-    service: nginx
     webuser: nginx
-    conf_file: /etc/nginx/nginx.conf
     server_available: /etc/nginx/conf.d
     server_enabled: /etc/nginx/conf.d
-    snippets_dir: /etc/nginx/snippets
     server_use_symlink: false
     pid_file: /run/nginx.pid
     rh_os_releasever: $releasever
@@ -58,13 +46,9 @@ RedHat:
 
 Suse:
   lookup:
-    package: nginx
-    service: nginx
     webuser: nginx
-    conf_file: /etc/nginx/nginx.conf
     server_available: /etc/nginx/vhosts.d
     server_enabled: /etc/nginx/vhosts.d
-    snippets_dir: /etc/nginx/snippets
     server_use_symlink: false
     pid_file: /run/nginx.pid
     gpg_check: true
@@ -74,33 +58,24 @@ Suse:
 
 Arch:
   lookup:
-    package: nginx
-    service: nginx
     webuser: http
-    conf_file: /etc/nginx/nginx.conf
     server_available: /etc/nginx/sites-available
     server_enabled: /etc/nginx/sites-enabled
-    snippets_dir: /etc/nginx/snippets
     server_use_symlink: true
     openssl_package: openssl
 
 Gentoo:
   lookup:
     package: www-servers/nginx
-    service: nginx
     webuser: nginx
-    conf_file: /etc/nginx/nginx.conf
     server_available: /etc/nginx/sites-available
     server_enabled: /etc/nginx/sites-enabled
-    snippets_dir: /etc/nginx/snippets
     server_use_symlink: true
     openssl_package: dev-libs/openssl
 
 FreeBSD:
   lookup:
-    package: nginx
     passenger_package: passenger
-    service: nginx
     webuser: www
     conf_file: /usr/local/etc/nginx/nginx.conf
     server_available: /usr/local/etc/nginx/sites-available

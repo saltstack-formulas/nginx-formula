@@ -2,7 +2,11 @@
 # vim: ft=yaml
 ---
 nginx:
-  lookup: {}
+  lookup:
+    package: nginx
+    service: nginx
+    conf_file: /etc/nginx/nginx.conf
+    snippets_dir: /etc/nginx/snippets
   install_from_source: false
   install_from_ppa: false
   install_from_repo: false
