@@ -77,6 +77,28 @@ openresty_official_repo:
     - watch_in:
       - pkg: {{ tplroot }}_nginx_install
 
+# Ensure service does not start upon package installation since default
+# configuration might conflict with an already running service (ex. installing
+# OpenResty while NGINX is already listening on default port).
+{{ tplroot }}_mask_service:
+  file.symlink:  # Not using service.masked: it looks buggy with prereq on Salt 2019.2.5
+    - name: /etc/systemd/system/{{ nginx.lookup.service }}.service
+    - target: /dev/null
+    - prereq:
+      - pkg: {{ tplroot }}_nginx_install
+
+# Unmask service after package installation to be able to start it normally
+# when configured later on.
+{{ tplroot }}_unmask_service:
+  file.absent:  # Not using service.unmasked: it looks buggy with prereq on Salt 2019.2.5
+    - name: /etc/systemd/system/{{ nginx.lookup.service }}.service
+    - onchanges:
+      - pkg: {{ tplroot }}_nginx_install
+  module.run:
+    - name: service.systemctl_reload
+    - onchanges:
+      - file: /etc/systemd/system/{{ nginx.lookup.service }}.service
+
    {%- if grains.os not in ('Debian',) %}
        ## applies to Ubuntu and derivatives only #}
 {{ tplroot }}_nginx_ppa_repo:
