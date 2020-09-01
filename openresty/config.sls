@@ -6,12 +6,22 @@
 {%- from tplroot ~ '/map.jinja' import nginx, sls_block with context %}
 {%- from tplroot ~ '/libtofs.jinja' import files_switch with context %}
 
-{% if nginx.install_from_source %}
-{{ tplroot }}_nginx_log_dir:
+{% if nginx.server.config.http.access_log %}
+{{ tplroot }}_nginx_accesslog_dir:
   file.directory:
-    - name: /var/log/nginx
+    - name: {{ salt['file.dirname'](nginx.server.config.http.access_log) }}
     - user: {{ nginx.server.config.user }}
     - group: {{ nginx.server.config.user }}
+    - makedirs: True
+{% endif %}
+
+{% if nginx.server.config.http.error_log %}
+{{ tplroot }}_nginx_errorlog_dir:
+  file.directory:
+    - name: {{ salt['file.dirname'](nginx.server.config.http.error_log) }}
+    - user: {{ nginx.server.config.user }}
+    - group: {{ nginx.server.config.user }}
+    - makedirs: True
 {% endif %}
 
 {{ tplroot }}_nginx_config:
