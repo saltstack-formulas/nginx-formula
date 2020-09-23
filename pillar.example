@@ -28,6 +28,17 @@ nginx:
   source_version: '1.10.0'
   source_hash: ''
 
+  # Check the configuration before applying:
+  # To prevent applying a configuration that might break nginx, set this
+  # parameter to true so the configuration is checked BEFORE applying. If
+  # the check fails, the state will fail and it won't be deployed.
+  # CAVEAT: As the configuration file is created in a temp dir, it can't
+  # have relative references or it will fail to check. You'll need to
+  # specify full paths where required (ie, `include`, `load_module`,
+  # `snippets`, etc.0
+  # Defaults to false
+  check_config_before_apply: false
+
   # These are usually set by grains in map.jinja
   # Typically you can comment these out.
   lookup:
