@@ -163,7 +163,7 @@ nginx_phusionpassenger_yum_repo:
     - baseurl: 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch'
     - repo_gpgcheck: 1
     - gpgcheck: 0
-    - gpgkey: 'https://packagecloud.io/gpg.key'
+    - gpgkey: 'https://oss-binaries.phusionpassenger.com/yum/definitions/RPM-GPG-KEY.asc'
     - enabled: True
     - sslverify: 1
     - sslcacert: /etc/pki/tls/certs/ca-bundle.crt

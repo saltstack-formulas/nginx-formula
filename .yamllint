@@ -14,7 +14,7 @@ ignore: |
   .cache/
   .git/
   node_modules/
-  test/**/states/**/*.sls
+  test/salt/**/*.sls
   .kitchen/
 
 yaml-files:

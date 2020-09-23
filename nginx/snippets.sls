@@ -28,4 +28,9 @@ nginx_snippet_{{ snippet }}:
     - context:
         config: {{ config|json() }}
         nginx: {{ _nginx|json() }}
+    - require:
+      - file: nginx_snippets_dir
+    - require_in:
+      - file: nginx_config
+      - service: nginx_service
 {% endfor %}
