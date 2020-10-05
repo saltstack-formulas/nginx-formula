@@ -17,3 +17,5 @@ Debian:
       http:
         access_log: []
         error_log: []
+  opm:
+    installed: {}

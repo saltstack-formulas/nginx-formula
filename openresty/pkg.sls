@@ -77,6 +77,19 @@ openresty_official_repo:
     - watch_in:
       - pkg: {{ tplroot }}_nginx_install
 
+{% for package, version in nginx.opm.installed.items() %}
+{{ tplroot }}_opm_package_{{ package }}:
+  opm.installed:
+    - name: {{ package }}
+{% if version %}
+    - version: {{ version }}
+{% endif %}
+    - require:
+      - pkg: {{ tplroot }}_nginx_install
+    - require_in:
+      - service: {{ tplroot }}_nginx_service
+{% endfor %}
+
 # Ensure service does not start upon package installation since default
 # configuration might conflict with an already running service (ex. installing
 # OpenResty while NGINX is already listening on default port).

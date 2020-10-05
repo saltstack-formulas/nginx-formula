@@ -364,3 +364,8 @@ nginx:
   # Configure formula pillar namespace
   pillar:
     namespace: nginx
+
+  # Install optional packages with OpenResty Package Manager
+  opm:
+    installed:
+      - cdbattags/lua-resty-jwt:
