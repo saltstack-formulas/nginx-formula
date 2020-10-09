@@ -4,6 +4,7 @@
 Debian:
   lookup:
     package: openresty
+    apt_repo_component: openresty
     service: openresty
     conf_file: /usr/local/openresty/nginx/conf/nginx.conf
     server_available: /usr/local/openresty/nginx/conf/sites-available

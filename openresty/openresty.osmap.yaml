@@ -1,0 +1,6 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
+Ubuntu:
+  lookup:
+    apt_repo_component: main

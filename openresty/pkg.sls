@@ -69,7 +69,7 @@ openresty_official_repo:
     - absent
     {%- endif %}
     - humanname: openresty apt repo
-    - name: deb http://openresty.org/package/{{ grains['os'].lower() }}/ {{ grains['oscodename'] }} openresty
+    - name: deb http://openresty.org/package/{{ grains['os'].lower() }}/ {{ grains['oscodename'] }} {{ nginx.lookup.apt_repo_component }}
     - file: /etc/apt/sources.list.d/openresty-{{ grains['oscodename'] }}.list
     - key_url: https://openresty.org/package/pubkey.gpg
     - require_in:
