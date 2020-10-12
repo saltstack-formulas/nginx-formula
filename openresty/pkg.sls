@@ -77,12 +77,16 @@ openresty_official_repo:
     - watch_in:
       - pkg: {{ tplroot }}_nginx_install
 
+{% set opm_home = nginx.opm.get('home', None) %}
 {% for package, version in nginx.opm.installed.items() %}
 {{ tplroot }}_opm_package_{{ package }}:
   opm.installed:
     - name: {{ package }}
 {% if version %}
     - version: {{ version }}
+{% endif %}
+{% if opm_home %}
+    - home: {{ opm_home }}
 {% endif %}
     - require:
       - pkg: {{ tplroot }}_nginx_install

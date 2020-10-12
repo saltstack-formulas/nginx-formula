@@ -367,5 +367,7 @@ nginx:
 
   # Install optional packages with OpenResty Package Manager
   opm:
+    # where to store opm configuration and cache
+    # home: /root
     installed:
       - cdbattags/lua-resty-jwt:
