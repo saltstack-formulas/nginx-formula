@@ -8,6 +8,10 @@
 {%- from tplroot ~ '/libtofs.jinja' import files_switch with context %}
 
 {% set server_states = [] %}
+{#- _nginx is a lightened copy of nginx map intended to passed in templates #}
+{%- set _nginx = nginx.copy() %}
+{%- do _nginx.pop('snippets') %}
+{%- do _nginx.pop('servers') %}
 
 # Simple path concatenation.
 # Needs work to make this function on windows.
@@ -126,6 +130,7 @@ nginx_server_available_dir:
 {% if 'source_path' not in settings.config %}
     - context:
         config: {{ settings.config|json(sort_keys=False) }}
+        nginx: {{ _nginx|json() }}
 {% endif %}
     {% if 'overwrite' in settings and settings.overwrite == False %}
     - unless:
