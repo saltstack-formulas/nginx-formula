@@ -1,6 +1,15 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
 ---
+################################################################################
+# NOTE: This file is UNMAINTAINED; it is provided for references purposes only.
+#       No guarantees are tendered that this structure will work after 2020.
+################################################################################
+# * https://en.wikipedia.org/wiki/Travis_CI:
+#   - "... free open-source plans were removed in [sic] the end of 2020"
+#   - https://blog.travis-ci.com/2020-11-02-travis-ci-new-billing
+#   - https://ropensci.org/technotes/2020/11/19/moving-away-travis/
+################################################################################
 ## Machine config
 os: 'linux'
 arch: 'amd64'
@@ -22,8 +31,10 @@ script:
 ## Stages and jobs matrix
 stages:
   - test
-  - name: 'release'
-    if: 'branch = master AND type != pull_request'
+  # # As part of the switch away from Travis CI, ensure that the `release` stage
+  # # is not run inadvertently
+  # - name: 'release'
+  #   if: 'branch = master AND type != pull_request'
 jobs:
   allow_failures:
     - env: Lint_rubocop
@@ -107,7 +118,7 @@ jobs:
     # - env: INSTANCE=default-arch-base-latest-2018-3-py2
     # - env: INSTANCE=default-debian-8-2017-7-py2
     # - env: INSTANCE=default-ubuntu-1604-2017-7-py2
-    - env: INSTANCE=default-centos-6-2017-7-py2
+    # - env: INSTANCE=default-centos-6-2017-7-py2
     # - env: INSTANCE=default-fedora-30-2017-7-py2
     # - env: INSTANCE=default-opensuse-leap-151-2017-7-py2
     # - env: INSTANCE=default-amazonlinux-1-2017-7-py2
