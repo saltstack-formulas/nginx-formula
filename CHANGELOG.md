@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.4.1](https://github.com/saltstack-formulas/nginx-formula/compare/v2.4.0...v2.4.1) (2020-12-16)
+
+
+### Continuous Integration
+
+* **gemfile.lock:** add to repo with updated `Gemfile` [skip ci] ([bcd67a6](https://github.com/saltstack-formulas/nginx-formula/commit/bcd67a6d462ac7b33e0e8638f0da9a2e762076b2))
+* **gitlab-ci:** use GitLab CI as Travis CI replacement ([f988e6d](https://github.com/saltstack-formulas/nginx-formula/commit/f988e6d8f5eb8bb9f8a99d6b2075883797040600))
+* **kitchen:** use `saltimages` Docker Hub where available [skip ci] ([a45ffb6](https://github.com/saltstack-formulas/nginx-formula/commit/a45ffb66aef246504794a82fddc71b5351f667e5))
+* **kitchen+travis:** remove `master-py2-arch-base-latest` [skip ci] ([86f0a57](https://github.com/saltstack-formulas/nginx-formula/commit/86f0a5705afd745fa9982e22c762d37b0f94345a))
+* **pre-commit:** add to formula [skip ci] ([cb98ed0](https://github.com/saltstack-formulas/nginx-formula/commit/cb98ed05c69af62c32e4b780498421cf4bdd2856))
+* **pre-commit:** enable/disable `rstcheck` as relevant [skip ci] ([093c38e](https://github.com/saltstack-formulas/nginx-formula/commit/093c38eae748a457644d9b0e802e10ebfef16bdb))
+* **pre-commit:** finalise `rstcheck` configuration [skip ci] ([33ce43d](https://github.com/saltstack-formulas/nginx-formula/commit/33ce43dcec7e5daef07c246b826848b0fe10662a))
+* **travis:** add notifications => zulip [skip ci] ([a288342](https://github.com/saltstack-formulas/nginx-formula/commit/a28834207074d7b7796822a83765bec9b799a9f0))
+* **workflows/commitlint:** add to repo [skip ci] ([437b28a](https://github.com/saltstack-formulas/nginx-formula/commit/437b28af257a657192ea8452365c2a843e3a4b94))
+
+
+### Styles
+
+* **libtofs.jinja:** use Black-inspired Jinja formatting [skip ci] ([66f4ea7](https://github.com/saltstack-formulas/nginx-formula/commit/66f4ea7ed9dd1aa10474c064a10f103b32f2b60f))
+
 # [2.4.0](https://github.com/saltstack-formulas/nginx-formula/compare/v2.3.3...v2.4.0) (2020-03-31)
 
 
