@@ -6,6 +6,11 @@
 {%- from tplroot ~ '/map.jinja' import nginx, sls_block with context %}
 {%- from tplroot ~ '/libtofs.jinja' import files_switch with context %}
 
+{#- _nginx is a lightened copy of nginx map intended to passed in templates #}
+{%- set _nginx = nginx.copy() %}
+{%- do _nginx.pop('snippets') %}
+{%- do _nginx.pop('servers') %}
+
 nginx_snippets_dir:
   file.directory:
     {{ sls_block(nginx.servers.dir_opts) }}
@@ -22,4 +27,5 @@ nginx_snippet_{{ snippet }}:
     - template: jinja
     - context:
         config: {{ config|json() }}
+        nginx: {{ _nginx|json() }}
 {% endfor %}
