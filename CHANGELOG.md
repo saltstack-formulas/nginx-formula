@@ -1,5 +1,18 @@
 # Changelog
 
+# [2.5.0](https://github.com/saltstack-formulas/nginx-formula/compare/v2.4.1...v2.5.0) (2021-01-04)
+
+
+### Continuous Integration
+
+* **commitlint:** ensure `upstream/master` uses main repo URL [skip ci] ([0ecd767](https://github.com/saltstack-formulas/nginx-formula/commit/0ecd767e8691ba14b8c3ab7311fa7ae78e71d575))
+* **gitlab-ci:** add `rubocop` linter (with `allow_failure`) [skip ci] ([5c9f6d4](https://github.com/saltstack-formulas/nginx-formula/commit/5c9f6d4d7144452145d06b95643a34f7fde3d35e))
+
+
+### Features
+
+* **context:** pass `nginx` to snippets and server_config contexts ([8641f0d](https://github.com/saltstack-formulas/nginx-formula/commit/8641f0d79a073b870a386ba9b494339c8e53b255))
+
 ## [2.4.1](https://github.com/saltstack-formulas/nginx-formula/compare/v2.4.0...v2.4.1) (2020-12-16)
 
 
