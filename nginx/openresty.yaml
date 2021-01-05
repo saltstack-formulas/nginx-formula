@@ -1,0 +1,19 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
+Debian:
+  lookup:
+    package: openresty
+    service: openresty
+    conf_file: /usr/local/openresty/nginx/conf/nginx.conf
+    server_available: /usr/local/openresty/nginx/conf/sites-available
+    server_enabled: /usr/local/openresty/nginx/conf/sites-enabled
+    snippets_dir: /usr/local/openresty/nginx/conf/snippets
+    pid_file: /usr/local/openresty/nginx/logs/nginx.pid
+  install_from_openresty: true
+  certificates_path: /usr/local/openresty/nginx/ssl
+  server:
+    config:
+      http:
+        access_log: []
+        error_log: []

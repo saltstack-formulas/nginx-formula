@@ -10,9 +10,9 @@
 
 include:
   {% if nginx.install_from_source %}
-  - nginx.src
+  - .src
   {% else %}
-  - nginx.pkg
+  - .pkg
   {% endif %}
 
 {% if nginx.install_from_source %}
@@ -32,9 +32,9 @@ nginx_service:
     - enable: {{ nginx.service.enable }}
     - require:
       {% if nginx.install_from_source %}
-      - sls: nginx.src
+      - sls: {{ tplroot }}.src
       {% else %}
-      - sls: nginx.pkg
+      - sls: {{ tplroot }}.pkg
       {% endif %}
     - listen:
       {% if nginx.install_from_source %}

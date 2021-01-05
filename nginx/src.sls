@@ -2,7 +2,8 @@
 #
 # Manages installation of nginx from source.
 
-{% from 'nginx/map.jinja' import nginx, sls_block with context %}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ '/map.jinja' import nginx, sls_block with context %}
 
 nginx_deps:
   pkg.installed:

@@ -2,23 +2,33 @@
 #
 # Manages installation of nginx from pkg.
 
-{% from 'nginx/map.jinja' import nginx, sls_block with context %}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ '/map.jinja' import nginx, sls_block with context %}
 {%- if nginx.install_from_repo %}
   {% set from_official = true %}
   {% set from_ppa = false %}
   {% set from_phusionpassenger = false %}
+  {% set from_openresty = false %}
 {% elif nginx.install_from_ppa %}
   {% set from_official = false %}
   {% set from_ppa = true %}
   {% set from_phusionpassenger = false %}
+  {% set from_openresty = false %}
 {% elif nginx.install_from_phusionpassenger %}
   {% set from_official = false %}
   {% set from_ppa = false %}
   {% set from_phusionpassenger = true %}
+  {% set from_openresty = false %}
+{% elif nginx.install_from_openresty %}
+  {% set from_official = false %}
+  {% set from_ppa = false %}
+  {% set from_phusionpassenger = false %}
+  {% set from_openresty = true %}
 {% else %}
   {% set from_official = false %}
   {% set from_ppa = false %}
   {% set from_phusionpassenger = false %}
+  {% set from_openresty = false %}
 {%- endif %}
 
 nginx_install:
@@ -46,6 +56,22 @@ nginx_official_repo:
     - file: /etc/apt/sources.list.d/nginx-official-{{ grains['oscodename'] }}.list
     - keyid: ABF5BD827BD9BF62
     - keyserver: keyserver.ubuntu.com
+    - require_in:
+      - pkg: nginx_install
+    - watch_in:
+      - pkg: nginx_install
+
+openresty_official_repo:
+  pkgrepo:
+    {%- if from_openresty %}
+    - managed
+    {%- else %}
+    - absent
+    {%- endif %}
+    - humanname: openresty apt repo
+    - name: deb http://openresty.org/package/{{ grains['os'].lower() }}/ {{ grains['oscodename'] }} openresty
+    - file: /etc/apt/sources.list.d/openresty-{{ grains['oscodename'] }}.list
+    - key_url: https://openresty.org/package/pubkey.gpg
     - require_in:
       - pkg: nginx_install
     - watch_in:

@@ -24,6 +24,9 @@ nginx:
   # each build accordingly ( https://launchpad.net/~nginx )
   ppa_version: 'stable'
 
+  # Use OpenResty repo binaries
+  install_from_openresty: false
+
   # Source install
   source_version: '1.10.0'
   source_hash: ''
@@ -357,3 +360,7 @@ nginx:
         - alt_nginx.service
       nginx_snippet_file_managed:
         - alt_server.conf
+
+  # Configure formula pillar namespace
+  pillar:
+    namespace: nginx
