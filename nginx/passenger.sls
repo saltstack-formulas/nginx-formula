@@ -15,6 +15,9 @@ include:
   {%- if nginx.snippets is defined %}
   - nginx.snippets
   {%- endif %}
+  {%- if nginx.streams is defined %}
+  - nginx.streams
+  {%- endif %}
   - nginx.servers
   - nginx.certificates
 

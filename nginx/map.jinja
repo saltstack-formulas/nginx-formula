@@ -16,6 +16,7 @@
             'server_available': '/etc/nginx/sites-available',
             'server_enabled': '/etc/nginx/sites-enabled',
             'snippets_dir': '/etc/nginx/snippets',
+            'streams_dir': '/etc/nginx/streams',
             'server_use_symlink': True,
             'pid_file': '/run/nginx.pid',
             'openssl_package': 'openssl',
@@ -30,6 +31,7 @@
             'server_available': '/etc/nginx/conf.d',
             'server_enabled': '/etc/nginx/conf.d',
             'snippets_dir': '/etc/nginx/snippets',
+            'streams_dir': '/etc/nginx/streams',
             'server_use_symlink': False,
             'pid_file': '/run/nginx.pid',
             'rh_os_releasever': '$releasever',
@@ -47,6 +49,7 @@
             'server_available': '/etc/nginx/conf.d',
             'server_enabled': '/etc/nginx/conf.d',
             'snippets_dir': '/etc/nginx/snippets',
+            'streams_dir': '/etc/nginx/streams',
             'server_use_symlink': False,
             'pid_file': '/run/nginx.pid',
             'rh_os_releasever': '$releasever',
@@ -67,6 +70,7 @@
             'server_available': '/etc/nginx/vhosts.d',
             'server_enabled': '/etc/nginx/vhosts.d',
             'snippets_dir': '/etc/nginx/snippets',
+            'streams_dir': '/etc/nginx/streams',
             'server_use_symlink': False,
             'pid_file': '/run/nginx.pid',
             'gpg_check': True,
@@ -81,6 +85,7 @@
             'server_available': '/etc/nginx/sites-available',
             'server_enabled': '/etc/nginx/sites-enabled',
             'snippets_dir': '/etc/nginx/snippets',
+            'streams_dir': '/etc/nginx/streams',
             'server_use_symlink': True,
             'openssl_package': 'openssl',
         },
@@ -92,6 +97,7 @@
             'server_available': '/etc/nginx/sites-available',
             'server_enabled': '/etc/nginx/sites-enabled',
             'snippets_dir': '/etc/nginx/snippets',
+            'streams_dir': '/etc/nginx/streams',
             'server_use_symlink': True,
             'openssl_package': 'dev-libs/openssl',
         },
@@ -104,6 +110,7 @@
             'server_available': '/usr/local/etc/nginx/sites-available',
             'server_enabled': '/usr/local/etc/nginx/sites-enabled',
             'snippets_dir': '/usr/local/etc/nginx/snippets',
+            'streams_dir': '/usr/local/etc/nginx/streams',
             'server_use_symlink': True,
             'pid_file': '/var/run/nginx.pid',
         },
@@ -131,6 +138,9 @@
             'worker_processes': 'auto',
             'events': {
                 'worker_connections': 512,
+            },
+            'stream' : {
+                'include': '/etc/nginx/streams/*',
             },
             'http': {
                 'sendfile': 'on',
@@ -195,4 +205,8 @@
         'passenger_root': '/usr/lib/ruby/1.8/phusion_passenger/locations.ini',
     }) %}
     {% endif %}
+{% endif %}
+
+{% if salt['grains.get']('os_family') == 'FreeBSD' %} 
+    {% do nginx.server.config.stream.update({'include' : nginx.lookup.streams_dir ~ '/*'}) %}
 {% endif %}
