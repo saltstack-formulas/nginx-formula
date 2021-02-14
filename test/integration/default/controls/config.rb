@@ -3,12 +3,12 @@
 server_available = '/etc/nginx/sites-available'
 server_enabled	 = '/etc/nginx/sites-enabled'
 
-# Override by OS
-case os[:name]
-when 'redhat', 'centos', 'fedora'
+# Override by platform family
+case platform[:family]
+when 'redhat','fedora'
   server_available = '/etc/nginx/conf.d'
   server_enabled   = '/etc/nginx/conf.d'
-when 'opensuse'
+when 'suse'
   server_available = '/etc/nginx/vhosts.d'
   server_enabled   = '/etc/nginx/vhosts.d'
 end
