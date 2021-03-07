@@ -46,7 +46,7 @@ variables:
   DOCKER_DRIVER: 'overlay2'
 
 ###############################################################################
-# `lint` stage: `commitlint` & `pre-commit`
+# `lint` stage: `commitlint`, `pre-commit` & `rubocop` (latest, failure allowed)
 ###############################################################################
 commitlint:
   stage: *stage_lint
@@ -149,55 +149,55 @@ default-oraclelinux-8-master-py3: {extends: '.test_instance'}
 default-oraclelinux-7-master-py3: {extends: '.test_instance'}
 # default-gentoo-stage3-latest-master-py3: {extends: '.test_instance'}
 default-gentoo-stage3-systemd-master-py3: {extends: '.test_instance'}
-# default-debian-10-3002-2-py3: {extends: '.test_instance'}
-# default-debian-9-3002-2-py3: {extends: '.test_instance'}
-# default-ubuntu-2004-3002-2-py3: {extends: '.test_instance'}
-# default-ubuntu-1804-3002-2-py3: {extends: '.test_instance'}
-# default-ubuntu-1604-3002-2-py3: {extends: '.test_instance'}
-# default-centos-8-3002-2-py3: {extends: '.test_instance'}
-# default-centos-7-3002-2-py3: {extends: '.test_instance'}
-# default-fedora-33-3002-2-py3: {extends: '.test_instance'}
-# default-fedora-32-3002-2-py3: {extends: '.test_instance'}
+# default-debian-10-3002-5-py3: {extends: '.test_instance'}
+# default-debian-9-3002-5-py3: {extends: '.test_instance'}
+# default-ubuntu-2004-3002-5-py3: {extends: '.test_instance'}
+# default-ubuntu-1804-3002-5-py3: {extends: '.test_instance'}
+# default-ubuntu-1604-3002-5-py3: {extends: '.test_instance'}
+# default-centos-8-3002-5-py3: {extends: '.test_instance'}
+# default-centos-7-3002-5-py3: {extends: '.test_instance'}
+# default-fedora-33-3002-5-py3: {extends: '.test_instance'}
+# default-fedora-32-3002-5-py3: {extends: '.test_instance'}
+# default-amazonlinux-2-3002-5-py3: {extends: '.test_instance'}
+# default-oraclelinux-8-3002-5-py3: {extends: '.test_instance'}
+# default-oraclelinux-7-3002-5-py3: {extends: '.test_instance'}
+default-arch-base-latest-3002-5-py3: {extends: '.test_instance'}
+# default-gentoo-stage3-latest-3002-5-py3: {extends: '.test_instance'}
+# default-gentoo-stage3-systemd-3002-5-py3: {extends: '.test_instance'}
 # default-opensuse-leap-152-3002-2-py3: {extends: '.test_instance'}
 # default-opensuse-tmbl-latest-3002-2-py3: {extends: '.test_instance'}
-# default-amazonlinux-2-3002-2-py3: {extends: '.test_instance'}
-# default-oraclelinux-8-3002-2-py3: {extends: '.test_instance'}
-# default-oraclelinux-7-3002-2-py3: {extends: '.test_instance'}
-default-arch-base-latest-3002-2-py3: {extends: '.test_instance'}
-# default-gentoo-stage3-latest-3002-2-py3: {extends: '.test_instance'}
-# default-gentoo-stage3-systemd-3002-2-py3: {extends: '.test_instance'}
-# default-debian-10-3001-4-py3: {extends: '.test_instance'}
-# default-debian-9-3001-4-py3: {extends: '.test_instance'}
-# default-ubuntu-2004-3001-4-py3: {extends: '.test_instance'}
-# default-ubuntu-1804-3001-4-py3: {extends: '.test_instance'}
-# default-ubuntu-1604-3001-4-py3: {extends: '.test_instance'}
-# default-centos-8-3001-4-py3: {extends: '.test_instance'}
-# default-centos-7-3001-4-py3: {extends: '.test_instance'}
-# default-fedora-33-3001-4-py3: {extends: '.test_instance'}
-# default-fedora-32-3001-4-py3: {extends: '.test_instance'}
-# default-opensuse-leap-152-3001-4-py3: {extends: '.test_instance'}
-# default-opensuse-tmbl-latest-3001-4-py3: {extends: '.test_instance'}
-# default-amazonlinux-2-3001-4-py3: {extends: '.test_instance'}
-# default-oraclelinux-8-3001-4-py3: {extends: '.test_instance'}
-# default-oraclelinux-7-3001-4-py3: {extends: '.test_instance'}
-# default-arch-base-latest-3001-4-py3: {extends: '.test_instance'}
-# default-gentoo-stage3-latest-3001-4-py3: {extends: '.test_instance'}
-# default-gentoo-stage3-systemd-3001-4-py3: {extends: '.test_instance'}
-# default-debian-10-3000-6-py3: {extends: '.test_instance'}
-# default-debian-9-3000-6-py3: {extends: '.test_instance'}
-# default-ubuntu-1804-3000-6-py3: {extends: '.test_instance'}
-# default-ubuntu-1604-3000-6-py3: {extends: '.test_instance'}
-# default-centos-8-3000-6-py3: {extends: '.test_instance'}
-# default-centos-7-3000-6-py3: {extends: '.test_instance'}
-# default-opensuse-leap-152-3000-6-py3: {extends: '.test_instance'}
-# default-amazonlinux-2-3000-6-py3: {extends: '.test_instance'}
-# default-oraclelinux-8-3000-6-py3: {extends: '.test_instance'}
-# default-oraclelinux-7-3000-6-py3: {extends: '.test_instance'}
-# default-gentoo-stage3-latest-3000-6-py3: {extends: '.test_instance'}
-# default-gentoo-stage3-systemd-3000-6-py3: {extends: '.test_instance'}
-# default-ubuntu-1804-3000-6-py2: {extends: '.test_instance'}
-# default-ubuntu-1604-3000-6-py2: {extends: '.test_instance'}
-# default-arch-base-latest-3000-6-py2: {extends: '.test_instance'}
+# default-debian-10-3001-6-py3: {extends: '.test_instance'}
+# default-debian-9-3001-6-py3: {extends: '.test_instance'}
+# default-ubuntu-2004-3001-6-py3: {extends: '.test_instance'}
+# default-ubuntu-1804-3001-6-py3: {extends: '.test_instance'}
+# default-ubuntu-1604-3001-6-py3: {extends: '.test_instance'}
+# default-centos-8-3001-6-py3: {extends: '.test_instance'}
+# default-centos-7-3001-6-py3: {extends: '.test_instance'}
+# default-fedora-33-3001-6-py3: {extends: '.test_instance'}
+# default-fedora-32-3001-6-py3: {extends: '.test_instance'}
+# default-opensuse-leap-152-3001-6-py3: {extends: '.test_instance'}
+# default-opensuse-tmbl-latest-3001-6-py3: {extends: '.test_instance'}
+# default-amazonlinux-2-3001-6-py3: {extends: '.test_instance'}
+# default-oraclelinux-8-3001-6-py3: {extends: '.test_instance'}
+# default-oraclelinux-7-3001-6-py3: {extends: '.test_instance'}
+# default-arch-base-latest-3001-6-py3: {extends: '.test_instance'}
+# default-gentoo-stage3-latest-3001-6-py3: {extends: '.test_instance'}
+# default-gentoo-stage3-systemd-3001-6-py3: {extends: '.test_instance'}
+# default-debian-10-3000-8-py3: {extends: '.test_instance'}
+# default-debian-9-3000-8-py3: {extends: '.test_instance'}
+# default-ubuntu-1804-3000-8-py3: {extends: '.test_instance'}
+# default-ubuntu-1604-3000-8-py3: {extends: '.test_instance'}
+# default-centos-8-3000-8-py3: {extends: '.test_instance'}
+# default-centos-7-3000-8-py3: {extends: '.test_instance'}
+# default-opensuse-leap-152-3000-8-py3: {extends: '.test_instance'}
+# default-amazonlinux-2-3000-8-py3: {extends: '.test_instance'}
+# default-oraclelinux-8-3000-8-py3: {extends: '.test_instance'}
+# default-oraclelinux-7-3000-8-py3: {extends: '.test_instance'}
+# default-gentoo-stage3-latest-3000-8-py3: {extends: '.test_instance'}
+# default-gentoo-stage3-systemd-3000-8-py3: {extends: '.test_instance'}
+# default-ubuntu-1804-3000-8-py2: {extends: '.test_instance'}
+# default-ubuntu-1604-3000-8-py2: {extends: '.test_instance'}
+# default-arch-base-latest-3000-8-py2: {extends: '.test_instance'}
 
 ###############################################################################
 # `release` stage: `semantic-release`
