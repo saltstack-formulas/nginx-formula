@@ -357,3 +357,7 @@ nginx:
         - alt_nginx.service
       nginx_snippet_file_managed:
         - alt_server.conf
+
+  # Configure formula pillar namespace
+  pillar:
+    namespace: nginx
