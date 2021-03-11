@@ -2,6 +2,38 @@
 Changelog
 =========
 
+`2.6.0 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.5.0...v2.6.0>`_ (2021-03-11)
+-------------------------------------------------------------------------------------------------------
+
+Bug Fixes
+^^^^^^^^^
+
+
+* **passenger:** various fixes (\ `7271c9d <https://github.com/saltstack-formulas/nginx-formula/commit/7271c9d16c8218244ae5ef0b188b7f9f4a414074>`_\ )
+* **pkg:** add inline EPEL repo configuration for Amazon Linux 2 (\ `ae6375c <https://github.com/saltstack-formulas/nginx-formula/commit/ae6375ccccd56a506ee28babbeabf351112a06de>`_\ )
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **gemfile+lock:** use ``ssf`` customised ``kitchen-docker`` repo [skip ci] (\ `123d13e <https://github.com/saltstack-formulas/nginx-formula/commit/123d13e2f483c203cbfc1366b36a30e1732603e1>`_\ )
+* **kitchen+ci:** make rubocop happy [skip ci] (\ `eedfc56 <https://github.com/saltstack-formulas/nginx-formula/commit/eedfc56b41b673e196029274048670e89e55a694>`_\ )
+* **kitchen+ci:** use latest pre-salted images (after CVE) [skip ci] (\ `63d32a4 <https://github.com/saltstack-formulas/nginx-formula/commit/63d32a40b13ca2c77bb83cceba620218617aab6a>`_\ )
+* **kitchen+gitlab-ci:** use latest pre-salted images [skip ci] (\ `b4411c6 <https://github.com/saltstack-formulas/nginx-formula/commit/b4411c61d3352ecb9775197f991f5f33996730dc>`_\ )
+* **pre-commit:** update hook for ``rubocop`` [skip ci] (\ `2a23743 <https://github.com/saltstack-formulas/nginx-formula/commit/2a23743fca8fd54b2a18dc2a07d0daa8142c0289>`_\ )
+
+Features
+^^^^^^^^
+
+
+* **config:** validate config before applying (\ `b396b24 <https://github.com/saltstack-formulas/nginx-formula/commit/b396b24fe456de7001b2cc013814ada189351e6f>`_\ )
+
+Tests
+^^^^^
+
+
+* **config:** fix for Amazon Linux 2 & Oracle Linux 7/8 (\ `ab39c8f <https://github.com/saltstack-formulas/nginx-formula/commit/ab39c8f7c3c9bf5dbd4436cad8ccce21263fe646>`_\ )
+
 `2.5.0 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.4.1...v2.5.0>`_ (2021-01-04)
 -------------------------------------------------------------------------------------------------------
 
