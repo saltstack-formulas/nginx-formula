@@ -7,7 +7,7 @@ server_enabled = '/etc/nginx/sites-enabled'
 
 # Override by platform family
 case platform[:family]
-when 'redhat','fedora'
+when 'redhat', 'fedora'
   server_available = '/etc/nginx/conf.d'
   server_enabled   = '/etc/nginx/conf.d'
 when 'suse'
