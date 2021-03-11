@@ -9,7 +9,7 @@
         'Debian': {
             'package': 'nginx',
             'passenger_package': 'passenger',
-            'passenger_config_file': '/etc/nginx/conf.d/passenger.conf',
+            'passenger_config_file': '/etc/nginx/conf.d/mod-http-passenger.conf',
             'service': 'nginx',
             'webuser': 'www-data',
             'conf_file': '/etc/nginx/nginx.conf',
@@ -112,6 +112,7 @@
     'install_from_ppa': False,
     'install_from_repo': False,
     'install_from_phusionpassenger': False,
+    'check_config_before_apply': False,
     'ppa_version': 'stable',
     'source_version': '1.10.0',
     'source_hash': '8ed647c3dd65bc4ced03b0e0f6bf9e633eff6b01bac772bcf97077d58bc2be4d',

@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 # Set defaults, use debian as base
 
 server_available = '/etc/nginx/sites-available'
-server_enabled	 = '/etc/nginx/sites-enabled'
+server_enabled = '/etc/nginx/sites-enabled'
 
 # Override by platform family
 case platform[:family]
-when 'redhat','fedora'
+when 'redhat', 'fedora'
   server_available = '/etc/nginx/conf.d'
   server_enabled   = '/etc/nginx/conf.d'
 when 'suse'
@@ -22,9 +24,13 @@ control 'Nginx configuration' do
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
     its('mode') { should cmp '0644' }
-    its('content') { should include %Q[    log_format main '$remote_addr - $remote_user [$time_local] $status '
+    its('content') do
+      # rubocop:disable Metrics/LineLength
+      should include %(    log_format main '$remote_addr - $remote_user [$time_local] $status '
                     '"$request" $body_bytes_sent "$http_referer" '
-                    '"$http_user_agent" "$http_x_forwarded_for"';] }
+                    '"$http_user_agent" "$http_x_forwarded_for"';)
+      # rubocop:enable Metrics/LineLength
+    end
   end
 
   # snippets configuration
@@ -40,12 +46,11 @@ control 'Nginx configuration' do
 
   # sites configuration
   [server_available, server_enabled].each do |dir|
-
-    describe file ("#{dir}/default") do
-     it { should_not exist }
+    describe file "#{dir}/default" do
+      it { should_not exist }
     end
 
-    describe file ("#{dir}/mysite") do
+    describe file "#{dir}/mysite" do
       it { should be_file }
       it { should be_owned_by 'root' }
       it { should be_grouped_into 'root' }
@@ -57,6 +62,5 @@ control 'Nginx configuration' do
       its('content') { should include 'try_files $uri $uri/ =404;' }
       its('content') { should include 'include snippets/letsencrypt.conf;' }
     end
-
   end
 end

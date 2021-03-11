@@ -31,3 +31,6 @@ nginx_config:
     - context:
         config: {{ nginx.server.config|json(sort_keys=False) }}
 {% endif %}
+{% if nginx.check_config_before_apply %}
+    - check_cmd: /usr/sbin/nginx -t -c
+{% endif %}

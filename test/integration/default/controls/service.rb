@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'Nginx service' do
   title 'should be running and enabled'
 
