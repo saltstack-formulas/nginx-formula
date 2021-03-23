@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
 ---
-name: passenger
-title: nginx formula
+name: share
+title: InSpec shared resources
 maintainer: SaltStack Formulas
 license: Apache-2.0
-summary: Verify that the nginx formula is setup and configured correctly
-depends:
-  - name: share
-    path: test/integration/share
+summary: shared resources
 supports:
   - platform-name: debian
   - platform-name: ubuntu

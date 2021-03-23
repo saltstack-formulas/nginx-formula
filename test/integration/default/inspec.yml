@@ -6,6 +6,9 @@ title: nginx formula
 maintainer: SaltStack Formulas
 license: Apache-2.0
 summary: Verify that the nginx formula is setup and configured correctly
+depends:
+  - name: share
+    path: test/integration/share
 supports:
   - platform-name: debian
   - platform-name: ubuntu
@@ -14,6 +17,7 @@ supports:
   - platform-name: opensuse
   - platform-name: suse
   - platform-name: freebsd
+  - platform-name: openbsd
   - platform-name: amazon
   - platform-name: oracle
   - platform-name: arch

@@ -312,6 +312,7 @@ suites:
       state_top:
         base:
           '*':
+            - nginx._mapdata
             - nginx
       pillars:
         top.sls:
@@ -336,6 +337,7 @@ suites:
       state_top:
         base:
           '*':
+            - nginx._mapdata
             - nginx.passenger
       pillars:
         top.sls:
