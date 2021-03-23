@@ -14,8 +14,9 @@ ignore: |
   .cache/
   .git/
   node_modules/
-  test/salt/**/*.sls
+  test/**/states/**/*.sls
   .kitchen/
+  test/salt/passenger/pillar/nginx.sls
 
 yaml-files:
   # Default settings
