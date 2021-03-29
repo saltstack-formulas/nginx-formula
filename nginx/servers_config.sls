@@ -106,6 +106,7 @@ nginx_server_available_dir:
 {{ conf_state_id }}:
     file.absent:
         - name: {{ server_curpath(server) }}
+{% do server_states.append(conf_state_id) %}
 {% else %}
 {% if settings.enabled == True %}
 {{ conf_state_id }}:
@@ -131,9 +132,9 @@ nginx_server_available_dir:
     - unless:
       - test -e {{ server_curpath(server) }}
     {% endif %}
-{% endif %}
-{% endif %}
 {% do server_states.append(conf_state_id) %}
+{% endif %}
+{% endif %}
 
 {% if settings.enabled != None %}
 {% set status_state_id = 'server_state_' ~ loop.index0 %}
