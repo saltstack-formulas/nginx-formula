@@ -1,5 +1,27 @@
 # Changelog
 
+## [2.6.1](https://github.com/saltstack-formulas/nginx-formula/compare/v2.6.0...v2.6.1) (2021-03-29)
+
+
+### Bug Fixes
+
+* **servers_config:** remove service depedency ([05994e1](https://github.com/saltstack-formulas/nginx-formula/commit/05994e1b174ccdf3ff4a444f81314ad925fa478d))
+
+
+### Code Refactoring
+
+* **servers_config:** remove unused loop ([3825557](https://github.com/saltstack-formulas/nginx-formula/commit/3825557070a18db4828cc634dd036a428f8a9836))
+
+
+### Continuous Integration
+
+* **kitchen+ci:** include `passenger` suite [skip ci] ([0bbe686](https://github.com/saltstack-formulas/nginx-formula/commit/0bbe68619fdf3791e6202ce3f17ca03efc4441c1))
+
+
+### Tests
+
+* standardise use of `share` suite & `_mapdata` state [skip ci] ([8ea3c82](https://github.com/saltstack-formulas/nginx-formula/commit/8ea3c82be3fccb2bad8bac566f210454549d141e))
+
 # [2.6.0](https://github.com/saltstack-formulas/nginx-formula/compare/v2.5.0...v2.6.0) (2021-03-11)
 
 
