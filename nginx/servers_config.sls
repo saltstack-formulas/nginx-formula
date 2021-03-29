@@ -52,6 +52,7 @@
   file.symlink:
     {{ sls_block(nginx.servers.symlink_opts) }}
     - name: {{ server_path(server, state) }}
+    - makedirs: True
     - target: {{ server_path(server, anti_state) }}
     {%- else %}
         {%- if deleted == True %}
@@ -98,10 +99,6 @@ nginx_server_available_dir:
     - clean: {{ nginx.servers.purge_servers_config }}
 {%- endif %}
 
-# Manage the actual server files
-{% for server, settings in nginx.servers.managed.items() %}
-{% endfor %}
-
 # Managed enabled/disabled state for servers
 {% for server, settings in nginx.servers.managed.items() %}
 {% set conf_state_id = 'server_conf_' ~ loop.index0 %}
@@ -125,8 +122,6 @@ nginx_server_available_dir:
       }}
     - makedirs: True
     - template: jinja
-    - require_in:
-      - service: nginx_service
 {% if 'source_path' not in settings.config %}
     - context:
         config: {{ settings.config|json(sort_keys=False) }}
@@ -136,9 +131,9 @@ nginx_server_available_dir:
     - unless:
       - test -e {{ server_curpath(server) }}
     {% endif %}
+{% endif %}
+{% endif %}
 {% do server_states.append(conf_state_id) %}
-{% endif %}
-{% endif %}
 
 {% if settings.enabled != None %}
 {% set status_state_id = 'server_state_' ~ loop.index0 %}
@@ -156,9 +151,7 @@ nginx_server_available_dir:
       - file: {{ conf_state_id }}
 {% endif %}
 
-{% if 'deleted' not in settings or ( 'deleted' in settings and settings.deleted == False ) %}
 {% do server_states.append(status_state_id) %}
-{% endif %}
 {%- endif %} {# enabled != available_dir #}
 {% endif %}
 {% endfor %}
