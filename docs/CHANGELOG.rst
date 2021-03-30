@@ -2,6 +2,15 @@
 Changelog
 =========
 
+`2.6.2 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.6.1...v2.6.2>`_ (2021-03-30)
+-------------------------------------------------------------------------------------------------------
+
+Bug Fixes
+^^^^^^^^^
+
+
+* **servers_config:** fixup 05994e1 (\ `c03729a <https://github.com/saltstack-formulas/nginx-formula/commit/c03729ae326876a20cb22c346f9d4cd96418af9a>`_\ )
+
 `2.6.1 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.6.0...v2.6.1>`_ (2021-03-29)
 -------------------------------------------------------------------------------------------------------
 
