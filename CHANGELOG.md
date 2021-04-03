@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.6.3](https://github.com/saltstack-formulas/nginx-formula/compare/v2.6.2...v2.6.3) (2021-04-03)
+
+
+### Bug Fixes
+
+* **freebsd:** add `openssl` pkg and update all `default` tests ([4cd351a](https://github.com/saltstack-formulas/nginx-formula/commit/4cd351adbc184b938b0d0cf587419bab5b39a7d3))
+
+
+### Continuous Integration
+
+* enable Vagrant-based testing using GitHub Actions ([c79ce9a](https://github.com/saltstack-formulas/nginx-formula/commit/c79ce9a9ae30e889ab925bb0398008b434bc9b0a))
+
 ## [2.6.2](https://github.com/saltstack-formulas/nginx-formula/compare/v2.6.1...v2.6.2) (2021-03-30)
 
 
