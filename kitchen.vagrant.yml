@@ -1,0 +1,23 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
+driver:
+  name: vagrant
+  cache_directory: false
+  customize:
+    usbxhci: 'off'
+  gui: false
+  linked_clone: true
+  ssh:
+    shell: /bin/sh
+
+platforms:
+  - name: freebsd-122-latest-py3
+    driver:
+      box: bento/freebsd-12.2
+  - name: freebsd-114-latest-py3
+    driver:
+      box: bento/freebsd-11.4
+
+provisioner:
+  salt_install: bootstrap

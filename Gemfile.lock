@@ -292,6 +292,8 @@ GEM
     kitchen-salt (0.6.3)
       hashie (>= 3.5)
       test-kitchen (>= 1.4)
+    kitchen-vagrant (1.7.0)
+      test-kitchen (>= 1.4, < 3)
     libyajl2 (1.2.0)
     license-acceptance (1.0.19)
       pastel (~> 0.7)
@@ -525,6 +527,7 @@ DEPENDENCIES
   kitchen-docker!
   kitchen-inspec (>= 2.2.1)
   kitchen-salt (>= 0.6.3)
+  kitchen-vagrant
 
 BUNDLED WITH
    2.1.2

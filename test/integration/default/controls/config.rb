@@ -2,27 +2,36 @@
 
 # Set defaults, use debian as base
 
-server_available = '/etc/nginx/sites-available'
-server_enabled = '/etc/nginx/sites-enabled'
-
 # Override by platform family
-case platform[:family]
-when 'redhat', 'fedora'
-  server_available = '/etc/nginx/conf.d'
-  server_enabled   = '/etc/nginx/conf.d'
-when 'suse'
-  server_available = '/etc/nginx/vhosts.d'
-  server_enabled   = '/etc/nginx/vhosts.d'
-end
+server_available, server_enabled =
+  case platform[:family]
+  when 'redhat', 'fedora'
+    %w[/etc/nginx/conf.d /etc/nginx/conf.d]
+  when 'suse'
+    %w[/etc/nginx/vhosts.d /etc/nginx/vhosts.d]
+  when 'bsd'
+    %w[/usr/local/etc/nginx/sites-available /usr/local/etc/nginx/sites-enabled]
+  else
+    %w[/etc/nginx/sites-available /etc/nginx/sites-enabled]
+  end
+
+nginx_conf, snippets_letsencrypt_conf, file_owner, file_group =
+  case platform[:family]
+  when 'bsd'
+    %w[/usr/local/etc/nginx/nginx.conf /usr/local/etc/nginx/snippets/letsencrypt.conf
+       root wheel]
+  else
+    %w[/etc/nginx/nginx.conf /etc/nginx/snippets/letsencrypt.conf root root]
+  end
 
 control 'Nginx configuration' do
   title 'should match desired lines'
 
   # main configuration
-  describe file('/etc/nginx/nginx.conf') do
+  describe file(nginx_conf) do
     it { should be_file }
-    it { should be_owned_by 'root' }
-    it { should be_grouped_into 'root' }
+    it { should be_owned_by file_owner }
+    it { should be_grouped_into file_group }
     its('mode') { should cmp '0644' }
     its('content') do
       # rubocop:disable Metrics/LineLength
@@ -34,10 +43,10 @@ control 'Nginx configuration' do
   end
 
   # snippets configuration
-  describe file('/etc/nginx/snippets/letsencrypt.conf') do
+  describe file(snippets_letsencrypt_conf) do
     it { should be_file }
-    it { should be_owned_by 'root' }
-    it { should be_grouped_into 'root' }
+    it { should be_owned_by file_owner }
+    it { should be_grouped_into file_group }
     its('mode') { should cmp '0644' }
     its('content') { should include 'location ^~ /.well-known/acme-challenge/ {' }
     its('content') { should include 'proxy_pass http://localhost:9999;' }
@@ -52,8 +61,8 @@ control 'Nginx configuration' do
 
     describe file "#{dir}/mysite" do
       it { should be_file }
-      it { should be_owned_by 'root' }
-      it { should be_grouped_into 'root' }
+      it { should be_owned_by file_owner }
+      it { should be_grouped_into file_group }
       its('mode') { should cmp '0644' }
       its('content') { should include 'server_name localhost;' }
       its('content') { should include 'listen 80 default_server;' }
