@@ -10,12 +10,14 @@ extends: 'default'
 # 3. All YAML files under directory `node_modules/`, introduced during the Travis run
 # 4. Any SLS files under directory `test/`, which are actually state files
 # 5. Any YAML files under directory `.kitchen/`, introduced during local testing
+# 6. `kitchen.vagrant.yml`, which contains Embedded Ruby (ERB) template syntax
 ignore: |
   .cache/
   .git/
   node_modules/
   test/**/states/**/*.sls
   .kitchen/
+  kitchen.vagrant.yml
   test/salt/passenger/pillar/nginx.sls
 
 yaml-files:
