@@ -2,7 +2,6 @@
 # vim: ft=yaml
 ---
 # Simple pillar setup
-# - snippet letsencrypt
 # - remove 'default' site
 # - create 'mysite' site
 
@@ -21,10 +20,6 @@ nginx:
   lookup:
     passenger_package: {{ passenger_pkg }}
 
-  snippets:
-    letsencrypt.conf:
-      - location ^~ /.well-known/acme-challenge/:
-          - proxy_pass: http://localhost:9999
   server:
     config:
       # This is required to get the passenger module loaded
@@ -63,4 +58,3 @@ nginx:
               - index: 'index.html index.htm'
               - location ~ .htm:
                   - try_files: '$uri $uri/ =404'
-              - include: '/etc/nginx/snippets/letsencrypt.conf'
