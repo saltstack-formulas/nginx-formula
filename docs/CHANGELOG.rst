@@ -2,6 +2,35 @@
 Changelog
 =========
 
+`2.7.0 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.6.3...v2.7.0>`_ (2021-04-28)
+-------------------------------------------------------------------------------------------------------
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **kitchen+gitlab:** adjust matrix to add ``3003`` [skip ci] (\ `46faf4e <https://github.com/saltstack-formulas/nginx-formula/commit/46faf4e24b39f7d4fd138126dbe5eb6a06eb5b67>`_\ )
+* **vagrant:** add FreeBSD 13.0 [skip ci] (\ `b41062e <https://github.com/saltstack-formulas/nginx-formula/commit/b41062e3b19c4c109198bd95c53158d871bbff85>`_\ )
+* **vagrant:** use pre-salted boxes & conditional local settings [skip ci] (\ `b9e9cd3 <https://github.com/saltstack-formulas/nginx-formula/commit/b9e9cd38e6d29b7eb4cd8ae74a1bdf901959dee3>`_\ )
+
+Documentation
+^^^^^^^^^^^^^
+
+
+* **readme:** add ``Testing with Vagrant`` section [skip ci] (\ `5727848 <https://github.com/saltstack-formulas/nginx-formula/commit/57278481de489441a5c04aee544962212e91c5af>`_\ )
+
+Features
+^^^^^^^^
+
+
+* **servers_config:** add require statement to manage dependencies (\ `622d22f <https://github.com/saltstack-formulas/nginx-formula/commit/622d22f9711085aeca19f3907e22e87c6b21b8d0>`_\ )
+
+Tests
+^^^^^
+
+
+* **requires:** verify dependencies in vhosts (\ `6478143 <https://github.com/saltstack-formulas/nginx-formula/commit/64781431b9187d392f56ce5461c3b1a9c2944f90>`_\ )
+
 `2.6.3 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.6.2...v2.6.3>`_ (2021-04-03)
 -------------------------------------------------------------------------------------------------------
 
