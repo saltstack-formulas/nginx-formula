@@ -309,9 +309,13 @@ verifier:
 suites:
   - name: default
     provisioner:
+      dependencies:
+        - name: test_dep
+          path: test/salt/default/states
       state_top:
         base:
           '*':
+            - test_dep.create_dependency_file
             - nginx._mapdata
             - nginx
       pillars:
