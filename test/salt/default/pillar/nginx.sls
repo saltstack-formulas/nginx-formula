@@ -37,6 +37,19 @@ nginx:
               - location ~ .htm:
                   - try_files: '$uri $uri/ =404'
               - include: 'snippets/letsencrypt.conf'
+      mysite_with_require:
+        enabled: true
+        config:
+          - server:
+              - server_name: with-deps
+              - listen:
+                  - '80'
+              - index: 'index.html index.htm'
+              - location ~ .htm:
+                  - try_files: '$uri $uri/ =404'
+        requires:
+          file: created_to_test_dependencies
+
   dh_param:
     'mydhparam2.pem':
       keysize: 2048

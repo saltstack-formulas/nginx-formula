@@ -123,6 +123,12 @@ nginx_server_available_dir:
       }}
     - makedirs: True
     - template: jinja
+      {%- if 'requires' in settings %}
+    - require:
+        {%- for k, v in settings.requires.items() %}
+      - {{ k }}: {{ v }}
+        {%- endfor %}
+      {%- endif %}
 {% if 'source_path' not in settings.config %}
     - context:
         config: {{ settings.config|json(sort_keys=False) }}

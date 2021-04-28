@@ -71,5 +71,16 @@ control 'Nginx configuration' do
       its('content') { should include 'try_files $uri $uri/ =404;' }
       its('content') { should include 'include snippets/letsencrypt.conf;' }
     end
+    describe file "#{dir}/mysite_with_require" do
+      it { should be_file }
+      it { should be_owned_by file_owner }
+      it { should be_grouped_into file_group }
+      its('mode') { should cmp '0644' }
+      its('content') { should include 'server_name with-deps;' }
+      its('content') { should include 'listen 80;' }
+      its('content') { should include 'index index.html index.htm;' }
+      its('content') { should include 'location ~ .htm {' }
+      its('content') { should include 'try_files $uri $uri/ =404;' }
+    end
   end
 end

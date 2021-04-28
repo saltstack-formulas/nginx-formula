@@ -202,6 +202,18 @@ nginx:
         # and None indicates no action
         enabled: true
 
+        # This let's you add dependencies on other resources being applied for a
+        # particular vhost
+        # A common case is when you use this formula together with letsencrypt's,
+        # validating through nginx: you need nginx running (to validate the vhost) but
+        # can't have the ssl vhost up until the certificate is created (because it
+        # won't exist and will make nginx fail to load the configuration)
+        #
+        # An example, when using LE to create the cert for 'some.host.domain':
+        # requires:
+        #   cmd: create-initial-cert-some.host.domain
+        requires: {}
+
         # Remove the site config file shipped by nginx
         # (i.e. '/etc/nginx/sites-available/default' by default)
         # It also remove the symlink (if it is exists).

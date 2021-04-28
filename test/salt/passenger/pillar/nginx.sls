@@ -26,7 +26,6 @@ nginx:
       - location ^~ /.well-known/acme-challenge/:
           - proxy_pass: http://localhost:9999
   server:
-
     config:
       # This is required to get the passenger module loaded
       # In Debian it can be done with this
@@ -64,5 +63,4 @@ nginx:
               - index: 'index.html index.htm'
               - location ~ .htm:
                   - try_files: '$uri $uri/ =404'
-              # - include: '/etc/nginx/snippets/letsencrypt.conf'
-              - include: 'snippets/letsencrypt.conf'
+              - include: '/etc/nginx/snippets/letsencrypt.conf'
