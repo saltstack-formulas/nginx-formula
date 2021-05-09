@@ -170,6 +170,8 @@ default-amazonlinux-2-master-py3: {extends: '.test_instance'}
 oraclelinux-8-master-py3: {extends: '.test_instance'}
 default-oraclelinux-7-master-py3: {extends: '.test_instance'}
 # oraclelinux-7-master-py3: {extends: '.test_instance'}
+default-arch-base-latest-master-py3: {extends: '.test_instance'}
+# arch-base-latest-master-py3: {extends: '.test_instance'}
 # default-gentoo-stage3-latest-master-py3: {extends: '.test_instance'}
 # gentoo-stage3-latest-master-py3: {extends: '.test_instance'}
 default-gentoo-stage3-systemd-master-py3: {extends: '.test_instance'}
@@ -186,8 +188,7 @@ default-gentoo-stage3-systemd-master-py3: {extends: '.test_instance'}
 # default-amazonlinux-2-3003-0-py3: {extends: '.test_instance'}
 # default-oraclelinux-8-3003-0-py3: {extends: '.test_instance'}
 # default-oraclelinux-7-3003-0-py3: {extends: '.test_instance'}
-default-arch-base-latest-3003-0-py3: {extends: '.test_instance'}
-# arch-base-latest-3003-0-py3: {extends: '.test_instance'}
+# default-arch-base-latest-3003-0-py3: {extends: '.test_instance'}
 # default-gentoo-stage3-latest-3003-0-py3: {extends: '.test_instance'}
 # default-gentoo-stage3-systemd-3003-0-py3: {extends: '.test_instance'}
 # default-debian-10-3002-6-py3: {extends: '.test_instance'}
