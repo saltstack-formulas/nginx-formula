@@ -43,5 +43,5 @@ nginx_service:
       - pkg: nginx_install
       {% endif %}
 {% if nginx.check_config_before_apply %}
-    - only_if: /usr/sbin/nginx -t
+    - onlyif: /usr/sbin/nginx -t
 {% endif %}
