@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.7.1](https://github.com/saltstack-formulas/nginx-formula/compare/v2.7.0...v2.7.1) (2021-05-12)
+
+
+### Bug Fixes
+
+* **servers:** wrong conditional specification ([494b2fb](https://github.com/saltstack-formulas/nginx-formula/commit/494b2fbea490fded02cecd4d3e3e0372476548fb))
+
+
+### Continuous Integration
+
+* add `arch-master` to matrix and update `.travis.yml` [skip ci] ([4697152](https://github.com/saltstack-formulas/nginx-formula/commit/46971528d7a7e23241564da146ee8d28b7d2eecc))
+
 # [2.7.0](https://github.com/saltstack-formulas/nginx-formula/compare/v2.6.3...v2.7.0) (2021-04-28)
 
 
