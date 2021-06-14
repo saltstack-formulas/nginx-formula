@@ -2,6 +2,15 @@
 Changelog
 =========
 
+`2.7.3 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.7.2...v2.7.3>`_ (2021-06-14)
+-------------------------------------------------------------------------------------------------------
+
+Tests
+^^^^^
+
+
+* **snippets:** add tests for snippets includes (\ `1c83b6d <https://github.com/saltstack-formulas/nginx-formula/commit/1c83b6d5fa93079476ca9e8baa1ccd9d44e5237f>`_\ ), closes `#275 <https://github.com/saltstack-formulas/nginx-formula/issues/275>`_ `#274 <https://github.com/saltstack-formulas/nginx-formula/issues/274>`_
+
 `2.7.2 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.7.1...v2.7.2>`_ (2021-06-14)
 -------------------------------------------------------------------------------------------------------
 

@@ -1,7 +1,7 @@
 name: nginx
 os: Debian, Ubuntu, RedHat, Fedora, CentOS, Suse, openSUSE
 os_family: Debian, RedHat, Suse
-version: 2.7.2
+version: 2.7.3
 release: 1
 minimum_version: 2017.3
 summary: nginx formula
