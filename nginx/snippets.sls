@@ -8,8 +8,8 @@
 
 {#- _nginx is a lightened copy of nginx map intended to passed in templates #}
 {%- set _nginx = nginx.copy() %}
-{%- do _nginx.pop('snippets') %}
-{%- do _nginx.pop('servers') %}
+{%- do _nginx.pop('snippets') if nginx.snippets is defined %}
+{%- do _nginx.pop('servers') if nginx.servers is defined %}
 
 nginx_snippets_dir:
   file.directory:
