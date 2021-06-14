@@ -2,6 +2,16 @@
 Changelog
 =========
 
+`2.7.2 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.7.1...v2.7.2>`_ (2021-06-14)
+-------------------------------------------------------------------------------------------------------
+
+Bug Fixes
+^^^^^^^^^
+
+
+* **certificates:** ensure ``openssl`` installed before ``cmd.run`` (\ `0cd7c7b <https://github.com/saltstack-formulas/nginx-formula/commit/0cd7c7b20528ce9fbd4f8991a365415a3093546d>`_\ ), closes `/gitlab.com/saltstack-formulas/nginx-formula/-/jobs/1345325819#L2830 <https://github.com//gitlab.com/saltstack-formulas/nginx-formula/-/jobs/1345325819/issues/L2830>`_
+* **snippets:** ignore servers or snippets when undefined (\ `6cb486d <https://github.com/saltstack-formulas/nginx-formula/commit/6cb486dbd290c91bbdbf00fd0061efaedbef4dea>`_\ ), closes `#274 <https://github.com/saltstack-formulas/nginx-formula/issues/274>`_
+
 `2.7.1 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.7.0...v2.7.1>`_ (2021-05-12)
 -------------------------------------------------------------------------------------------------------
 
