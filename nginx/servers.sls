@@ -22,7 +22,9 @@ extend:
     service:
       - reload: True
       - require:
+        - file: nginx_config
         {{ file_requisites(server_states) }}
       - listen:
+        - file: nginx_config
         {{ file_requisites(server_states) }}
 {% endif %}
