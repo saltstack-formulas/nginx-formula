@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.4](https://github.com/saltstack-formulas/nginx-formula/compare/v2.7.3...v2.7.4) (2021-06-15)
+
+
+### Bug Fixes
+
+* **servers:** include main config file watch in extend ([00387e7](https://github.com/saltstack-formulas/nginx-formula/commit/00387e7cbd90ceb5496df5cf9bce8f7dae25b056))
+
 ## [2.7.3](https://github.com/saltstack-formulas/nginx-formula/compare/v2.7.2...v2.7.3) (2021-06-14)
 
 
