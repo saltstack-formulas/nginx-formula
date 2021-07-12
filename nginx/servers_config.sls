@@ -10,14 +10,10 @@
 {% set server_states = [] %}
 {#- _nginx is a lightened copy of nginx map intended to passed in templates #}
 {%- set _nginx = nginx.copy() %}
-<<<<<<< HEAD
 {%- do _nginx.pop('snippets') %}
-{%- do _nginx.pop('streams') %}
-{%- do _nginx.pop('servers') %}
-=======
+{%- do _nginx.pop('streams') if nginx.streams is defined %}
 {%- do _nginx.pop('snippets') if nginx.snippets is defined %}
 {%- do _nginx.pop('servers') if nginx.servers is defined %}
->>>>>>> 6a42a9bdf84e764cb4b3313ad2b6d95688517dec
 
 # Simple path concatenation.
 # Needs work to make this function on windows.
