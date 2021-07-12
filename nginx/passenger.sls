@@ -28,6 +28,7 @@ passenger_install:
       - pkg: nginx_install
     - require_in:
       - service: nginx_service
+      - file: nginx_config
 
 /etc/nginx/passenger.conf:
   file.absent:
@@ -49,6 +50,7 @@ passenger_config:
       - service: nginx_service
     - require_in:
       - service: nginx_service
+      - file: nginx_config
     - require:
       - file: /etc/nginx/passenger.conf
       - pkg: passenger_install
