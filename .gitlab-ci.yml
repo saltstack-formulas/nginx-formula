@@ -149,9 +149,9 @@ ubuntu-1804-master-py3: {extends: '.test_instance'}
 # default-centos-8-master-py3: {extends: '.test_instance'}
 # passenger-centos-8-master-py3: {extends: '.test_instance'}
 centos-8-master-py3: {extends: '.test_instance'}
-default-centos-7-master-py3: {extends: '.test_instance'}
+# default-centos-7-master-py3: {extends: '.test_instance'}
 # passenger-centos-7-master-py3: {extends: '.test_instance'}
-# centos-7-master-py3: {extends: '.test_instance'}
+centos-7-master-py3: {extends: '.test_instance'}
 default-fedora-34-master-py3: {extends: '.test_instance'}
 # fedora-34-master-py3: {extends: '.test_instance'}
 default-fedora-33-master-py3: {extends: '.test_instance'}
