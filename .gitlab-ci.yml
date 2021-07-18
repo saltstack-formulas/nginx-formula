@@ -102,7 +102,7 @@ rubocop:
 ###############################################################################
 # Define `test` template
 ###############################################################################
-.test_instance:
+.test_instance: &test_instance
   stage: *stage_test
   image: *image_dindruby
   services: *services_docker_dind
@@ -118,11 +118,19 @@ rubocop:
     - 'bin/kitchen verify "${DOCKER_ENV_CI_JOB_NAME}"'
 
 ###############################################################################
+# Define `test` template (`allow_failure: true`)
+###############################################################################
+.test_instance_failure_permitted:
+  <<: *test_instance
+  allow_failure: true
+
+###############################################################################
 # `test` stage: each instance below uses the `test` template above
 ###############################################################################
 ## Define the rest of the matrix based on Kitchen testing
 # Make sure the instances listed below match up with
 # the `platforms` defined in `kitchen.yml`
+# default-debian-11-tiamat-py3: {extends: '.test_instance'}
 # default-debian-10-tiamat-py3: {extends: '.test_instance'}
 # default-debian-9-tiamat-py3: {extends: '.test_instance'}
 # default-ubuntu-2004-tiamat-py3: {extends: '.test_instance'}
@@ -134,6 +142,9 @@ rubocop:
 # default-oraclelinux-7-tiamat-py3: {extends: '.test_instance'}
 # default-almalinux-8-tiamat-py3: {extends: '.test_instance'}
 # default-rockylinux-8-tiamat-py3: {extends: '.test_instance'}
+# default-debian-11-master-py3: {extends: '.test_instance'}
+# passenger-debian-11-master-py3: {extends: '.test_instance'}
+debian-11-master-py3: {extends: '.test_instance_failure_permitted'}
 # default-debian-10-master-py3: {extends: '.test_instance'}
 # passenger-debian-10-master-py3: {extends: '.test_instance'}
 debian-10-master-py3: {extends: '.test_instance'}
@@ -181,6 +192,7 @@ almalinux-8-master-py3: {extends: '.test_instance'}
 # default-rockylinux-8-master-py3: {extends: '.test_instance'}
 # passenger-rockylinux-8-master-py3: {extends: '.test_instance'}
 rockylinux-8-master-py3: {extends: '.test_instance'}
+# default-debian-11-3003-1-py3: {extends: '.test_instance'}
 # default-debian-10-3003-1-py3: {extends: '.test_instance'}
 # default-debian-9-3003-1-py3: {extends: '.test_instance'}
 # default-ubuntu-2004-3003-1-py3: {extends: '.test_instance'}
@@ -198,6 +210,7 @@ rockylinux-8-master-py3: {extends: '.test_instance'}
 # default-arch-base-latest-3003-1-py3: {extends: '.test_instance'}
 # default-gentoo-stage3-latest-3003-1-py3: {extends: '.test_instance'}
 # default-gentoo-stage3-systemd-3003-1-py3: {extends: '.test_instance'}
+# default-debian-11-3002-6-py3: {extends: '.test_instance'}
 # default-debian-10-3002-6-py3: {extends: '.test_instance'}
 # default-debian-9-3002-6-py3: {extends: '.test_instance'}
 # default-ubuntu-2004-3002-6-py3: {extends: '.test_instance'}
