@@ -83,6 +83,7 @@ jobs:
     ## Define the rest of the matrix based on Kitchen testing
     # Make sure the instances listed below match up with
     # the `platforms` defined in `kitchen.yml`
+    # - env: INSTANCE=default-debian-11-tiamat-py3
     # - env: INSTANCE=default-debian-10-tiamat-py3
     # - env: INSTANCE=default-debian-9-tiamat-py3
     # - env: INSTANCE=default-ubuntu-2004-tiamat-py3
@@ -94,6 +95,9 @@ jobs:
     # - env: INSTANCE=default-oraclelinux-7-tiamat-py3
     # - env: INSTANCE=default-almalinux-8-tiamat-py3
     # - env: INSTANCE=default-rockylinux-8-tiamat-py3
+    # - env: INSTANCE=default-debian-11-master-py3
+    # - env: INSTANCE=passenger-debian-11-master-py3
+    - env: INSTANCE=debian-11-master-py3
     # - env: INSTANCE=default-debian-10-master-py3
     # - env: INSTANCE=passenger-debian-10-master-py3
     - env: INSTANCE=debian-10-master-py3
@@ -109,9 +113,9 @@ jobs:
     # - env: INSTANCE=default-centos-8-master-py3
     # - env: INSTANCE=passenger-centos-8-master-py3
     - env: INSTANCE=centos-8-master-py3
-    - env: INSTANCE=default-centos-7-master-py3
+    # - env: INSTANCE=default-centos-7-master-py3
     # - env: INSTANCE=passenger-centos-7-master-py3
-    # - env: INSTANCE=centos-7-master-py3
+    - env: INSTANCE=centos-7-master-py3
     - env: INSTANCE=default-fedora-34-master-py3
     # - env: INSTANCE=fedora-34-master-py3
     - env: INSTANCE=default-fedora-33-master-py3
@@ -141,6 +145,7 @@ jobs:
     # - env: INSTANCE=default-rockylinux-8-master-py3
     # - env: INSTANCE=passenger-rockylinux-8-master-py3
     - env: INSTANCE=rockylinux-8-master-py3
+    # - env: INSTANCE=default-debian-11-3003-1-py3
     # - env: INSTANCE=default-debian-10-3003-1-py3
     # - env: INSTANCE=default-debian-9-3003-1-py3
     # - env: INSTANCE=default-ubuntu-2004-3003-1-py3
@@ -158,6 +163,7 @@ jobs:
     # - env: INSTANCE=default-arch-base-latest-3003-1-py3
     # - env: INSTANCE=default-gentoo-stage3-latest-3003-1-py3
     # - env: INSTANCE=default-gentoo-stage3-systemd-3003-1-py3
+    # - env: INSTANCE=default-debian-11-3002-6-py3
     # - env: INSTANCE=default-debian-10-3002-6-py3
     # - env: INSTANCE=default-debian-9-3002-6-py3
     # - env: INSTANCE=default-ubuntu-2004-3002-6-py3
