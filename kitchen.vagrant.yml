@@ -25,10 +25,10 @@ platforms:
   - name: freebsd-122-master-py3
     driver:
       box: myii/freebsd-12.2-master-py3
-  - name: freebsd-130-3003-1-py3
+  - name: freebsd-130-3004-0-py3
     driver:
-      box: myii/freebsd-13.0-3003.1-py3
+      box: myii/freebsd-13.0-3004.0-py3
       synced_folders: []  # https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=255208
-  - name: freebsd-122-3003-1-py3
+  - name: freebsd-122-3004-0-py3
     driver:
-      box: myii/freebsd-12.2-3003.1-py3
+      box: myii/freebsd-12.2-3004.0-py3
