@@ -10,8 +10,8 @@ in favor of using `keyring files` which contain a binary OpenPGP format of the k
 As nginx and passenger don't provide such key files, we created them following the
 official recomendations in their sites and install the resulting files.
 
-Ngninx
-------
+Nginx
+-----
 
 See https://nginx.org/en/linux_packages.html#Debian for details
 

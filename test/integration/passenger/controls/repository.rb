@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-case os[:name]
-when 'centos'
+case os.family
+when 'redhat'
   repo_file = '/etc/yum.repos.d/passenger.repo'
   repo_url = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch'
-when 'debian', 'ubuntu'
+when 'debian'
   # Inspec does not provide a `codename` matcher, so we add ours
   case platform[:release].to_f.truncate
   # ubuntu
@@ -13,6 +13,8 @@ when 'debian', 'ubuntu'
   when 20
     codename = 'focal'
   # debian
+  when 9
+    codename = 'stretch'
   when 10
     codename = 'buster'
   when 11

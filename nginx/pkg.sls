@@ -37,11 +37,11 @@ nginx_install:
     - name: {{ nginx.lookup.package }}
     {% endif %}
 
-{% if salt['grains.get']('os_family') == 'Debian' %}
+{% if grains.os_family == 'Debian' %}
   {%- if from_official %}
 nginx_official_repo_keyring:
   file.managed:
-    - name: /usr/share/keyrings/nginx-archive-keyring.gpg
+    - name: {{ nginx.lookup.package_repo_keyring }}
     - source: {{ files_switch(['nginx-archive-keyring.gpg'],
                               lookup='nginx_official_repo_keyring'
                  )
@@ -58,8 +58,10 @@ nginx_official_repo:
     - absent
     {%- endif %}
     - humanname: nginx apt repo
-    - name: deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/{{ grains['os'].lower() }}/ {{ grains['oscodename'] }} nginx
-    - file: /etc/apt/sources.list.d/nginx-official-{{ grains['oscodename'] }}.list
+    - name: >-
+        deb [signed-by={{ nginx.lookup.package_repo_keyring }}]
+        http://nginx.org/packages/{{ grains.os | lower }}/ {{ grains.oscodename }} nginx
+    - file: /etc/apt/sources.list.d/nginx-official-{{ grains.oscodename }}.list
     - require_in:
       - pkg: nginx_install
     - watch_in:
@@ -74,10 +76,10 @@ nginx_ppa_repo:
     {%- else %}
     - absent
     {%- endif %}
-    {% if salt['grains.get']('os') == 'Ubuntu' %}
+    {% if grains.os == 'Ubuntu' %}
     - ppa: nginx/{{ nginx.ppa_version }}
     {% else %}
-    - name: deb http://ppa.launchpad.net/nginx/{{ nginx.ppa_version }}/ubuntu {{ grains['oscodename'] }} main
+    - name: deb http://ppa.launchpad.net/nginx/{{ nginx.ppa_version }}/ubuntu {{ grains.oscodename }} main
     - keyid: C300EE8C
     - keyserver: keyserver.ubuntu.com
     {% endif %}
@@ -101,12 +103,12 @@ nginx_phusionpassenger_repo_keyring:
 # Remove the old repo file
 nginx_phusionpassenger_repo_remove:
   pkgrepo.absent:
-    - name: deb http://nginx.org/packages/{{ grains['os'].lower() }}/ {{ grains['oscodename'] }} nginx
+    - name: deb http://nginx.org/packages/{{ grains.os |lower }}/ {{ grains.oscodename }} nginx
     - keyid: 561F9B9CAC40B2F7
     - require_in:
       - pkgrepo: nginx_phusionpassenger_repo
   file.absent:
-    - name: /etc/apt/sources.list.d/nginx-phusionpassenger-{{ grains['oscodename'] }}.list
+    - name: /etc/apt/sources.list.d/nginx-phusionpassenger-{{ grains.oscodename }}.list
     - require_in:
       - pkgrepo: nginx_phusionpassenger_repo
   {%- endif %}
@@ -119,15 +121,17 @@ nginx_phusionpassenger_repo:
     - absent
     {%- endif %}
     - humanname: nginx phusionpassenger repo
-    - name: deb [signed-by=/usr/share/keyrings/phusionpassenger-archive-keyring.gpg] https://oss-binaries.phusionpassenger.com/apt/passenger {{ grains['oscodename'] }} main
-    - file: /etc/apt/sources.list.d/phusionpassenger-official-{{ grains['oscodename'] }}.list
+    - name: >-
+        deb [signed-by={{ nginx.lookup.passenger_package_repo_keyring }}]
+        https://oss-binaries.phusionpassenger.com/apt/passenger {{ grains.oscodename }} main
+    - file: /etc/apt/sources.list.d/phusionpassenger-official-{{ grains.oscodename }}.list
     - require_in:
       - pkg: nginx_install
     - watch_in:
       - pkg: nginx_install
 {% endif %}
 
-{% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
+{% if grains.os_family == 'Suse' or grains.os == 'SUSE' %}
 nginx_zypp_repo:
   pkgrepo:
     {%- if from_official %}
@@ -148,8 +152,8 @@ nginx_zypp_repo:
       - pkg: nginx_install
 {% endif %}
 
-{% if salt['grains.get']('os_family') == 'RedHat' %}
-{%   if salt['grains.get']('osfinger', '') in ['Amazon Linux-2'] %}
+{% if grains.os_family == 'RedHat' %}
+{%   if grains.osfinger in ['Amazon Linux-2'] %}
 nginx_epel_repo:
   pkgrepo.managed:
     - name: epel
