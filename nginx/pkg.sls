@@ -2,7 +2,11 @@
 #
 # Manages installation of nginx from pkg.
 
-{% from 'nginx/map.jinja' import nginx, sls_block with context %}
+{#- Get the `tplroot` from `tpldir` #}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ "/map.jinja" import nginx, sls_block with context %}
+{%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
+
 {%- if nginx.install_from_repo %}
   {% set from_official = true %}
   {% set from_ppa = false %}
@@ -34,6 +38,18 @@ nginx_install:
     {% endif %}
 
 {% if salt['grains.get']('os_family') == 'Debian' %}
+  {%- if from_official %}
+nginx_official_repo_keyring:
+  file.managed:
+    - name: /usr/share/keyrings/nginx-archive-keyring.gpg
+    - source: {{ files_switch(['nginx-archive-keyring.gpg'],
+                              lookup='nginx_official_repo_keyring'
+                 )
+              }}
+    - require_in:
+      - pkgrepo: nginx_official_repo
+  {%- endif %}
+
 nginx_official_repo:
   pkgrepo:
     {%- if from_official %}
@@ -42,10 +58,8 @@ nginx_official_repo:
     - absent
     {%- endif %}
     - humanname: nginx apt repo
-    - name: deb http://nginx.org/packages/{{ grains['os'].lower() }}/ {{ grains['oscodename'] }} nginx
+    - name: deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/{{ grains['os'].lower() }}/ {{ grains['oscodename'] }} nginx
     - file: /etc/apt/sources.list.d/nginx-official-{{ grains['oscodename'] }}.list
-    - keyid: ABF5BD827BD9BF62
-    - keyserver: keyserver.ubuntu.com
     - require_in:
       - pkg: nginx_install
     - watch_in:
@@ -73,6 +87,30 @@ nginx_ppa_repo:
       - pkg: nginx_install
    {%- endif %}
 
+  {%- if from_phusionpassenger %}
+nginx_phusionpassenger_repo_keyring:
+  file.managed:
+    - name: /usr/share/keyrings/phusionpassenger-archive-keyring.gpg
+    - source: {{ files_switch(['phusionpassenger-archive-keyring.gpg'],
+                              lookup='nginx_phusionpassenger_repo_keyring'
+                 )
+              }}
+    - require_in:
+      - pkgrepo: nginx_phusionpassenger_repo
+
+# Remove the old repo file
+nginx_phusionpassenger_repo_remove:
+  pkgrepo.absent:
+    - name: deb http://nginx.org/packages/{{ grains['os'].lower() }}/ {{ grains['oscodename'] }} nginx
+    - keyid: 561F9B9CAC40B2F7
+    - require_in:
+      - pkgrepo: nginx_phusionpassenger_repo
+  file.absent:
+    - name: /etc/apt/sources.list.d/nginx-phusionpassenger-{{ grains['oscodename'] }}.list
+    - require_in:
+      - pkgrepo: nginx_phusionpassenger_repo
+  {%- endif %}
+
 nginx_phusionpassenger_repo:
   pkgrepo:
     {%- if from_phusionpassenger %}
@@ -81,10 +119,8 @@ nginx_phusionpassenger_repo:
     - absent
     {%- endif %}
     - humanname: nginx phusionpassenger repo
-    - name: deb https://oss-binaries.phusionpassenger.com/apt/passenger {{ grains['oscodename'] }} main
-    - file: /etc/apt/sources.list.d/nginx-phusionpassenger-{{ grains['oscodename'] }}.list
-    - keyid: 561F9B9CAC40B2F7
-    - keyserver: keyserver.ubuntu.com
+    - name: deb [signed-by=/usr/share/keyrings/phusionpassenger-archive-keyring.gpg] https://oss-binaries.phusionpassenger.com/apt/passenger {{ grains['oscodename'] }} main
+    - file: /etc/apt/sources.list.d/phusionpassenger-official-{{ grains['oscodename'] }}.list
     - require_in:
       - pkg: nginx_install
     - watch_in:
