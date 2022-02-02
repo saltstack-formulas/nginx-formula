@@ -1,5 +1,28 @@
 # Changelog
 
+## [2.7.5](https://github.com/saltstack-formulas/nginx-formula/compare/v2.7.4...v2.7.5) (2022-02-02)
+
+
+### Bug Fixes
+
+* **snippets:** make sure they're deployed before being used ([9dfc1c1](https://github.com/saltstack-formulas/nginx-formula/commit/9dfc1c1b2f4a0cd17221b303c95af1d7a9aba781))
+
+
+### Continuous Integration
+
+* **3003.1:** update inc. AlmaLinux, Rocky & `rst-lint` [skip ci] ([6a42a9b](https://github.com/saltstack-formulas/nginx-formula/commit/6a42a9bdf84e764cb4b3313ad2b6d95688517dec))
+* **freebsd:** update with latest pre-salted Vagrant boxes [skip ci] ([860fabe](https://github.com/saltstack-formulas/nginx-formula/commit/860fabe327cfa9512152b0f278897311f35449bf))
+* **gemfile:** allow rubygems proxy to be provided as an env var [skip ci] ([1557473](https://github.com/saltstack-formulas/nginx-formula/commit/155747346c5b0fe7e1af5214734581e992832b45))
+* **gemfile+lock:** use `ssf` customised `inspec` repo [skip ci] ([a11da83](https://github.com/saltstack-formulas/nginx-formula/commit/a11da83d03fad1c50a93ba06c1c5af21f1c79e7a))
+* **gitlab-ci:** enable instance after upstream issue resolved [skip ci] ([79499e8](https://github.com/saltstack-formulas/nginx-formula/commit/79499e841be74162dd5ec869de267366b6048af1))
+* **kitchen:** move `provisioner` block & update `run_command` [skip ci] ([6b65017](https://github.com/saltstack-formulas/nginx-formula/commit/6b650177aaa9800151f2e7f628551856f0c28c54))
+* **kitchen+ci:** update with `3004` pre-salted images/boxes [skip ci] ([30f87cc](https://github.com/saltstack-formulas/nginx-formula/commit/30f87cc84b2991c7f0ed1f0066f9241a3754e8df))
+* **kitchen+ci:** update with latest `3003.2` pre-salted images [skip ci] ([70a1f31](https://github.com/saltstack-formulas/nginx-formula/commit/70a1f3135ccfde09f6016a46eee3fc55b2ca9840))
+* **kitchen+ci:** update with latest CVE pre-salted images [skip ci] ([e041418](https://github.com/saltstack-formulas/nginx-formula/commit/e0414181a724076176cb37f6402f013f4e498109))
+* **vagrant:** replace FreeBSD 12.2 with 12.3 [skip ci] ([7deb74f](https://github.com/saltstack-formulas/nginx-formula/commit/7deb74fdbccad7e8590b9ddf7d0630e9a2ba56e1))
+* add Debian 11 Bullseye & update `yamllint` configuration [skip ci] ([fa8a5db](https://github.com/saltstack-formulas/nginx-formula/commit/fa8a5db5079b1e41eeac5d4ee25c06d976a24f3e))
+* **kitchen+gitlab:** remove Ubuntu 16.04 & Fedora 32 (EOL) [skip ci] ([d15f3de](https://github.com/saltstack-formulas/nginx-formula/commit/d15f3decb3fb1d8d1d04934c8d909913380d53f1))
+
 ## [2.7.4](https://github.com/saltstack-formulas/nginx-formula/compare/v2.7.3...v2.7.4) (2021-06-15)
 
 
