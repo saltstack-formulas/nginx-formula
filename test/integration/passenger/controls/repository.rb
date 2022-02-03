@@ -1,25 +1,20 @@
 # frozen_string_literal: true
 
-case os.family
+case platform.family
 when 'redhat'
   repo_file = '/etc/yum.repos.d/passenger.repo'
   repo_url = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch'
 when 'debian'
   # Inspec does not provide a `codename` matcher, so we add ours
-  case platform[:release].to_f.truncate
-  # ubuntu
-  when 18
-    codename = 'bionic'
-  when 20
-    codename = 'focal'
-  # debian
-  when 9
-    codename = 'stretch'
-  when 10
-    codename = 'buster'
-  when 11
-    codename = 'bullseye'
-  end
+  finger_codename = {
+    'ubuntu-18.04' => 'bionic',
+    'ubuntu-20.04' => 'focal',
+    'debian-9' => 'stretch',
+    'debian-10' => 'buster',
+    'debian-11' => 'bullseye'
+  }
+  codename = finger_codename[system.platform[:finger]]
+
   repo_keyring = '/usr/share/keyrings/phusionpassenger-archive-keyring.gpg'
   repo_file = "/etc/apt/sources.list.d/phusionpassenger-official-#{codename}.list"
   # rubocop:disable Metrics/LineLength
