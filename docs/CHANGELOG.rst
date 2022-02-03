@@ -2,6 +2,45 @@
 Changelog
 =========
 
+`2.8.0 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.7.5...v2.8.0>`_ (2022-02-03)
+-------------------------------------------------------------------------------------------------------
+
+Code Refactoring
+^^^^^^^^^^^^^^^^
+
+
+* **pkgs:** readbility (\ `b76e8cc <https://github.com/saltstack-formulas/nginx-formula/commit/b76e8cc6640943d97bc778948555ae3f45a71552>`_\ )
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **kitchen+gitlab:** update for new pre-salted images [skip ci] (\ `7fcb960 <https://github.com/saltstack-formulas/nginx-formula/commit/7fcb9608cd838469e7c1faf2126ea8d5673d0481>`_\ )
+
+Features
+^^^^^^^^
+
+
+* **debian:** use keyrings instead of key_ids (\ `037c13a <https://github.com/saltstack-formulas/nginx-formula/commit/037c13a674d9e2850a808bcb0fe8600e4ec8b177>`_\ )
+
+Reverts
+^^^^^^^
+
+
+* **pkg:** use grains.osfinger in a format suitable for all platforms (\ `8fee9f0 <https://github.com/saltstack-formulas/nginx-formula/commit/8fee9f05bd86c549a050a5b4c555fa0d532493d3>`_\ )
+
+Styles
+^^^^^^
+
+
+* **map.jinja:** remove empty line (\ `ae52641 <https://github.com/saltstack-formulas/nginx-formula/commit/ae52641cfc87ad576f22f0675eff436ebccf3d34>`_\ )
+
+Tests
+^^^^^
+
+
+* **repository:** favor ``platform`` over ``os`` (\ `c16ecf8 <https://github.com/saltstack-formulas/nginx-formula/commit/c16ecf82f52b0236a8b54b5ad984c08902b79534>`_\ )
+
 `2.7.5 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.7.4...v2.7.5>`_ (2022-02-02)
 -------------------------------------------------------------------------------------------------------
 
