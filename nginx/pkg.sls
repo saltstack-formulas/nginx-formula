@@ -153,7 +153,7 @@ nginx_zypp_repo:
 {% endif %}
 
 {% if grains.os_family == 'RedHat' %}
-{%   if grains.osfinger in ['Amazon Linux-2'] %}
+  {% if grains.get('osfinger', '') == 'Amazon Linux-2' %}
 nginx_epel_repo:
   pkgrepo.managed:
     - name: epel
@@ -178,7 +178,7 @@ nginx_yum_repo:
     {%- endif %}
     - name: nginx
     - humanname: nginx repo
-    {%- if salt['grains.get']('os') == 'CentOS' %}
+    {%- if grains.os == 'CentOS' %}
     - baseurl: 'http://nginx.org/packages/centos/$releasever/$basearch/'
     {%- else %}
     - baseurl: 'http://nginx.org/packages/rhel/{{ nginx.lookup.rh_os_releasever }}/$basearch/'
