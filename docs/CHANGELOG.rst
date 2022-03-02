@@ -2,6 +2,28 @@
 Changelog
 =========
 
+`2.8.1 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.8.0...v2.8.1>`_ (2022-03-02)
+-------------------------------------------------------------------------------------------------------
+
+Bug Fixes
+^^^^^^^^^
+
+
+* **debian:** avoid adding repositories entries multiple times (\ `d1d3e55 <https://github.com/saltstack-formulas/nginx-formula/commit/d1d3e552adf3bc17265ffcc1c27920d4b9a09c6d>`_\ ), closes `/github.com/saltstack/salt/issues/59785#issuecomment-826590482 <https://github.com//github.com/saltstack/salt/issues/59785/issues/issuecomment-826590482>`_
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* update linters to latest versions [skip ci] (\ `512fe00 <https://github.com/saltstack-formulas/nginx-formula/commit/512fe00a069f2fcabed119c36f9444c2a65e179c>`_\ )
+
+Tests
+^^^^^
+
+
+* **repository:** use ``system.platform[:codename]`` [skip ci] (\ `0e51694 <https://github.com/saltstack-formulas/nginx-formula/commit/0e51694c2a59b975be0fe4972c525b73f556a6db>`_\ )
+* **system:** add ``build_platform_codename`` [skip ci] (\ `5f1a289 <https://github.com/saltstack-formulas/nginx-formula/commit/5f1a289f11cdcbb2dac6021109cfc390068134d4>`_\ )
+
 `2.8.0 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.7.5...v2.8.0>`_ (2022-02-03)
 -------------------------------------------------------------------------------------------------------
 
