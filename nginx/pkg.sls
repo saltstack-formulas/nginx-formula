@@ -25,6 +25,8 @@
   {% set from_phusionpassenger = false %}
 {%- endif %}
 
+{%- set resource_repo_managed = 'file' if grains.os_family == 'Debian' else 'pkgrepo' %}
+
 nginx_install:
   pkg.installed:
     {{ sls_block(nginx.package.opts) }}
@@ -47,21 +49,21 @@ nginx_official_repo_keyring:
                  )
               }}
     - require_in:
-      - pkgrepo: nginx_official_repo
+      - {{ resource_repo_managed }}: nginx_official_repo
   {%- endif %}
 
 nginx_official_repo:
-  pkgrepo:
+  file:
     {%- if from_official %}
     - managed
     {%- else %}
     - absent
     {%- endif %}
-    - humanname: nginx apt repo
-    - name: >-
+    - name: /etc/apt/sources.list.d/nginx-official-{{ grains.oscodename }}.list
+    - contents: >
         deb [signed-by={{ nginx.lookup.package_repo_keyring }}]
         http://nginx.org/packages/{{ grains.os | lower }}/ {{ grains.oscodename }} nginx
-    - file: /etc/apt/sources.list.d/nginx-official-{{ grains.oscodename }}.list
+
     - require_in:
       - pkg: nginx_install
     - watch_in:
@@ -98,7 +100,7 @@ nginx_phusionpassenger_repo_keyring:
                  )
               }}
     - require_in:
-      - pkgrepo: nginx_phusionpassenger_repo
+      - {{ resource_repo_managed }}: nginx_phusionpassenger_repo
 
 # Remove the old repo file
 nginx_phusionpassenger_repo_remove:
@@ -106,25 +108,25 @@ nginx_phusionpassenger_repo_remove:
     - name: deb http://nginx.org/packages/{{ grains.os |lower }}/ {{ grains.oscodename }} nginx
     - keyid: 561F9B9CAC40B2F7
     - require_in:
-      - pkgrepo: nginx_phusionpassenger_repo
+      - {{ resource_repo_managed }}: nginx_phusionpassenger_repo
   file.absent:
     - name: /etc/apt/sources.list.d/nginx-phusionpassenger-{{ grains.oscodename }}.list
     - require_in:
-      - pkgrepo: nginx_phusionpassenger_repo
+      - {{ resource_repo_managed }}: nginx_phusionpassenger_repo
   {%- endif %}
 
 nginx_phusionpassenger_repo:
-  pkgrepo:
+  file:
     {%- if from_phusionpassenger %}
     - managed
     {%- else %}
     - absent
     {%- endif %}
-    - humanname: nginx phusionpassenger repo
-    - name: >-
+    - name: /etc/apt/sources.list.d/phusionpassenger-official-{{ grains.oscodename }}.list
+    - contents: >
         deb [signed-by={{ nginx.lookup.passenger_package_repo_keyring }}]
         https://oss-binaries.phusionpassenger.com/apt/passenger {{ grains.oscodename }} main
-    - file: /etc/apt/sources.list.d/phusionpassenger-official-{{ grains.oscodename }}.list
+
     - require_in:
       - pkg: nginx_install
     - watch_in:
