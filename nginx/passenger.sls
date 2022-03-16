@@ -23,6 +23,7 @@ include:
 
 passenger_install:
   pkg.installed:
+    {{ sls_block(nginx.package.opts) }}
     - name: {{ nginx.lookup.passenger_package }}
     - require:
       - pkg: nginx_install

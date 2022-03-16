@@ -32,5 +32,7 @@ nginx_snippet_{{ snippet }}:
       - file: nginx_snippets_dir
     - require_in:
       - file: nginx_config
+      - sls: nginx.servers
+      - sls: nginx.servers_config
       - service: nginx_service
 {% endfor %}

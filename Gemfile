@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-source 'https://rubygems.org'
+source ENV['PROXY_RUBYGEMSORG'] || 'https://rubygems.org'
 
 # Install the `inspec` gem using `git` because versions after `4.22.22`
 # suppress diff output; this version fixes this for our uses.
@@ -16,7 +16,7 @@ gem 'kitchen-docker', git: 'https://gitlab.com/saltstack-formulas/infrastructure
 # rubocop:enable Layout/LineLength
 
 gem 'kitchen-inspec', '>= 2.5.0'
-gem 'kitchen-salt', '>= 0.6.3'
+gem 'kitchen-salt', '>= 0.7.2'
 
 group :vagrant do
   gem 'kitchen-vagrant'
