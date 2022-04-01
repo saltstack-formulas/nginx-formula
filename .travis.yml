@@ -116,6 +116,8 @@ jobs:
     # - env: INSTANCE=default-centos-7-master-py3
     # - env: INSTANCE=passenger-centos-7-master-py3
     - env: INSTANCE=centos-7-master-py3
+    - env: INSTANCE=default-fedora-35-master-py3
+    # - env: INSTANCE=fedora-35-master-py3
     - env: INSTANCE=default-fedora-34-master-py3
     # - env: INSTANCE=fedora-34-master-py3
     - env: INSTANCE=default-opensuse-leap-153-master-py3
@@ -148,6 +150,7 @@ jobs:
     # - env: INSTANCE=default-ubuntu-1804-3004-0-py3
     # - env: INSTANCE=default-centos-stream8-3004-0-py3
     # - env: INSTANCE=default-centos-7-3004-0-py3
+    # - env: INSTANCE=default-fedora-35-3004-0-py3
     # - env: INSTANCE=default-fedora-34-3004-0-py3
     # - env: INSTANCE=default-opensuse-leap-153-3004-0-py3
     # - env: INSTANCE=default-opensuse-tmbl-latest-3004-0-py3
