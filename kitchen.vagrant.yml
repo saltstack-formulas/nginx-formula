@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
+driver:
+  name: vagrant
+  cache_directory: false
+  customize:
+    usbxhci: 'off'
+  gui: false
+  ssh:
+    shell: /bin/sh
+  <% unless ENV['CI'] %>
+  linked_clone: true
+  synced_folders:
+    - - '.kitchen/kitchen-vagrant/%{instance_name}/vagrant'
+      - '/vagrant'
+      - 'create: true, disabled: false'
+  <% end %>
+
+platforms:
+  - name: freebsd-130-master-py3
+    driver:
+      box: myii/freebsd-13.0-master-py3
+  - name: freebsd-123-master-py3
+    driver:
+      box: myii/freebsd-12.3-master-py3
+  - name: freebsd-130-3004-0-py3
+    driver:
+      box: myii/freebsd-13.0-3004.0-py3
+  - name: freebsd-123-3004-0-py3
+    driver:
+      box: myii/freebsd-12.3-3004.0-py3

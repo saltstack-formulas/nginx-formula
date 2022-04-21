@@ -28,6 +28,17 @@ nginx:
   source_version: '1.10.0'
   source_hash: ''
 
+  # Check the configuration before applying:
+  # To prevent applying a configuration that might break nginx, set this
+  # parameter to true so the configuration is checked BEFORE applying. If
+  # the check fails, the state will fail and it won't be deployed.
+  # CAVEAT: As the configuration file is created in a temp dir, it can't
+  # have relative references or it will fail to check. You'll need to
+  # specify full paths where required (ie, `include`, `load_module`,
+  # `snippets`, etc.0
+  # Defaults to false
+  check_config_before_apply: false
+
   # These are usually set by grains in map.jinja
   # Typically you can comment these out.
   lookup:
@@ -94,7 +105,16 @@ nginx:
       - upstream netdata:
           - server: 127.0.0.1:19999
           - keepalive: 64
-
+  
+  streams:
+    example_stream:
+      - upstream some_upstream:
+        - server: '10.0.0.1:8000'
+        - server: '10.0.0.2:8000'
+      - server:
+        - listen: 7000
+        - proxy_pass: some_upstream
+        
   server:
     # this partially exposes file.managed parameters as they relate to the main
     # nginx.conf file
@@ -190,6 +210,18 @@ nginx:
         # may be true, false, or None where true is enabled, false, disabled,
         # and None indicates no action
         enabled: true
+
+        # This let's you add dependencies on other resources being applied for a
+        # particular vhost
+        # A common case is when you use this formula together with letsencrypt's,
+        # validating through nginx: you need nginx running (to validate the vhost) but
+        # can't have the ssl vhost up until the certificate is created (because it
+        # won't exist and will make nginx fail to load the configuration)
+        #
+        # An example, when using LE to create the cert for 'some.host.domain':
+        # requires:
+        #   cmd: create-initial-cert-some.host.domain
+        requires: {}
 
         # Remove the site config file shipped by nginx
         # (i.e. '/etc/nginx/sites-available/default' by default)

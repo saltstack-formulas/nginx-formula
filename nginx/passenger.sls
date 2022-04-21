@@ -15,16 +15,21 @@ include:
   {%- if nginx.snippets is defined %}
   - nginx.snippets
   {%- endif %}
+  {%- if nginx.streams is defined %}
+  - nginx.streams
+  {%- endif %}
   - nginx.servers
   - nginx.certificates
 
 passenger_install:
   pkg.installed:
+    {{ sls_block(nginx.package.opts) }}
     - name: {{ nginx.lookup.passenger_package }}
     - require:
       - pkg: nginx_install
     - require_in:
       - service: nginx_service
+      - file: nginx_config
 
 /etc/nginx/passenger.conf:
   file.absent:
@@ -46,6 +51,7 @@ passenger_config:
       - service: nginx_service
     - require_in:
       - service: nginx_service
+      - file: nginx_config
     - require:
       - file: /etc/nginx/passenger.conf
       - pkg: passenger_install

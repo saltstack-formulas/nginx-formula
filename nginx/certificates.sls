@@ -30,6 +30,7 @@ generate_nginx_dhparam_{{ dh_param }}_key:
     - creates: {{ certificates_path }}/{{ dh_param }}
     - require:
       - file: prepare_certificates_path_dir
+      - pkg: generate_nginx_dhparam_{{ dh_param }}_key
     - watch_in:
       - service: nginx_service
 {%- endif %}

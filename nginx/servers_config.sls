@@ -10,8 +10,9 @@
 {% set server_states = [] %}
 {#- _nginx is a lightened copy of nginx map intended to passed in templates #}
 {%- set _nginx = nginx.copy() %}
-{%- do _nginx.pop('snippets') %}
-{%- do _nginx.pop('servers') %}
+{%- do _nginx.pop('streams') if nginx.streams is defined %}
+{%- do _nginx.pop('snippets') if nginx.snippets is defined %}
+{%- do _nginx.pop('servers') if nginx.servers is defined %}
 
 # Simple path concatenation.
 # Needs work to make this function on windows.
@@ -52,6 +53,7 @@
   file.symlink:
     {{ sls_block(nginx.servers.symlink_opts) }}
     - name: {{ server_path(server, state) }}
+    - makedirs: True
     - target: {{ server_path(server, anti_state) }}
     {%- else %}
         {%- if deleted == True %}
@@ -98,10 +100,6 @@ nginx_server_available_dir:
     - clean: {{ nginx.servers.purge_servers_config }}
 {%- endif %}
 
-# Manage the actual server files
-{% for server, settings in nginx.servers.managed.items() %}
-{% endfor %}
-
 # Managed enabled/disabled state for servers
 {% for server, settings in nginx.servers.managed.items() %}
 {% set conf_state_id = 'server_conf_' ~ loop.index0 %}
@@ -109,6 +107,7 @@ nginx_server_available_dir:
 {{ conf_state_id }}:
     file.absent:
         - name: {{ server_curpath(server) }}
+{% do server_states.append(conf_state_id) %}
 {% else %}
 {% if settings.enabled == True %}
 {{ conf_state_id }}:
@@ -125,8 +124,12 @@ nginx_server_available_dir:
       }}
     - makedirs: True
     - template: jinja
-    - require_in:
-      - service: nginx_service
+      {%- if 'requires' in settings %}
+    - require:
+        {%- for k, v in settings.requires.items() %}
+      - {{ k }}: {{ v }}
+        {%- endfor %}
+      {%- endif %}
 {% if 'source_path' not in settings.config %}
     - context:
         config: {{ settings.config|json(sort_keys=False) }}
@@ -156,9 +159,7 @@ nginx_server_available_dir:
       - file: {{ conf_state_id }}
 {% endif %}
 
-{% if 'deleted' not in settings or ( 'deleted' in settings and settings.deleted == False ) %}
 {% do server_states.append(status_state_id) %}
-{% endif %}
 {%- endif %} {# enabled != available_dir #}
 {% endif %}
 {% endfor %}
