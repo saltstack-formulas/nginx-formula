@@ -119,9 +119,10 @@ nginx:
     ## - - --  - - -- -- - - --- -- - -- - - - -- - - - - -- - - - -- - - - -- - ##
     config:
       include: 'snippets/letsencrypt.conf'
-      # IMPORTANT: This option is mutually exclusive with TOFS and the rest of
-      # the options; if it is found other options (worker_processes: 4 and so
-      # on) are not processed and just upload the file from source
+      # IMPORTANT: This option is mutually exclusive with TOFS.
+      # It uploads the file from source and passes the global `nginx` and the
+      # `config` dictionnary to the template.
+      # `jinja` is assumed as template type.
       source_path: salt://path_to_nginx_conf_file/nginx.conf
       worker_processes: 4
       # pass as very first in configuration; otherwise nginx will fail to start
@@ -278,9 +279,14 @@ nginx:
         available_dir: /etc/nginx/sites-available
         enabled_dir: /etc/nginx/sites-enabled
         config:
-          # IMPORTANT: This field is mutually exclusive with TOFS and other
-          # config options, it just uploads the specified file
+          # IMPORTANT: This field is mutually exclusive with TOFS.
+          # It uploads the file from source and passes the global `nginx` and the
+          # `config` dictionnary to the template.
+          # `jinja` is assumed as template type.
           source_path: salt://path-to-site-file/mysite2
+          # Example:
+          port: 80  # is passed as `config.port` to template located at `source_path`
+          custom_key: custom_value
 
       # Below configuration becomes handy if you want to create custom
       # configuration files for example if you want to create
