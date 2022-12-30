@@ -101,7 +101,7 @@ nginx_server_available_dir:
 
 # Managed enabled/disabled state for servers
 {% for server, settings in nginx.servers.managed.items() %}
-{% set conf_state_id = 'server_conf_' ~ loop.index0 %}
+{%- set conf_state_id = 'nginx_' ~ server ~ '_server_config_file' %}
 {% if 'deleted' in settings and settings.deleted %}
 {{ conf_state_id }}:
     file.absent:
@@ -143,7 +143,7 @@ nginx_server_available_dir:
 {% endif %}
 
 {% if settings.enabled != None %}
-{% set status_state_id = 'server_state_' ~ loop.index0 %}
+{%- set status_state_id = 'nginx_' ~ server ~ '_server_state_symlink'  %}
 {%- set enabled_dir = path_join(server, nginx.servers.managed.get(server).get('enabled_dir', nginx.lookup.server_enabled)) -%}
 {%- set available_dir = path_join(server, nginx.servers.managed.get(server).get('available_dir', nginx.lookup.server_available)) -%}
 {%- if enabled_dir != available_dir %}
