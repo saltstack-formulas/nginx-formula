@@ -11,18 +11,27 @@
   {% set from_official = true %}
   {% set from_ppa = false %}
   {% set from_phusionpassenger = false %}
+  {% set from_opensuse_devel = false %}
 {% elif nginx.install_from_ppa %}
   {% set from_official = false %}
   {% set from_ppa = true %}
   {% set from_phusionpassenger = false %}
+  {% set from_opensuse_devel = false %}
 {% elif nginx.install_from_phusionpassenger %}
   {% set from_official = false %}
   {% set from_ppa = false %}
   {% set from_phusionpassenger = true %}
+  {% set from_opensuse_devel = false %}
+{% elif nginx.install_from_opensuse_devel %}
+  {% set from_official = false %}
+  {% set from_ppa = false %}
+  {% set from_phusionpassenger = false %}
+  {% set from_opensuse_devel = true %}
 {% else %}
   {% set from_official = false %}
   {% set from_ppa = false %}
   {% set from_phusionpassenger = false %}
+  {% set from_opensuse_devel = false %}
 {%- endif %}
 
 {%- set resource_repo_managed = 'file' if grains.os_family == 'Debian' else 'pkgrepo' %}
@@ -136,7 +145,7 @@ nginx_phusionpassenger_repo:
 {% if grains.os_family == 'Suse' or grains.os == 'SUSE' %}
 nginx_zypp_repo:
   pkgrepo:
-    {%- if from_official %}
+    {%- if from_opensuse_devel %}
     - managed
     {%- else %}
     - absent
