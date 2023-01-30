@@ -72,7 +72,8 @@
             'server_use_symlink': False,
             'pid_file': '/run/nginx.pid',
             'gpg_check': True,
-            'gpg_key': 'http://download.opensuse.org/repositories/server:/http/openSUSE_{{ grains.osrelease }}/repodata/repomd.xml.key',
+            'gpg_key': 'http://download.opensuse.org/repositories/server:/http/{{ grains.osrelease }}/repodata/repomd.xml.key',
+            'gpg_autoimport': True,
             'openssl_package': 'openssl',
         },
         'Arch': {

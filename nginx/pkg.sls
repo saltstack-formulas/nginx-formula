@@ -143,11 +143,12 @@ nginx_zypp_repo:
     {%- endif %}
     - name: server_http
     - humanname: server_http
-    - baseurl: 'http://download.opensuse.org/repositories/server:/http/openSUSE_13.2/'
+    - baseurl: 'http://download.opensuse.org/repositories/server:/http/{{ grains.osrelease }}/'
     - enabled: True
     - autorefresh: True
     - gpgcheck: {{ nginx.lookup.gpg_check }}
     - gpgkey: {{ nginx.lookup.gpg_key }}
+    - gpgautoimport: {{ nginx.lookup.gpg_autoimport }}
     - require_in:
       - pkg: nginx_install
     - watch_in:
