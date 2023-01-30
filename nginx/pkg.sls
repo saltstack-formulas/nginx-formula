@@ -145,12 +145,9 @@ nginx_phusionpassenger_repo:
 {% if grains.os_family == 'Suse' or grains.os == 'SUSE' %}
 nginx_zypp_repo:
   pkgrepo:
+    - name: server_http
     {%- if from_opensuse_devel %}
     - managed
-    {%- else %}
-    - absent
-    {%- endif %}
-    - name: server_http
     - humanname: server_http
     - baseurl: 'http://download.opensuse.org/repositories/server:/http/{{ grains.osrelease }}/'
     - enabled: True
@@ -158,6 +155,9 @@ nginx_zypp_repo:
     - gpgcheck: {{ nginx.lookup.gpg_check }}
     - gpgkey: {{ nginx.lookup.gpg_key }}
     - gpgautoimport: {{ nginx.lookup.gpg_autoimport }}
+    {%- else %}
+    - absent
+    {%- endif %}
     - require_in:
       - pkg: nginx_install
     - watch_in:
