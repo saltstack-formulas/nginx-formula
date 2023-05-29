@@ -24,6 +24,10 @@ nginx:
   # each build accordingly ( https://launchpad.net/~nginx )
   ppa_version: 'stable'
 
+  # Use openSUSE devel (server:http) repository to install nginx.
+  # If not set, the server_http repository will be removed if it exists.
+  install_from_opensuse_devel: false
+
   # Source install
   source_version: '1.10.0'
   source_hash: ''

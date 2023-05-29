@@ -11,18 +11,27 @@
   {% set from_official = true %}
   {% set from_ppa = false %}
   {% set from_phusionpassenger = false %}
+  {% set from_opensuse_devel = false %}
 {% elif nginx.install_from_ppa %}
   {% set from_official = false %}
   {% set from_ppa = true %}
   {% set from_phusionpassenger = false %}
+  {% set from_opensuse_devel = false %}
 {% elif nginx.install_from_phusionpassenger %}
   {% set from_official = false %}
   {% set from_ppa = false %}
   {% set from_phusionpassenger = true %}
+  {% set from_opensuse_devel = false %}
+{% elif nginx.install_from_opensuse_devel %}
+  {% set from_official = false %}
+  {% set from_ppa = false %}
+  {% set from_phusionpassenger = false %}
+  {% set from_opensuse_devel = true %}
 {% else %}
   {% set from_official = false %}
   {% set from_ppa = false %}
   {% set from_phusionpassenger = false %}
+  {% set from_opensuse_devel = false %}
 {%- endif %}
 
 {%- set resource_repo_managed = 'file' if grains.os_family == 'Debian' else 'pkgrepo' %}
@@ -114,18 +123,19 @@ nginx_phusionpassenger_repo:
 {% if grains.os_family == 'Suse' or grains.os == 'SUSE' %}
 nginx_zypp_repo:
   pkgrepo:
-    {%- if from_official %}
-    - managed
-    {%- else %}
-    - absent
-    {%- endif %}
     - name: server_http
+    {%- if from_opensuse_devel %}
+    - managed
     - humanname: server_http
-    - baseurl: 'http://download.opensuse.org/repositories/server:/http/openSUSE_13.2/'
+    - baseurl: 'http://download.opensuse.org/repositories/server:/http/{{ grains.osrelease }}/'
     - enabled: True
     - autorefresh: True
     - gpgcheck: {{ nginx.lookup.gpg_check }}
     - gpgkey: {{ nginx.lookup.gpg_key }}
+    - gpgautoimport: {{ nginx.lookup.gpg_autoimport }}
+    {%- else %}
+    - absent
+    {%- endif %}
     - require_in:
       - pkg: nginx_install
     - watch_in:

@@ -76,7 +76,8 @@
             'server_use_symlink': False,
             'pid_file': '/run/nginx.pid',
             'gpg_check': True,
-            'gpg_key': 'http://download.opensuse.org/repositories/server:/http/openSUSE_{{ grains.osrelease }}/repodata/repomd.xml.key',
+            'gpg_key': 'http://download.opensuse.org/repositories/server:/http/{{ grains.osrelease }}/repodata/repomd.xml.key',
+            'gpg_autoimport': True,
             'openssl_package': 'openssl',
         },
         'Arch': {
@@ -122,6 +123,7 @@
     'install_from_ppa': False,
     'install_from_repo': False,
     'install_from_phusionpassenger': False,
+    'install_from_opensuse_devel': False,
     'check_config_before_apply': False,
     'ppa_version': 'stable',
     'source_version': '1.10.0',
