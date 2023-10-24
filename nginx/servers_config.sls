@@ -129,11 +129,9 @@ nginx_server_available_dir:
       - {{ k }}: {{ v }}
         {%- endfor %}
       {%- endif %}
-{% if 'source_path' not in settings.config %}
     - context:
-        config: {{ settings.config|json(sort_keys=False) }}
         nginx: {{ _nginx|json() }}
-{% endif %}
+        config: {{ settings.get('config',{})|json(sort_keys=False) }}
     {% if 'overwrite' in settings and settings.overwrite == False %}
     - unless:
       - test -e {{ server_curpath(server) }}

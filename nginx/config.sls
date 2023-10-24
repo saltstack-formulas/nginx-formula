@@ -27,7 +27,5 @@ nginx_config:
           )
       }}
     - template: jinja
-{% if 'source_path' not in nginx.server.config %}
     - context:
-        config: {{ nginx.server.config|json(sort_keys=False) }}
-{% endif %}
+        config: {{ nginx.server.get('config', {})|json(sort_keys=False) }}
