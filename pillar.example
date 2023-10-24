@@ -202,8 +202,9 @@ nginx:
       # relative filename of server file
       # (defaults to '/etc/nginx/sites-available/mysite')
       mysite:
-        # may be true, false, or None where true is enabled, false, disabled,
+        # may be true, false, or None where true is enabled, false is disabled,
         # and None indicates no action
+        # true without ".disabled" management if not specified
         enabled: true
 
         # This let's you add dependencies on other resources being applied for a
