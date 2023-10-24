@@ -10,6 +10,7 @@
 {% set server_states = [] %}
 {#- _nginx is a lightened copy of nginx map intended to passed in templates #}
 {%- set _nginx = nginx.copy() %}
+{%- do _nginx.pop('streams') if nginx.streams is defined %}
 {%- do _nginx.pop('snippets') if nginx.snippets is defined %}
 {%- do _nginx.pop('servers') if nginx.servers is defined %}
 
