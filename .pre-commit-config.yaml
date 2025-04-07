@@ -15,7 +15,7 @@ ci:
   autoupdate_schedule: quarterly
   skip: []
   submodules: false
-default_stages: [commit]
+default_stages: [pre-commit]
 repos:
   - repo: https://github.com/dafyddj/commitlint-pre-commit-hook
     rev: v2.3.0
@@ -30,7 +30,7 @@ repos:
         additional_dependencies: ['@commitlint/config-conventional@8.3.4']
         always_run: true
   - repo: https://github.com/rubocop-hq/rubocop
-    rev: v1.56.4
+    rev: v1.75.2
     hooks:
       - id: rubocop
         name: Check Ruby files with rubocop
@@ -38,14 +38,14 @@ repos:
         always_run: true
         pass_filenames: false
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.9.0.6
+    rev: v0.10.0.1
     hooks:
       - id: shellcheck
         name: Check shell scripts with shellcheck
         files: ^.*\.(sh|bash|ksh)$
         types: []
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.32.0
+    rev: v1.37.0
     hooks:
       - id: yamllint
         name: Check YAML syntax with yamllint
@@ -58,14 +58,14 @@ repos:
       - id: salt-lint
         name: Check Salt files using salt-lint
         files: ^.*\.(sls|jinja|j2|tmpl|tst)$
-  - repo: https://github.com/myint/rstcheck
-    rev: 3f929574
+  - repo: https://github.com/rstcheck/rstcheck
+    rev: v6.2.4
     hooks:
       - id: rstcheck
         name: Check reST files using rstcheck
         exclude: 'docs/CHANGELOG.rst'
   - repo: https://github.com/saltstack-formulas/mirrors-rst-lint
-    rev: v1.3.2
+    rev: v1.4.0
     hooks:
       - id: rst-lint
         name: Check reST files using rst-lint
