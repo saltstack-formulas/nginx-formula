@@ -17,8 +17,6 @@ provisioner:
   salt_copy_filter:
     - .kitchen
     - .git
-  pillars_from_directories:
-    - test/salt/pillar
 
 transport:
   # Avoid lengthy waits when a container does not launch correctly
