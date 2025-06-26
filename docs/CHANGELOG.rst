@@ -2,6 +2,29 @@
 Changelog
 =========
 
+`2.9.0 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.8.1...v2.9.0>`_ (2025-06-26)
+-------------------------------------------------------------------------------------------------------
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* update ``pre-commit`` configuration inc. for pre-commit.ci [skip ci] (\ `9f83975 <https://github.com/saltstack-formulas/nginx-formula/commit/9f83975053707988494c55389a610cf3c20bcdee>`_\ )
+* **kitchen+gitlab:** update for new pre-salted images [skip ci] (\ `2df772e <https://github.com/saltstack-formulas/nginx-formula/commit/2df772ee67e8ec5a047ad90e169fc192ddfa90c0>`_\ )
+* **vagrant:** use ``linked_clone`` at all times (inc. CI) [skip ci] (\ `6f2b7b1 <https://github.com/saltstack-formulas/nginx-formula/commit/6f2b7b100c0ce196769e75fa4058d3276923173d>`_\ )
+
+Features
+^^^^^^^^
+
+
+* **opensuse:** optional openSUSE devel repository (\ `094bde5 <https://github.com/saltstack-formulas/nginx-formula/commit/094bde5082fbafb0ed8fb25acc4eb315ab179d15>`_\ )
+
+Tests
+^^^^^
+
+
+* **system.rb:** add support for ``mac_os_x`` [skip ci] (\ `8222541 <https://github.com/saltstack-formulas/nginx-formula/commit/82225416ef625e87c5109991ae7b7160bfbd834f>`_\ )
+
 `2.8.1 <https://github.com/saltstack-formulas/nginx-formula/compare/v2.8.0...v2.8.1>`_ (2022-03-02)
 -------------------------------------------------------------------------------------------------------
 
