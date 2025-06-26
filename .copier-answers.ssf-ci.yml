@@ -1,6 +1,6 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
 _commit: v2.1.0
-_src_path: gh:dafyddj/copier-ssf-ci
+_src_path: https://github.com/dafyddj/copier-ssf-ci
 failure_permitted_ignored: []
 failure_permitted_patterns: []
 formula_name: nginx
