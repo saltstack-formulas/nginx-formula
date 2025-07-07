@@ -88,7 +88,6 @@ nginx_server_enabled_dir:
   file.directory:
     {{ sls_block(nginx.servers.dir_opts) }}
     - name: {{ nginx.lookup.server_enabled }}
-    - clean: {{ nginx.servers.purge_servers_config }}
 
 # If enabled and available are not the same, create available
 {% if nginx.lookup.server_enabled != nginx.lookup.server_available -%}
@@ -96,7 +95,6 @@ nginx_server_available_dir:
   file.directory:
     {{ sls_block(nginx.servers.dir_opts) }}
     - name: {{ nginx.lookup.server_available }}
-    - clean: {{ nginx.servers.purge_servers_config }}
 {%- endif %}
 
 # Managed enabled/disabled state for servers
@@ -162,3 +160,23 @@ nginx_server_available_dir:
 {%- endif %} {# enabled != available_dir #}
 {% endif %}
 {% endfor %}
+
+
+{# Add . and .. to make it easier to not clean those #}
+{% set valid_sites = ['.', '..', ] %}
+
+{# Take sites from nginx.servers.managed #}
+{% for server, settings in salt['pillar.get']('nginx:servers:managed', {}).items() %}
+{%   do valid_sites.append(server) %}
+{% endfor %}
+
+{% if salt['file.directory_exists'](nginx.lookup.server_enabled) %}
+{%   for filename in salt['file.readdir'](nginx.lookup.server_enabled) %}
+{%     if filename not in valid_sites %}
+
+{{ nginx.lookup.server_enabled ~ '/' ~ filename }}:
+  file.absent
+
+{%     endif %}
+{%   endfor %}
+{% endif %}
