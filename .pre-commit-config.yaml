@@ -30,7 +30,7 @@ repos:
       - id: commitlint
       - id: commitlint-ci
   - repo: https://github.com/rubocop-hq/rubocop
-    rev: v1.81.7
+    rev: v1.82.1
     hooks:
       - id: rubocop
         name: Check Ruby files with rubocop
@@ -100,12 +100,12 @@ repos:
             )$
         additional_dependencies: [pygments==2.16.1]
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 42.29.5
+    rev: 42.71.2
     hooks:
       - id: renovate-config-validator
         name: Check Renovate config with renovate-config-validator
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.35.0
+    rev: 0.36.0
     hooks:
       - id: check-github-workflows
         name: Check GitHub workflows with check-jsonschema
