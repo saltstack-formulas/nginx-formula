@@ -25,13 +25,13 @@ jobs:
     name: Lint / `pre-commit`
     needs: should-run
     if: fromJSON(needs.should-run.outputs.should-run)
-    container: techneg/ci-pre-commit:v2.5.24@sha256:b206cbb9bf1506dec0e1b2a70c7e8d69850af75255a9d5d93d52dae54f636d3a
+    container: techneg/ci-pre-commit:v2.5.28@sha256:fb14ff152879618c500efa8eac55a6937b34f10e3b86e6d4869b7eb532618c09
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - run: | # Needed because of bug #2031 in `actions/checkout`
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
           fetch-tags: true
@@ -61,13 +61,13 @@ jobs:
       issues: write
       pull-requests: write
       checks: read
-    container: techneg/ci-semantic-release:v1.2.22@sha256:091cbee13d24025ba940398995814c807d253933ce20a3b07563cc0d27bba147
+    container: techneg/ci-semantic-release:v1.2.26@sha256:e736e32f69db7c51205c06fd5538731fddfa9c6339d0571e7ec8ce9250b8f962
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - run: |  # Needed due to bug actions/checkout#2031
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       # yamllint disable-line rule:line-length
       - uses: poseidon/wait-for-status-checks@899c768d191b56eef585c18f8558da19e1f3e707 # v0.6.0
         with:
