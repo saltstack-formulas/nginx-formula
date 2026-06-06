@@ -15,15 +15,15 @@
   stage_test: &stage_test 'test'
   # `image`
   # yamllint disable rule:line-length
-  image_commitlint: &image_commitlint 'techneg/ci-commitlint:v1.1.137@sha256:65f39c2408d55619ba50b1289c1f9e52d6e76f4d8c899c46a6d520fa56c20da4'
-  image_dindruby: &image_dindruby 'techneg/ci-docker-python-ruby:v2.2.107@sha256:16d1d002162df6679b3ff26c84ddbabfc3ec8f8811ebcda8ef6adaefb9d8e7fa'
-  image_dindrubybionic: &image_dindrubybionic 'techneg/ci-docker-python-ruby:v2.2.107@sha256:16d1d002162df6679b3ff26c84ddbabfc3ec8f8811ebcda8ef6adaefb9d8e7fa'
-  image_precommit: &image_precommit 'techneg/ci-pre-commit:v2.5.40@sha256:08cbbc8b1b3ad6bfc7056494823b0f96faa50ab467649f8d48e8e6d963f11b41'
-  image_rubocop: &image_rubocop 'pipelinecomponents/rubocop:latest@sha256:74850471782195453cdf91f4a5edf62b6fcc3365c124d4d975c7e87a702040d7'
-  image_semantic-release: &image_semanticrelease 'techneg/ci-semantic-release:v1.2.38@sha256:292fab25c01c3a8bf6f27be8d397be40c4e95ded49d99d9a5ac47c79cc40d981'
+  image_commitlint: &image_commitlint 'techneg/ci-commitlint:v1.1.142@sha256:c374e40bca234b54db9a3e922239ddeef4581b6481ef4e6679024a453c15b856'
+  image_dindruby: &image_dindruby 'techneg/ci-docker-python-ruby:v2.2.112@sha256:fce4a39620b9de05356bcab1a4ab56e036462c00065d505c0548867448dc58b1'
+  image_dindrubybionic: &image_dindrubybionic 'techneg/ci-docker-python-ruby:v2.2.112@sha256:fce4a39620b9de05356bcab1a4ab56e036462c00065d505c0548867448dc58b1'
+  image_precommit: &image_precommit 'techneg/ci-pre-commit:v2.5.45@sha256:bef8c61363feadbe5c5b66abc87d7504e71bc72f50baaf5b2b36dc6b3a5ed073'
+  image_rubocop: &image_rubocop 'pipelinecomponents/rubocop:latest@sha256:a2abed57112d1931b77b30138d8f6a211303f10f2d03d42513cfbe7de1e25963'
+  image_semantic-release: &image_semanticrelease 'techneg/ci-semantic-release:v1.2.43@sha256:7d28707c511e7291cf098cf8f04f1da0f7fffeae897d32910cceaf57acd786bb'
   # `services`
   services_docker_dind: &services_docker_dind
-    - 'docker:29.4.1-dind@sha256:c77e5d7912f9b137cc67051fdc2991d8f5ae22c55ddf532bb836dcb693a04940'
+    - 'docker:29.5.2-dind@sha256:6b9cd914eb9c6b342c040a49a27a5eb3804453bae6ecc90f7ff96133595a95e8'
   # yamllint enable rule:line-length
   # `variables`
   # https://forum.gitlab.com/t/gitlab-com-ci-caching-rubygems/5627/3
@@ -175,6 +175,24 @@ rockylinux-8-master: {extends: '.test_instance_failure_permitted'}
 ubuntu-2404-master: {extends: '.test_instance_failure_permitted'}
 ubuntu-2204-master: {extends: '.test_instance_failure_permitted'}
 ubuntu-2004-master: {extends: '.test_instance_failure_permitted'}
+almalinux-9-3008: {extends: '.test_instance'}
+almalinux-8-3008: {extends: '.test_instance'}
+amazonlinux-2023-3008: {extends: '.test_instance'}
+amazonlinux-2-3008: {extends: '.test_instance_failure_permitted'}
+centos-stream9-3008: {extends: '.test_instance'}
+debian-12-3008: {extends: '.test_instance'}
+debian-11-3008: {extends: '.test_instance'}
+fedora-41-3008: {extends: '.test_instance_failure_permitted'}
+fedora-40-3008: {extends: '.test_instance'}
+opensuse-leap-156-3008: {extends: '.test_instance'}
+opensuse-tmbl-latest-3008: {extends: '.test_instance'}
+oraclelinux-9-3008: {extends: '.test_instance'}
+oraclelinux-8-3008: {extends: '.test_instance'}
+rockylinux-9-3008: {extends: '.test_instance'}
+rockylinux-8-3008: {extends: '.test_instance'}
+ubuntu-2404-3008: {extends: '.test_instance'}
+ubuntu-2204-3008: {extends: '.test_instance'}
+ubuntu-2004-3008: {extends: '.test_instance'}
 almalinux-9-3007: {extends: '.test_instance'}
 almalinux-8-3007: {extends: '.test_instance'}
 amazonlinux-2023-3007: {extends: '.test_instance'}
