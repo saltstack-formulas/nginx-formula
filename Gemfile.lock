@@ -380,7 +380,7 @@ GEM
     erubi (1.13.1)
     excon (1.4.2)
       logger
-    faraday (1.10.5)
+    faraday (1.10.6)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
