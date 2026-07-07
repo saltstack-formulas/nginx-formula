@@ -25,20 +25,20 @@ jobs:
     name: Lint / `pre-commit`
     needs: should-run
     if: fromJSON(needs.should-run.outputs.should-run)
-    container: techneg/ci-pre-commit:v2.5.47@sha256:d73cd0b63eb950a8b8bac3e5a20ec06c4224597681d921dd7ce803fbf5924465
+    container: techneg/ci-pre-commit:v2.5.49@sha256:5be3d67ffdcbf1a2a4d54e6423faa15102d86154d797e1200e2fcf875b1530bf
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - run: | # Needed because of bug #2031 in `actions/checkout`
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
           fetch-tags: true
           filter: tree:0
       - name: Export `CI_CACHE_ID` from container
         run: echo "CI_CACHE_ID=$(cat /.ci_cache_id)" >> $GITHUB_ENV
-      - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.cache/pre-commit
           key: "${{ env.CI_CACHE_ID }}|\
@@ -61,17 +61,18 @@ jobs:
       issues: write
       pull-requests: write
       checks: read
-    container: techneg/ci-semantic-release:v1.2.45@sha256:39e80afd903fd70dbeb8c9dc455a58acdf97e39d0283c15af126ecc34facfcfc
+    container: techneg/ci-semantic-release:v1.2.48@sha256:04e593968299fb4903f6e8a8e5f983cb5d55a12baf230d0b583e9ba80ffa49cf
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - run: |  # Needed due to bug actions/checkout#2031
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       # yamllint disable-line rule:line-length
       - uses: poseidon/wait-for-status-checks@899c768d191b56eef585c18f8558da19e1f3e707 # v0.6.0
         with:
           ignore: >
+            Dependabot,
             Release / Collect results
           ignore_pattern: ^GitLab CI
           token: ${{ secrets.GITHUB_TOKEN }}
