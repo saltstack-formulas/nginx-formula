@@ -2,7 +2,7 @@
 
 # This is a placeholder version to remind us to update the Gemfile
 # when a new stable Chef Workstation is released
-# renovate: chef-workstation 25.13.7
+# renovate: chef-workstation 25.14.2
 
 source ENV.fetch('PROXY_RUBYGEMSORG', 'https://rubygems.org')
 
@@ -12,16 +12,16 @@ source ENV.fetch('PROXY_RUBYGEMSORG', 'https://rubygems.org')
 gem 'inspec', git: 'https://gitlab.com/saltstack-formulas/infrastructure/inspec', branch: 'ssf'
 # rubocop:enable Layout/LineLength
 
-# Install the `kitchen-docker` gem using `git` in order to gain a performance
-# improvement: avoid package installations which are already covered by the
-# `salt-image-builder` (i.e. the pre-salted images that we're using)
+# Install the `kitchen-docker` gem using `git` in order to avoid an upstream
+# error caused by `kitchen-docker.gemspec`.
+# TODO: correct the error upstream
 # rubocop:disable Layout/LineLength
-gem 'kitchen-docker', git: 'https://github.com/test-kitchen/kitchen-docker', ref: '511e4ad36856b9e2eccceb56603586e6cebd296a'
+gem 'kitchen-docker', git: 'https://github.com/dafyddj/kitchen-docker', branch: 'chore/gemspec'
 # rubocop:enable Layout/LineLength
 
 gem 'kitchen-inspec', '3.1.0'
 gem 'kitchen-salt', '0.7.2'
 
-gem 'net-ssh', '7.3.0'
+gem 'net-ssh', '7.3.2'
 
-gem 'test-kitchen', '3.9.1'
+gem 'test-kitchen', '4.0.0'
