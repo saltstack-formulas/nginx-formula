@@ -101,6 +101,7 @@ nginx_server_available_dir:
 
 # Managed enabled/disabled state for servers
 {% for server, settings in nginx.servers.managed.items() %}
+{% set server_enabled = settings.enabled | default(True) %}
 {% set conf_state_id = 'server_conf_' ~ loop.index0 %}
 {% if 'deleted' in settings and settings.deleted %}
 {{ conf_state_id }}:
@@ -108,7 +109,7 @@ nginx_server_available_dir:
         - name: {{ server_curpath(server) }}
 {% do server_states.append(conf_state_id) %}
 {% else %}
-{% if settings.enabled == True %}
+{% if server_enabled == True %}
 {{ conf_state_id }}:
   file.managed:
     {{ sls_block(nginx.servers.managed_opts) }}
@@ -142,7 +143,7 @@ nginx_server_available_dir:
 {% endif %}
 {% endif %}
 
-{% if settings.enabled != None %}
+{% if settings.enabled is defined and server_enabled != None %}
 {% set status_state_id = 'server_state_' ~ loop.index0 %}
 {%- set enabled_dir = path_join(server, nginx.servers.managed.get(server).get('enabled_dir', nginx.lookup.server_enabled)) -%}
 {%- set available_dir = path_join(server, nginx.servers.managed.get(server).get('available_dir', nginx.lookup.server_available)) -%}
@@ -151,9 +152,9 @@ nginx_server_available_dir:
 {% if 'deleted' in settings and settings.deleted %}
 {{ manage_status(server, False, True) }}
 {% else %}
-{{ manage_status(server, settings.enabled, False) }}
+{{ manage_status(server, server_enabled, False) }}
 {% endif %}
-{% if settings.enabled == True %}
+{% if server_enabled == True %}
     - require:
       - file: {{ conf_state_id }}
 {% endif %}
