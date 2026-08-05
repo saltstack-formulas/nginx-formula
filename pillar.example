@@ -109,7 +109,16 @@ nginx:
       - upstream netdata:
           - server: 127.0.0.1:19999
           - keepalive: 64
-
+  
+  streams:
+    example_stream:
+      - upstream some_upstream:
+        - server: '10.0.0.1:8000'
+        - server: '10.0.0.2:8000'
+      - server:
+        - listen: 7000
+        - proxy_pass: some_upstream
+        
   server:
     # this partially exposes file.managed parameters as they relate to the main
     # nginx.conf file
