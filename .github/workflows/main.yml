@@ -25,7 +25,7 @@ jobs:
     name: Lint / `pre-commit`
     needs: should-run
     if: fromJSON(needs.should-run.outputs.should-run)
-    container: techneg/ci-pre-commit:v2.5.52@sha256:c5ce7075611cc185ea8e0992dec3cf1157382452f6ede9be86bee8baed09395d
+    container: techneg/ci-pre-commit:v2.5.55@sha256:9b5522126c6076b9fcc6d23a21411674cc348c450aadaca13eaaa882eceeb076
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -61,7 +61,7 @@ jobs:
       issues: write
       pull-requests: write
       checks: read
-    container: techneg/ci-semantic-release:v1.2.51@sha256:a57103734a036c435ec6a1adb35a823eeb20498794bd9020e2fb01eb3b96baa3
+    container: techneg/ci-semantic-release:v1.2.55@sha256:2f11d840b348dd7a7376c19e6893edd91b704fd979ad25f59e92d17518d01a63
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -69,7 +69,7 @@ jobs:
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # yamllint disable-line rule:line-length
-      - uses: poseidon/wait-for-status-checks@899c768d191b56eef585c18f8558da19e1f3e707 # v0.6.0
+      - uses: poseidon/wait-for-status-checks@e7e24423722c5b8e97a6dd5848827d2a412f812d # v0.7.0
         with:
           ignore: >
             Dependabot,
