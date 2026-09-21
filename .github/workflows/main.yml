@@ -25,7 +25,7 @@ jobs:
     name: Lint / `pre-commit`
     needs: should-run
     if: fromJSON(needs.should-run.outputs.should-run)
-    container: techneg/ci-pre-commit:v2.5.52@sha256:c5ce7075611cc185ea8e0992dec3cf1157382452f6ede9be86bee8baed09395d
+    container: techneg/ci-pre-commit:v2.5.58@sha256:56e0bf7d16560020b738a2378240643ccb399350a540e906ca1e27009ffe2d68
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -61,7 +61,7 @@ jobs:
       issues: write
       pull-requests: write
       checks: read
-    container: techneg/ci-semantic-release:v1.2.51@sha256:a57103734a036c435ec6a1adb35a823eeb20498794bd9020e2fb01eb3b96baa3
+    container: techneg/ci-semantic-release:v1.2.58@sha256:723edbddfa534c7c137f09adec5fb2dfd6286d3fcb9c63688d7e5265ca4dd77e
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -69,11 +69,11 @@ jobs:
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # yamllint disable-line rule:line-length
-      - uses: poseidon/wait-for-status-checks@899c768d191b56eef585c18f8558da19e1f3e707 # v0.6.0
+      - uses: poseidon/wait-for-status-checks@e7e24423722c5b8e97a6dd5848827d2a412f812d # v0.7.0
         with:
           ignore: >
             Dependabot,
-            Release / Collect results
+            Release / Collect results,
           ignore_pattern: ^GitLab CI
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run `semantic-release`
