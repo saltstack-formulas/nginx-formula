@@ -250,6 +250,7 @@ suites:
         base:
           '*':
             - test_dep.create_dependency_file
+            - test_dep.create_unmanaged_conf_file
             - nginx._mapdata
             - nginx
       pillars:

@@ -59,6 +59,10 @@ control 'Nginx configuration' do
       it { should_not exist }
     end
 
+    describe file "#{dir}/unmanaged-deleteme.conf" do
+      it { should_not exist }
+    end
+
     describe file "#{dir}/mysite" do
       it { should be_file }
       it { should be_owned_by file_owner }

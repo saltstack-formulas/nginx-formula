@@ -138,6 +138,13 @@ nginx_server_available_dir:
     - unless:
       - test -e {{ server_curpath(server) }}
     {% endif %}
+    {% if nginx.lookup.server_enabled == nginx.lookup.server_available -%}
+    - require_in: # on RHEL derived systems there is only an 'enabled'-dir.
+      - file: nginx_server_enabled_dir
+    {% else %}
+    - require_in: # Exists only if these are not the same directory
+      - file: nginx_server_available_dir
+    {% endif -%}
 {% do server_states.append(conf_state_id) %}
 {% endif %}
 {% endif %}
@@ -156,6 +163,8 @@ nginx_server_available_dir:
 {% if settings.enabled == True %}
     - require:
       - file: {{ conf_state_id }}
+    - require_in:
+      - file: nginx_server_enabled_dir
 {% endif %}
 
 {% do server_states.append(status_state_id) %}
