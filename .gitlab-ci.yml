@@ -15,14 +15,14 @@
   stage_test: &stage_test 'test'
   # `image`
   # yamllint disable rule:line-length
-  image_commitlint: &image_commitlint 'techneg/ci-commitlint:v1.1.158@sha256:fc1b510fee57c5d44e1bf76125966c5a33ae8c9c92efc80a8c94ba3e22dc495c'
-  image_dindruby: &image_dindruby 'techneg/ci-docker-python-ruby:v2.2.127@sha256:4e10825128fbfd4837eb336b80e41573b1dd893dfc285a209570f69b8a9e1e10'
-  image_dindrubybionic: &image_dindrubybionic 'techneg/ci-docker-python-ruby:v2.2.127@sha256:4e10825128fbfd4837eb336b80e41573b1dd893dfc285a209570f69b8a9e1e10'
-  image_precommit: &image_precommit 'techneg/ci-pre-commit:v2.5.60@sha256:5afa335df3eaa1e0b303406241464a2a9e3c381f76df94b5f9f543a44d6ab8c6'
-  image_semantic-release: &image_semanticrelease 'techneg/ci-semantic-release:v1.2.60@sha256:f136bfe165e961f84188f21dd749e1f164f7991a95836401ac2ef5c943f96d73'
+  image_commitlint: &image_commitlint 'techneg/ci-commitlint:v1.1.163@sha256:be65e57f7cb2ba6cd2e951ea7237a579ef7272331751aad0ca31f2290224ec16'
+  image_dindruby: &image_dindruby 'techneg/ci-docker-python-ruby:v2.2.133@sha256:6130f815c887ac25a84fd09da2f57211599da0a2b5a020ba18312ae8b8184a44'
+  image_dindrubybionic: &image_dindrubybionic 'techneg/ci-docker-python-ruby:v2.2.133@sha256:6130f815c887ac25a84fd09da2f57211599da0a2b5a020ba18312ae8b8184a44'
+  image_precommit: &image_precommit 'techneg/ci-pre-commit:v2.5.66@sha256:a00d71824d57112a3a99dbbebd1728b821bacd3eb827970d7d3bf330b4d7fba0'
+  image_semantic-release: &image_semanticrelease 'techneg/ci-semantic-release:v1.2.65@sha256:041c4231b1f349c67c0e9fab2c1c47c6c5623708a63bdf1cbc87fd0a100d71ec'
   # `services`
   services_docker_dind: &services_docker_dind
-    - 'docker:29.8.1-dind@sha256:3f3c01aaaebf7cce837356b688b7c059a4749f10bd7660dec7c58fc454a283f0'
+    - 'docker:29.9.2-dind@sha256:9e79b879b177fbd72c34376a3dd3d91747da5db49e1f560f76aea59561471977'
   # yamllint enable rule:line-length
   # `variables`
   # https://forum.gitlab.com/t/gitlab-com-ci-caching-rubygems/5627/3
