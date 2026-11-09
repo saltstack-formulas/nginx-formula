@@ -8,9 +8,8 @@ when 'debian'
   codename = system.platform[:codename]
   repo_keyring = '/usr/share/keyrings/phusionpassenger-archive-keyring.gpg'
   repo_file = "/etc/apt/sources.list.d/phusionpassenger-official-#{codename}.list"
-  # rubocop:disable Layout/LineLength
+  # rubocop:disable-next Layout/LineLength
   repo_url = "deb [signed-by=#{repo_keyring}] https://oss-binaries.phusionpassenger.com/apt/passenger #{codename} main"
-  # rubocop:enable Layout/LineLength
 end
 
 control 'Phusion-passenger repository keyring' do

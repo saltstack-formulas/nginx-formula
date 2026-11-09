@@ -34,11 +34,10 @@ control 'Nginx configuration' do
     it { should be_grouped_into file_group }
     its('mode') { should cmp '0644' }
     its('content') do
-      # rubocop:disable Metrics/LineLength
+      # rubocop:disable-next Layout/LineLength
       should include %(    log_format main '$remote_addr - $remote_user [$time_local] $status '
                     '"$request" $body_bytes_sent "$http_referer" '
                     '"$http_user_agent" "$http_x_forwarded_for"';)
-      # rubocop:enable Metrics/LineLength
     end
   end
 
