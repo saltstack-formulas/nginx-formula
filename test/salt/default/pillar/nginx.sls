@@ -20,6 +20,7 @@ nginx:
                               '"$request" $body_bytes_sent "$http_referer" '
                               '"$http_user_agent" "$http_x_forwarded_for"'
   servers:
+    purge_servers_config: true
     managed:
       default:
         deleted: true
